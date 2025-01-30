@@ -19,7 +19,9 @@ const CustomArrow = ({ direction, onClick }) => (
 const A = () => {
     const [isshown, setshown] = useState(true)
     const [issubshown, setsubshown] = useState(false)
+    const [issubshown2, setsubshown2] = useState(false)
     const [issidebarshown, setsidebarshown] = useState(false)
+    const [issearchxshown, setsearchxshown] = useState(false)
     const [des, setdes] = useState('')
     const [des1, setdes1] = useState('')
     const [des2, setdes2] = useState('')
@@ -130,7 +132,7 @@ const A = () => {
             settitle(shortText)
         }
 
-        shortDescription('لە کاتی جەنگی جیهانی دووەم، جێگری ژەنەڕاڵ لێسلی گرۆڤس جوونیەر، فیزیاناس جەی ڕۆبەرت ئۆپنهایمەری دەستنیشان کرد بۆ کارکردن لەسەر پڕۆژەی نهێنی مانهاتن','دو سرباز، کە کارەکەیان ئەم بریتیە لە گەیاندنی پەیامی گرنگ بۆ یەکەمی تر، ژیانەکانەیان بە ریسک دەنەوە بۆ ئەم کارە، بۆ ئەوەی بەرەو پەیامیەکی تەواوەوە کەیانە بەرەو فەرمی تایبەتی بەکارێن','کاپتێن میچ نەلسۆن پێشەنگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی کەسایەتی فەرمی، ڕووداوەکان زیاتر بەرەو ڕووداوی ئیشە بەرەو کۆمپلیتەسەر و کەیسی');
+        shortDescription('لە کاتی جەنگی جیهانی دووەم، جێگری ژەنەڕاڵ لێسلی گرۆڤس جوونیەر، فیزیاناس جەی ڕۆبەرت ئۆپنهایمەری دەستنیشان کرد بۆ کارکردن لەسەر پڕۆژەی نهێنی مانهاتن', 'دو سرباز، کە کارەکەیان ئەم بریتیە لە گەیاندنی پەیامی گرنگ بۆ یەکەمی تر، ژیانەکانەیان بە ریسک دەنەوە بۆ ئەم کارە، بۆ ئەوەی بەرەو پەیامیەکی تەواوەوە کەیانە بەرەو فەرمی تایبەتی بەکارێن', 'کاپتێن میچ نەلسۆن پێشەنگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی کەسایەتی فەرمی، ڕووداوەکان زیاتر بەرەو ڕووداوی ئیشە بەرەو کۆمپلیتەسەر و کەیسی');
 
         // not using it yet due to not setting up the api yet
         shortTitle('marvel avengers - infinity war');
@@ -139,106 +141,179 @@ const A = () => {
     return (
         <div>
             <div className='w-full'>
-                <div className='flex flex-row justify-between items-center bg-sky-500'>
-                    <div className='relative sm:hidden visible bg-sky-500 p-6'>
-                        <button onClick={() => setshown(!isshown)}>
-                            <span class="block w-6 h-1 bg-white mb-1"></span>
-                            <span class="block w-6 h-1 bg-white mb-1"></span>
-                            <span class="block w-6 h-1 bg-white"></span>
-                        </button>
+                <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
+                    <input
+                        dir='rtl'
+                        type="input"
+                        placeholder='گەڕان'
+                        className='bg-sky-600 absolute z-20 w-full px-12 py-5 text-white focus:outline-none placeholder:text-white'
+                    />
+                    <i className="fa-solid text-white text-xl fa-magnifying-glass absolute right-4 top-4 z-20"></i>
+                    <i onClick={() => setsearchxshown(!issearchxshown)} className="fa-solid text-white text-xl fa-x absolute left-4 top-4 z-20 cursor-pointer"></i>
+                </div>
 
-                        <div className={`absolute left-0 top-0 h-screen bg-sky-500 overflow-hidden ${isshown ? 'w-0' : 'w-64'} transition-all duration-700 ease-in-out`}>
-                            <div className='flex w-full flex-wrap flex-col bg-sky-500 justify-center items-center mt-20'>
-                                <div className='relative w-full'>
-                                    <div onClick={() => setsidebarshown(!issidebarshown)} className='flex justify-around w-full items-center hover:bg-sky-400 hover:rounded cursor-pointer'>
-                                        <div className='flex justify-self-start basis-3/4'>
-                                            <p className="text-base text-left p-6 w-full text-white font-semibold  transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                                <i class="fa-solid fa-house -ms-2 me-1"></i> home
-                                            </p>
-                                        </div>
-
-                                        <div className='flex justify-center basis-1/4'>
-                                            <i class={`fa-solid fa-chevron-down text-white ${issidebarshown ? '-rotate-90 transition-all duration-300 ease-in-out' : 'rotate-0 transition-all duration-300 ease-in-out'}`}></i>
-                                        </div>
-                                    </div>
-
-                                    <div className={`w-full bg-sky-400 overflow-hidden ${issidebarshown ? 'max-h-48' : 'max-h-0'} transition-all duration-300 ease-in-out`}>
-                                        <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 1</p>
-                                        <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 2</p>
-                                        <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 3</p>
-                                    </div>
-                                </div>
-
-
-                                <div>
-                                    <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                        shop
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                        contact
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                        about
-                                    </p>
-                                </div>
-                                <div>
-                                    <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                        location
-                                    </p>
-                                </div>
+                <div className='flex h-16 flex-row items-center bg-sky-500'>
+                    <div className='flex flex-row items-center justify-start gap-6 w-1/4'>
+                        <div>
+                            <h3 className='cursor-pointer text-2xl font-bold text-white p-6'>
+                                <i className="fa-solid fa-user"></i>
+                            </h3>
+                        </div>
+                        <div>
+                            <div className='relative lg:flex hidden'>
+                                <input
+                                    dir='rtl'
+                                    type="input"
+                                    placeholder='گەڕان'
+                                    className='bg-sky-600 rounded-full px-12 py-3 text-white focus:outline-none focus:ring-2 focus:ring-sky-900 focus:border-sky-900 placeholder:text-white'
+                                />
+                                <i className="fa-solid text-white text-xl fa-magnifying-glass absolute right-4 top-2 z-20"></i>
                             </div>
-                            <div onClick={() => setshown(!isshown)} className='absolute top-6 right-8 text-2xl text-white cursor-pointer'><i class="fa-solid fa-x"></i></div>
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className='text-2xl font-bold text-white p-6'>jobify</h2>
-                    </div>
-                    <div className='sm:flex hidden flex-wrap flex-row justify-center '>
-                        <div>
-                            <p className="text-base p-6 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                home
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-base p-6 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                shop
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-base p-6 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                contact
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-base p-6 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                about
-                            </p>
-                        </div>
-                        <div className='relative'>
-                            <p onClick={() => setsubshown(!issubshown)} className="text-base p-6 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                location
-                            </p>
-                            <div className={`w-full absolute left-0 z-30 bg-sky-500 ${issubshown ? 'opacity-100' : 'opacity-0'} transition-all duration-300 ease-in-out`}>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 1</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 2</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 3</p>
+                            <div onClick={() => setsearchxshown(!issearchxshown)} className='lg:hidden flex bg-sky-600 hover:bg-sky-700 p-3 rounded cursor-pointer'>
+                                <i className="fa-solid text-white text-xl fa-magnifying-glass"></i>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h4 className='text-xl font-bold text-white p-6'>users</h4>
+
+                    <div className='flex flex-row items-center justify-end gap-6 w-3/4'>
+
+                        <div className='relative lg:hidden visible bg-sky-500'>
+                            <button className='mt-1' onClick={() => setshown(!isshown)}>
+                                <span className="block w-6 h-1 bg-white mb-1"></span>
+                                <span className="block w-6 h-1 bg-white mb-1"></span>
+                                <span className="block w-6 h-1 bg-white"></span>
+                            </button>
+
+                            <div className={`absolute left-0 top-0 h-screen bg-sky-500 overflow-hidden ${isshown ? 'w-0' : 'w-64'} transition-all duration-700 ease-in-out`}>
+                                <div className='flex w-full flex-wrap flex-col bg-sky-500 justify-center items-center mt-20'>
+                                    <div className='relative w-full'>
+                                        <div onClick={() => setsidebarshown(!issidebarshown)} className='flex justify-around w-full items-center hover:bg-sky-400 hover:rounded cursor-pointer'>
+                                            <div className='flex justify-self-start basis-3/4'>
+                                                <p className="text-base text-left p-6 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                                    <i className="fa-solid fa-house -ms-2 me-1"></i> home
+                                                </p>
+                                            </div>
+                                            <div className='flex justify-center basis-1/4'>
+                                                <i className={`fa-solid fa-chevron-down text-white ${issidebarshown ? '-rotate-90 transition-all duration-300 ease-in-out' : 'rotate-0 transition-all duration-300 ease-in-out'}`}></i>
+                                            </div>
+                                        </div>
+
+                                        <div className={`w-full bg-sky-400 overflow-hidden ${issidebarshown ? 'max-h-48' : 'max-h-0'} transition-all duration-300 ease-in-out`}>
+                                            <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 1</p>
+                                            <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 2</p>
+                                            <p className="text-white p-2 cursor-pointer hover:bg-sky-300">Sub-location 3</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Mobile Menu Items */}
+                                    <div>
+                                        <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                            shop
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                            contact
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                            about
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-base p-6 px-16 text-white font-semibold cursor-pointer hover:bg-sky-400 hover:rounded hover:underline hover:decoration-current hover:underline-offset-8 transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                            location
+                                        </p>
+                                    </div>
+                                </div>
+                                <div onClick={() => setshown(!isshown)} className='absolute top-6 right-8 text-2xl text-white cursor-pointer'>
+                                    <i className="fa-solid fa-x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='lg:flex hidden w-full flex-row-reverse justify-start space-x-6 space-x-reverse'>
+                            <div className='relative'>
+                                <p onClick={() => {
+                                    if (issubshown2) {
+                                        setsubshown2(!issubshown2);
+                                        setsubshown(!issubshown);
+                                    } else {
+                                        setsubshown(!issubshown);
+                                    }
+                                }} className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    فیلمەکان
+                                </p>
+                                <div className={`w-40 absolute left-0 z-30 bg-sky-500 ${issubshown ? 'opacity-100' : 'opacity-0'} transition-all duration-300 ease-in-out`}>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">سەرجەم فیلمەکان</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">بۆلیود</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">هۆلیود</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">کۆری</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">ئەنیمی</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">فارسی</p>
+                                </div>
+                            </div>
+                            <div className='relative'>
+                                <p className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    زنجیرەکان
+                                </p>
+                            </div>
+                            <div className='relative'>
+                                <p className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    زنجیرە فیلم
+                                </p>
+                            </div>
+                            <div className='relative'>
+                                <p className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    ئەنیمی
+                                </p>
+                            </div>
+                            <div className='relative'>
+                                <p className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    کوردی
+                                </p>
+                            </div>
+                            <div className='relative'>
+                                <p className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    پێداچونەوە
+                                </p>
+                            </div>
+                            <div className='relative'>
+                                <p onClick={() => {
+                                    if (issubshown) {
+                                        setsubshown(!issubshown);
+                                        setsubshown2(!issubshown2);
+                                    } else {
+                                        setsubshown2(!issubshown2);
+                                    }
+                                }} className="text-base text-white hover:text-[hsl(208,7%,45%)] font-semibold cursor-pointer transition-all duration-300 ease-in-out">
+                                    زیاتر
+                                </p>
+                                <div className={`w-40 absolute left-0 z-30 bg-sky-500 ${issubshown2 ? 'opacity-100' : 'opacity-0'} transition-all duration-300 ease-in-out`}>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">دەرهێنەران</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">ئەکتەرەکان</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">IMDb باشترینی 250</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">دەربارە</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">ستاف</p>
+                                    <p className="text-white p-2 cursor-pointer hover:bg-sky-300">پەیوەندی کردن</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div>
+                            <h2 className='text-2xl font-bold text-white p-6'>jobify</h2>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="w-full h-[85vh] p-4 px-8 mb-12">
                 <Slider {...settings}>
-                    <div className="w-full h-full relative">
-                        <img className="w-full h-[60vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                    <div className="w-full h-full rounded relative">
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
                             src="https://apollohou.com/wp-content/uploads/img_9027.jpg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
@@ -253,8 +328,8 @@ const A = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full h-full relative">
-                        <img className="w-full h-[60vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                    <div className="w-full h-full rounded relative">
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
                             src="https://upload.wikimedia.org/wikipedia/en/f/fe/1917_%282019%29_Film_Poster.jpeg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
@@ -269,8 +344,8 @@ const A = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full h-full relative">
-                        <img className="w-full h-[60vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                    <div className="w-full h-full rounded relative">
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
                             src="https://m.media-amazon.com/images/I/71g3I5WCClL.jpg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
