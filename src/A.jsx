@@ -27,6 +27,13 @@ const A = () => {
     const [des1, setdes1] = useState('')
     const [des2, setdes2] = useState('')
     const [title, settitle] = useState('')
+    const [selectedButton, setSelectedButton] = useState(2);
+
+    const mostViewButtons = [
+        { id: 0, text: 'بینراوی ساڵ' },
+        { id: 1, text: 'بینراوی مانگ' },
+        { id: 2, text: 'بینراوی هەفتە' }
+    ];
 
     const settings = {
         dots: true,
@@ -157,6 +164,101 @@ const A = () => {
                 img: 'https://preview.redd.it/new-poster-for-spider-man-no-way-home-v0-1smp15la6xc81.jpg?width=1080&crop=smart&auto=webp&s=5f997eafffa5da954939301afaa47678c4071cd8'
             },
         ]
+
+    const mostViewpages = [
+        {
+            id: 0, text: 'بینراوی ساڵ',
+            content: (
+                <div className="mx-auto px-4 py-4 mt-10">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                        {series.map((movie, index) => (
+                            <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                                <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                    <div className="h-full w-full relative">
+                                        <img
+                                            src={movie.img}
+                                            alt=""
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-2 space-y-2 text-center">
+                                    <div dir="rtl" className="break-all">
+                                        <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
+                                    </div>
+                                    <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                        <p className='text-white'>{movie.year}</p>
+                                        <p className='text-white'>{movie.genre}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>)
+        }
+        ,
+        {
+            id: 1, text: 'بینراوی مانگ', content: (
+                <div className="mx-auto px-4 py-4 mt-10">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                        {series.map((movie, index) => (
+                            <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                                <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                    <div className="h-full w-full relative">
+                                        <img
+                                            src={movie.img}
+                                            alt=""
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-2 space-y-2 text-center">
+                                    <div dir="rtl" className="break-all">
+                                        <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
+                                    </div>
+                                    <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                        <p className='text-white'>{movie.year}</p>
+                                        <p className='text-white'>{movie.genre}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        },
+        {
+            id: 2, text: 'بینراوی هەفتە'
+            , content: (
+                <div className="mx-auto px-4 py-4 mt-10">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                        {series.map((movie, index) => (
+                            <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                                <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                    <div className="h-full w-full relative">
+                                        <img
+                                            src={movie.img}
+                                            alt=""
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-2 space-y-2 text-center">
+                                    <div dir="rtl" className="break-all">
+                                        <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
+                                    </div>
+                                    <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                        <p className='text-white'>{movie.year}</p>
+                                        <p className='text-white'>{movie.genre}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+    ];
 
     useEffect(() => {
         const shortDescription = (text1, text2, text3) => {
@@ -404,7 +506,7 @@ const A = () => {
             <div className="w-full h-[85vh] p-4 px-8 -mb-12 md:mb-12 ">
                 <Slider {...settings}>
                     <div className="w-full h-full rounded relative">
-                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-center grayscale-[75%] brightness-75 contrast-125"
                             src="https://apollohou.com/wp-content/uploads/img_9027.jpg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
@@ -414,13 +516,13 @@ const A = () => {
                                 <p className="text-sm font-semibold text-white mt-4">{des}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
-                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-8 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
                         </div>
                     </div>
                     <div className="w-full h-full rounded relative">
-                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-center grayscale-[75%] brightness-75 contrast-125"
                             src="https://upload.wikimedia.org/wikipedia/en/f/fe/1917_%282019%29_Film_Poster.jpeg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
@@ -430,23 +532,23 @@ const A = () => {
                                 <p className="text-sm font-semibold text-white mt-4">{des1}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
-                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-2 px-8 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
                         </div>
                     </div>
                     <div className="w-full h-full rounded relative">
-                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
+                        <img className="w-full h-[70vh] md:h-[85vh] rounded object-center grayscale-[75%] brightness-75 contrast-125"
                             src="https://m.media-amazon.com/images/I/71g3I5WCClL.jpg"
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                            <h1 className="text-4xl font-bold text-white">Oppenheimer</h1>
+                            <h1 className="text-4xl font-bold text-white">12 Strong man</h1>
                             <p className="text-xl font-bold text-white mt-4">9/10 <i className="fa-solid fa-star text-yellow-400"></i></p>
                             <div dir="rtl" className='w-50 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des2}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
-                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                            <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-8 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
                         </div>
@@ -742,6 +844,67 @@ const A = () => {
                     </div>
                 </div>
             </div>
+
+            <footer className="w-full bg-[hsl(195,9%,10%)] bg-sky-900 p-4">
+                <div className="flex justify-center md:justify-end items-center gap-6 pr-0 md:pr-4 mt-6">
+                    {mostViewButtons.map((button) => (
+                        <div key={button.id}>
+                            <button
+                                onClick={() => setSelectedButton(button.id)}
+                                className={`bg-transparent border font-bold py-3 px-2 md:py-2 md:px-6 rounded-full transition-colors duration-200 text-sm md:text-xl ${selectedButton === button.id
+                                    ? 'border-sky-500 text-white'
+                                    : 'border-gray-500 text-gray-500'
+                                    }`}
+                            >
+                                {button.text}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                {mostViewpages[selectedButton].content}
+
+                <div className="flex flex-col justify-center items-center mt-12 gap-4">
+                    <div>
+                        <p className='text-4xl font-bold text-white'>Kurdish <span className='text-sky-500'>Movie</span></p>
+                    </div>
+
+                    <div className>
+                        <p className='text-gray-400'>گەورەترین کۆگای فیلم و زنجیرەی ژێرنووسکراوی کوردی</p>
+                    </div>
+
+                    <div className='flex flex-row justify-center items-center text-center gap-5 mt-4'>
+                        <div className='flex justify-center items-center h-10 w-10 border border-white p-2 rounded-full cursor-pointer hover:bg-sky-500 transition-colors duration-500'>
+                            <i class="fa-brands fa-facebook-f text-lg text-white"></i>
+                        </div>
+                        <div className='flex justify-center items-center h-10 w-10 border border-white p-2 rounded-full cursor-pointer hover:bg-sky-500 transition-colors duration-500'>
+                            <i class="fa-brands fa-instagram text-lg text-white"></i>
+                        </div>
+                        <div className='flex justify-center items-center h-10 w-10 border border-white p-2 rounded-full cursor-pointer hover:bg-sky-500 transition-colors duration-500'>
+                            <i class="fa-brands fa-snapchat text-lg text-white"></i>
+                        </div>
+                        <div className='flex justify-center items-center h-10 w-10 border border-white p-2 rounded-full cursor-pointer hover:bg-sky-500 transition-colors duration-500'>
+                            <i class="fa-brands fa-tiktok text-lg text-white"></i>
+                        </div>
+                        <div className='flex justify-center items-center h-10 w-10 border border-white p-2 rounded-full cursor-pointer hover:bg-sky-500 transition-colors duration-500'>
+                            <i class="fa-brands fa-telegram text-lg text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='mt-8'>
+                    <hr className='border-gray-500' />
+                </div>
+
+                <div className='mt-6 flex flex-col justify-center'>
+                    <p className='text-gray-400 text-center mt-4'>هەموو مافێکی پارێزراوە بۆ کوردیش موڤی © 2025</p>
+                    <div className='flex flex-row gap-4 justify-center'>
+                        <p onClick={() => window.location.href = "https://www.facebook.com/zhyaromer999/"} className='text-sky-500 text-center mt-4 font-bold cursor-pointer'>Zhyar omer</p>
+                        <p className='text-gray-400 text-center mt-4'>دروستکردنی وێبسایت</p>
+                    </div>
+                </div>
+            </footer>
+
         </div>
     )
 }
