@@ -182,7 +182,7 @@ const A = () => {
     return (
         <div className='bg-[#282e30]'>
             <div className='w-full'>
-            <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
+                <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
                     <input
                         dir='rtl'
                         type="input"
@@ -410,7 +410,7 @@ const A = () => {
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                             <h1 className="text-4xl font-bold text-white">Oppenheimer</h1>
                             <p className="text-xl font-bold text-white mt-4">10/8 <i className="fa-solid fa-star text-yellow-400"></i></p>
-                            <div dir="rtl" className='w-80 md:w-full'>
+                            <div dir="rtl" className='w-50 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
@@ -426,7 +426,7 @@ const A = () => {
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                             <h1 className="text-4xl font-bold text-white">1917</h1>
                             <p className="text-xl font-bold text-white mt-4">9.5/8 <i className="fa-solid fa-star text-yellow-400"></i></p>
-                            <div dir="rtl" className='w-80 md:w-full'>
+                            <div dir="rtl" className='w-50 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des1}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
@@ -442,7 +442,7 @@ const A = () => {
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                             <h1 className="text-4xl font-bold text-white">Oppenheimer</h1>
                             <p className="text-xl font-bold text-white mt-4">9/10 <i className="fa-solid fa-star text-yellow-400"></i></p>
-                            <div dir="rtl" className='w-80 md:w-full'>
+                            <div dir="rtl" className='w-50 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des2}</p>
                             </div>
                             <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
