@@ -117,6 +117,46 @@ const A = () => {
             },
         ]
 
+    const series =
+        [
+            {
+                movieName: 'avengers endgame',
+                genre: 'ئاکشن - دراما',
+                year: '2019',
+                img: 'https://www.komar.de/media/catalog/product/cache/5/image/9df78eab33525d08d6e5fb8d27136e95/4/-/4-4126_avengers_infinity_war_movie_poster_web.jpg'
+            },
+            {
+                movieName: 'The Godfather',
+                genre: 'ئاکشن - تاوانکاری',
+                year: '1972',
+                img: 'https://i.ebayimg.com/00/s/MTYwMFgxMDY2/z/7DkAAOSwlYRa86zV/$_10.JPG?set_id=880000500F'
+            },
+            {
+                movieName: 'The Dark Knight',
+                genre: 'ئاکشن - تاوانکاری',
+                year: '2008',
+                img: 'https://m.media-amazon.com/images/I/A1exRxgHRRL.jpg'
+            },
+            {
+                movieName: 'Inception',
+                genre: 'ئاکشن - گەڕان',
+                year: '2010',
+                img: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg'
+            },
+            {
+                movieName: 'Titanic',
+                genre: 'دراما - ڕۆمانسی',
+                year: '1997',
+                img: 'https://m.media-amazon.com/images/I/71V3V0FE1gS._AC_SL1200_.jpg'
+            },
+            {
+                movieName: 'Spider-Man: No Way Home',
+                genre: 'دراما - سەرکێشی',
+                year: '2021',
+                img: 'https://preview.redd.it/new-poster-for-spider-man-no-way-home-v0-1smp15la6xc81.jpg?width=1080&crop=smart&auto=webp&s=5f997eafffa5da954939301afaa47678c4071cd8'
+            },
+        ]
+
     useEffect(() => {
         const shortDescription = (text1, text2, text3) => {
             const shortText1 = text1.substring(0, 100) + ' ...';
@@ -301,8 +341,6 @@ const A = () => {
                             </div>
                         </div>
 
-
-
                         <div>
                             <h2 className='text-2xl font-bold text-white p-6'>jobify</h2>
                         </div>
@@ -310,7 +348,7 @@ const A = () => {
                 </div>
             </div>
 
-            <div className="w-full h-[85vh] p-4 px-8 mb-12">
+            <div className="w-full h-[85vh] p-4 px-8 -mb-12 md:mb-12 ">
                 <Slider {...settings}>
                     <div className="w-full h-full rounded relative">
                         <img className="w-full h-[70vh] md:h-[85vh] rounded object-cover grayscale-[75%] brightness-75 contrast-125"
@@ -322,7 +360,7 @@ const A = () => {
                             <div dir="rtl" className='w-80 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des}</p>
                             </div>
-                            <p className="text-lg font-semibold text-white text-sky-500 mt-4">ئاكشن - مێژووی</p>
+                            <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
                             <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
@@ -338,7 +376,7 @@ const A = () => {
                             <div dir="rtl" className='w-80 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des1}</p>
                             </div>
-                            <p className="text-lg font-semibold text-white text-sky-500 mt-4">ئاكشن - مێژووی</p>
+                            <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
                             <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
@@ -350,11 +388,11 @@ const A = () => {
                             alt="" />
                         <div className="absolute font-sans z-20 top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                             <h1 className="text-4xl font-bold text-white">Oppenheimer</h1>
-                            <p className="text-xl font-bold text-white mt-4">10/8 <i className="fa-solid fa-star text-yellow-400"></i></p>
+                            <p className="text-xl font-bold text-white mt-4">9/10 <i className="fa-solid fa-star text-yellow-400"></i></p>
                             <div dir="rtl" className='w-80 md:w-full'>
                                 <p className="text-sm font-semibold text-white mt-4">{des2}</p>
                             </div>
-                            <p className="text-lg font-semibold text-white text-sky-500 mt-4">ئاكشن - مێژووی</p>
+                            <p className="text-lg font-semibold text-sky-500 mt-4">ئاكشن - مێژووی</p>
                             <button className="mt-6 text-lg font-semibold text-white bg-sky-500 py-3 px-14 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                                 بینینی زیاتر
                             </button>
@@ -364,8 +402,9 @@ const A = () => {
             </div>
 
             <div className="mx-auto px-4 py-8">
-                <div className="mb-12 mt-4">
-                    <h1 className="text-3xl font-bold text-center">نوێترین فیلمەکان</h1>
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center">نوێترین فیلمەکان</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {movies.map((movie, index) => (
@@ -379,11 +418,11 @@ const A = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-2 space-y-2">
-                                <div dir="rtl" className="flex items-center justify-between break-all">
+                            <div className="mt-2 space-y-2 text-center">
+                                <div dir="rtl" className="break-all">
                                     <p className="text-sm sm:text-base">{movie.movieName}</p>
                                 </div>
-                                <div className="flex items-center justify-end space-x-2 text-gray-600 text-sm">
+                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
                                     <p>{movie.year}</p>
                                     <p>{movie.genre}</p>
                                 </div>
@@ -392,6 +431,192 @@ const A = () => {
                     ))}
                 </div>
             </div>
+
+            <div className="mx-auto px-4 py-4 bg-gray-300">
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center">نوێترین زنجیرەکان</h4>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                    {series.map((movie, index) => (
+                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                <div className="h-full w-full relative">
+                                    <img
+                                        src={movie.img}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-2 space-y-2 text-center">
+                                <div dir="rtl" className="break-all">
+                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                </div>
+                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                    <p>{movie.year}</p>
+                                    <p>{movie.genre}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="mx-auto px-4 py-4">
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center">کۆری</h4>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                    {series.map((movie, index) => (
+                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                <div className="h-full w-full relative">
+                                    <img
+                                        src={movie.img}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-2 space-y-2 text-center">
+                                <div dir="rtl" className="break-all">
+                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                </div>
+                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                    <p>{movie.year}</p>
+                                    <p>{movie.genre}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="mx-auto px-4 py-4 bg-gray-300">
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center">ئەنیمی</h4>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                    {series.map((movie, index) => (
+                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                <div className="h-full w-full relative">
+                                    <img
+                                        src={movie.img}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-2 space-y-2 text-center">
+                                <div dir="rtl" className="break-all">
+                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                </div>
+                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                    <p>{movie.year}</p>
+                                    <p>{movie.genre}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="mx-auto px-4 py-4 bg-gray-300">
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center">تۆپ 250</h4>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+                    {series.map((movie, index) => (
+                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
+                                <div className="h-full w-full relative">
+                                    <img
+                                        src={movie.img}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-2 space-y-2 text-center">
+                                <div dir="rtl" className="break-all">
+                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                </div>
+                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                    <p>{movie.year}</p>
+                                    <p>{movie.genre}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className='flex justify-center items-center mb-12'>
+                <div className='bg-gradient-to-r from-sky-500 to-blue-500 w-[90%] h-48 md:w-2/4 mt-12 rounded-full'>
+                    <div className='flex flex-col justify-center items-center gap-4 mt-4'>
+                        <div>
+                            <i class="fa-solid fa-shuffle text-white text-6xl"></i>
+                        </div>
+                        <div>
+                            <h2 className='text-white font-bold text-2xl'>نازانی سەیری چی بکەی؟</h2>
+                        </div>
+                        <div>
+                            <h4 className='text-white text-lg'>با ئێمە فلیمێکت بۆ پێشنیار بکەین</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center">
+                <div className="md:w-[50%] w-[100%] mb-4 p-2">
+                    <div className="relative bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                        <img
+                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-4 text-right">
+                            <h1 className="text-2xl font-bold text-white">سپایدەرمان </h1>
+                            <p className="text-xl font-bold text-white mt-4">ژمارەی فلیمەکان | 12 </p>
+                            <p className="text-lg font-semibold text-white mt-1">ژانەرەکان | ئاكشن - مێژووی</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="md:w-[50%] w-[100%] mb-4 p-2">
+                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                        <img
+                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+                <div className="md:w-[50%] w-[100%] mb-4 p-2">
+                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                        <img
+                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+                <div className="md:w-[50%] w-[100%] mb-4 p-2">
+                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                        <img
+                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }
