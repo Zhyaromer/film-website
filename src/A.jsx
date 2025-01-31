@@ -525,37 +525,6 @@ const A = () => {
                 </div>
             </div>
 
-            <div className="mx-auto px-4 py-4 bg-gray-300">
-                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
-                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center">تۆپ 250</h4>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
-                    {series.map((movie, index) => (
-                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
-                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
-                                <div className="h-full w-full relative">
-                                    <img
-                                        src={movie.img}
-                                        alt=""
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genre}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
             <div className='flex justify-center items-center mb-12'>
                 <div className='bg-gradient-to-r from-sky-500 to-blue-500 w-[90%] h-48 md:w-2/4 mt-12 rounded-full'>
                     <div className='flex flex-col justify-center items-center gap-4 mt-4'>
@@ -573,50 +542,153 @@ const A = () => {
                 </div>
             </div>
 
+            <div className="mb-4 mt-4 px-8 flex justify-between items-center">
+                <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                <h4 className="text-lg md:text-3xl font-bold text-center">زنجیرە فیلم</h4>
+            </div>
+
             <div className="flex flex-wrap justify-center">
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
-                    <div className="relative bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                    <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
                             src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
                             alt=""
                             className="w-full h-full object-cover"
                         />
-                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-4 text-right">
-                            <h1 className="text-2xl font-bold text-white">سپایدەرمان </h1>
-                            <p className="text-xl font-bold text-white mt-4">ژمارەی فلیمەکان | 12 </p>
-                            <p className="text-lg font-semibold text-white mt-1">ژانەرەکان | ئاكشن - مێژووی</p>
+                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[400px] h-[200px] pt-2'>
+                                <h1 className="text-2xl text-white">سپایدەرمان </h1>
+                                <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
+                                <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
+                                <div className="flex justify-evenly items-center mt-4">
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="16eff6124a5658f3defb294987d2afed.png" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="Rotten_Tomatoes_alternative_logo.svg" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
-                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                    <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
                             src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
                             alt=""
                             className="w-full h-full object-cover"
                         />
+                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                                <h1 className="text-2xl text-white">سپایدەرمان </h1>
+                                <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
+                                <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
+                                <div className="flex justify-evenly items-center mt-4">
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="16eff6124a5658f3defb294987d2afed.png" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="Rotten_Tomatoes_alternative_logo.svg" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
-                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                    <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
                             src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
                             alt=""
                             className="w-full h-full object-cover"
                         />
+                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                                <h1 className="text-2xl text-white">سپایدەرمان </h1>
+                                <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
+                                <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
+                                <div className="flex justify-evenly items-center mt-4">
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="16eff6124a5658f3defb294987d2afed.png" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="Rotten_Tomatoes_alternative_logo.svg" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
-                    <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-48">
+                    <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
                             src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
                             alt=""
                             className="w-full h-full object-cover"
                         />
+                        <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                                <h1 className="text-2xl text-white">سپایدەرمان </h1>
+                                <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
+                                <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
+                                <div className="flex justify-evenly items-center mt-4">
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="16eff6124a5658f3defb294987d2afed.png" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-black/40 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
+                                        <div>
+                                            <img src="Rotten_Tomatoes_alternative_logo.svg" className="w-4 h-4" alt='' />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-white">  7.8</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
