@@ -180,7 +180,7 @@ const A = () => {
     }, []);
 
     return (
-        <div>
+        <div className='bg-[#282e30]'>
             <div className='w-full'>
                 <nav className="w-full h-16 bg-[#282e30] flex flex-row-reverse items-center md:justify-start justify-between px-4">
                     <div className='flex flex-row lg:flex-row-reverse gap-8 items-center justify-end lg:justify-start w-4/5'>
@@ -447,7 +447,7 @@ const A = () => {
             <div className="mx-auto px-4 py-8">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
                     <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center">نوێترین فیلمەکان</h4>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین فیلمەکان</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {movies.map((movie, index) => (
@@ -463,11 +463,11 @@ const A = () => {
                             </div>
                             <div className="mt-2 space-y-2 text-center">
                                 <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                    <p className="text-sm sm:text-base text-sky-500 font-semibold">{movie.movieName}</p>
                                 </div>
                                 <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genre}</p>
+                                    <p className='text-white'>{movie.year}</p>
+                                    <p className='text-white'>{movie.genre}</p>
                                 </div>
                             </div>
                         </div>
@@ -475,10 +475,10 @@ const A = () => {
                 </div>
             </div>
 
-            <div className="mx-auto px-4 py-4 bg-gray-300">
+            <div className="mx-auto px-4 py-4 bg-[hsl(195,9%,10%)]">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
                     <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center">نوێترین زنجیرەکان</h4>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین زنجیرەکان</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {series.map((movie, index) => (
@@ -494,11 +494,11 @@ const A = () => {
                             </div>
                             <div className="mt-2 space-y-2 text-center">
                                 <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                    <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
                                 </div>
                                 <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genre}</p>
+                                    <p className='text-white'>{movie.year}</p>
+                                    <p className='text-white'>{movie.genre}</p>
                                 </div>
                             </div>
                         </div>
@@ -509,7 +509,7 @@ const A = () => {
             <div className="mx-auto px-4 py-4">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
                     <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center">کۆری</h4>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">کۆری</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {series.map((movie, index) => (
@@ -525,11 +525,11 @@ const A = () => {
                             </div>
                             <div className="mt-2 space-y-2 text-center">
                                 <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                    <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
                                 </div>
                                 <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genre}</p>
+                                    <p className='text-white'>{movie.year}</p>
+                                    <p className='text-white'>{movie.genre}</p>
                                 </div>
                             </div>
                         </div>
@@ -537,10 +537,10 @@ const A = () => {
                 </div>
             </div>
 
-            <div className="mx-auto px-4 py-4 bg-gray-300">
+            <div className="mx-auto px-4 py-4 bg-[hsl(195,9%,10%)]">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
                     <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center">ئەنیمی</h4>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">ئەنیمی</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {series.map((movie, index) => (
@@ -556,11 +556,11 @@ const A = () => {
                             </div>
                             <div className="mt-2 space-y-2 text-center">
                                 <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base">{movie.movieName}</p>
+                                    <p className="text-sm sm:text-base text-sky-500 font-semibold">{movie.movieName}</p>
                                 </div>
                                 <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genre}</p>
+                                    <p className='text-white'>{movie.year}</p>
+                                    <p className='text-white'>{movie.genre}</p>
                                 </div>
                             </div>
                         </div>
@@ -587,14 +587,14 @@ const A = () => {
 
             <div className="mb-4 mt-4 px-8 flex justify-between items-center">
                 <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                <h4 className="text-lg md:text-3xl font-bold text-center">زنجیرە فیلم</h4>
+                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرە فیلم</h4>
             </div>
 
             <div className="flex flex-wrap justify-center">
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
                     <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
-                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            src='https://cdn.europosters.eu/image/750/posters/blade-runner-2049-flying-car-i50060.jpg'
                             alt=""
                             className="w-full h-full object-cover"
                         />
@@ -629,12 +629,12 @@ const A = () => {
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
                     <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
-                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            src='  https://occ-0-8407-1361.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRDQOzGC_rInp4gFvqFPDF3mcWchowjepe5uTldav_Sx1QgJlpJG-ATT_PcYJbF-y5AtlC9koSScBJPATb4JET65SrkrgOl92SGl.jpg?r=c9b'
                             alt=""
                             className="w-full h-full object-cover"
                         />
                         <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
-                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[400px] h-[200px] pt-2'>
                                 <h1 className="text-2xl text-white">سپایدەرمان </h1>
                                 <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
                                 <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
@@ -664,12 +664,12 @@ const A = () => {
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
                     <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
-                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            src='https://pastposters.com/cdn/shop/files/fury-cinema-quad-movie-poster-_1.jpg?v=1730152725'
                             alt=""
                             className="w-full h-full object-cover"
                         />
                         <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
-                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[400px] h-[200px] pt-2'>
                                 <h1 className="text-2xl text-white">سپایدەرمان </h1>
                                 <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
                                 <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
@@ -699,12 +699,12 @@ const A = () => {
                 <div className="md:w-[50%] w-[100%] mb-4 p-2">
                     <div className="relative rounded-lg shadow-md overflow-hidden group h-48">
                         <img
-                            src='https://www.thehollywoodnews.com/wp-content/uploads/PeakyBlinders_Group_landscape-1024x724.jpg'
+                            src='https://preview.redd.it/i-found-this-super-cool-star-wars-poster-online-and-set-it-v0-f46xrb44ysn81.jpg?width=1080&crop=smart&auto=webp&s=54a82ab69006fbb6a4d20f0e08b0671e21d88591'
                             alt=""
                             className="w-full h-full object-cover"
                         />
                         <div className="flex justify-self-end items-self-end flex-col absolute font-sans z-20 top-2 right-0 text-right">
-                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[300px] h-[200px] pt-2'>
+                            <div className='bg-gradient-to-r from-black/20 to-black/60 absolute z-40 -top-2 -right-7 px-12 w-[400px] h-[200px] pt-2'>
                                 <h1 className="text-2xl text-white">سپایدەرمان </h1>
                                 <p className="md:text-xl text-base text-white mt-4">ژمارەی فلیمەکان | 12 </p>
                                 <p className="md:text-lg text-base text-white mt-4">ژانەرەکان | ئاكشن - مێژووی</p>
