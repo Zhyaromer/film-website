@@ -35,7 +35,7 @@ const MultiSelect = ({ options, placeholder }) => {
             return <span className="text-white">{placeholder}</span>;
         }
 
-        if (selectedItems.length <= 3) {
+        if (selectedItems.length <= 5) {
             return (
                 <span className="text-white">
                     {selectedItems.map(item => item.label).join(', ')}
@@ -45,14 +45,14 @@ const MultiSelect = ({ options, placeholder }) => {
 
         return (
             <span dir='rtl' className="text-white">
-                {selectedItems.slice(0, 4).map(item => item.label).join(', ')}
+                {selectedItems.slice(0, 5).map(item => item.label).join(', ')}
                 <span className="text-white"> ... </span>
             </span>
         );
     };
 
     return (
-        <div className="relative w-64 " ref={dropdownRef}>
+        <div className="relative w-72 " ref={dropdownRef}>
             <div >
                 <button
                     onClick={toggleDropdown}
@@ -83,7 +83,7 @@ const MultiSelect = ({ options, placeholder }) => {
                                 onChange={() => { }}
                                 className="h-4 w-4 text-blue-600 rounded"
                             />
-                            <span className="ml-2 text-lg text-white me-3">{option.label}</span>
+                            <span className="ml-2 text-md text-white me-3">{option.label}</span>
                         </div>
                     ))}
                 </div>

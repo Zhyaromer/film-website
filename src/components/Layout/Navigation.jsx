@@ -7,6 +7,7 @@ const Navigation = () => {
     const [issidebarshown, setsidebarshown] = useState(false)
     const [issidebarshown2, setsidebarshown2] = useState(false)
     const [issearchxshown, setsearchxshown] = useState(false)
+    
     return (
         <div className='w-full'>
             <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
