@@ -4,7 +4,7 @@ import MultiSelect from '../components/Layout/Filters.jsx'
 import FilmsCard from '../components/Layout/FilmsCard.jsx'
 import Footer from '../components/Layout/Footer.jsx'
 
-const Films = () => {
+const Series = () => {
     const genre = [
         { id: 1, label: 'ئاکشن', value: 'ئاکشن' },
         { id: 2, label: 'ڕۆمانس', value: 'ڕۆمانس' },
@@ -52,7 +52,7 @@ const Films = () => {
             </div>
 
             <div >
-                <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>فیلمەکان (٢٤٠)</h2>
+                <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>زنجیرەکان (٢٤٠)</h2>
             </div>
 
             <FilmsCard />
@@ -62,4 +62,4 @@ const Films = () => {
     )
 }
 
-export default Films
+export default Series
