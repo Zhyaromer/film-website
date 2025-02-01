@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Navigation from '../components/Layout/Navigation.jsx'
-import MultiSelect from '../components/Layout/Filters.jsx'
-import FilmsCard from '../components/Layout/FilmsCard.jsx'
-import Footer from '../components/Layout/Footer.jsx'
+import Navigation from '../components/@Layout/Navigation.jsx'
+import MultiSelect from '../components/@Layout/Filters.jsx'
+import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import Footer from '../components/@Layout/Footer.jsx'
 
 const Series = () => {
     const genre = [
