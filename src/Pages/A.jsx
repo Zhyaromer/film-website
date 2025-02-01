@@ -2,8 +2,8 @@ import { React, useState, useEffect } from 'react'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../Styles/landingpage.css'
 import '../index.css'
-import Footer from '../components/@Layout/Footer.jsx'
 import Navigation from '../components/@Layout/Navigation.jsx'
+import Footer from '../components/@Layout/Footer.jsx'
 import Sliderr from '../components/@Layout/Slider.jsx'
 import MoviesCard from '../components/@Layout/MoviesCard.jsx'
 
