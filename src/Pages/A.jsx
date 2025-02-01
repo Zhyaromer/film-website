@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import './index.css'
-import './css/landingpage.css'
+import '../Styles/landingpage.css'
+import '../index.css'
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -845,7 +845,7 @@ const A = () => {
                 </div>
             </div>
 
-            <footer className="w-full bg-[hsl(195,9%,10%)] bg-sky-900 p-4">
+            <footer className="w-full bg-[hsl(195,9%,10%)] p-4">
                 <div className="flex justify-center md:justify-end items-center gap-6 pr-0 md:pr-4 mt-6">
                     {mostViewButtons.map((button) => (
                         <div key={button.id}>
@@ -904,7 +904,6 @@ const A = () => {
                     </div>
                 </div>
             </footer>
-
         </div>
     )
 }
