@@ -5,6 +5,7 @@ const MoviesCard = () => {
     const [isHomePage, setIsHomePage] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
+    
     const movies = [
         {
             title: "سپایدەرمان", // Spiderman (Kurdish)

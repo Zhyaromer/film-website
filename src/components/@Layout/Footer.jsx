@@ -150,7 +150,7 @@ const Footer = () => {
                     <div key={button.id}>
                         <button
                             onClick={() => setSelectedButton(button.id)}
-                            className={`bg-transparent border font-bold py-3 px-2 md:py-2 md:px-6 rounded-full transition-colors duration-200 text-sm md:text-xl ${selectedButton === button.id
+                            className={`bg-transparent border-2 font-bold py-3 px-2 md:py-2 md:px-6 rounded-full transition-colors duration-200 text-sm md:text-xl ${selectedButton === button.id
                                 ? 'border-sky-500 text-white'
                                 : 'border-gray-500 text-gray-500'
                                 }`}

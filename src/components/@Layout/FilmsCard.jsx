@@ -93,7 +93,7 @@ const FilmsCard = () => {
     const [currentMovies, setCurrentMovies] = useState(movies.slice(0, 6));
     const itemsPerPage = 6;
 
-    const handlePageChange = (page, startIndex, endIndex) => {
+    const handlePageChange = (_, startIndex, endIndex) => {
         setCurrentMovies(movies.slice(startIndex, endIndex));
     };
 
