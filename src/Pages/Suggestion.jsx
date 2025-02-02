@@ -2,6 +2,7 @@ import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import Suggestioninput from '../components/@UI/Suggestioninput.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
+import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 
 const Suggestion = () => {
     const { genre, year } = FiltersOption();
@@ -28,6 +29,21 @@ const Suggestion = () => {
                     </div>
                 </div>
             </div>
+
+            <div className='flex justify-end px-5'>
+                <button className='mt-2 py-2 px-5 md:py-3 md:px-8 text-md md:text-lg font-semibold text-white bg-sky-500 rounded-lg cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out'>پێشنیاری ئێمە</button>
+            </div>
+
+            <div className="mt-12 px-8 flex justify-end items-center">
+                <h4 className="text-lg md:text-3xl font-bold text-center text-white">فیلمەکان</h4>
+            </div>
+            <FilmsCard/>
+
+            <div className="mt-4 px-8 flex justify-end items-center">
+                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەکان</h4>
+            </div>
+
+            <FilmsCard/>
 
             <Footer />
         </div>

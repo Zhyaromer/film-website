@@ -4,6 +4,7 @@ import Films from '../Pages/Films.jsx';
 import Series from '../Pages/Series.jsx';
 import MovieSeries from '../Pages/MovieSeries.jsx';
 import Suggestion from '../Pages/Suggestion.jsx';
+import News from '../Pages/News.jsx'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/series" element={<Series />} />
         <Route path="/movie-series" element={<MovieSeries />} />
         <Route path="/suggestion" element={<Suggestion />} />
+        <Route path="/News" element={<News />} />
       </Routes>
     </Router>
   );

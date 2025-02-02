@@ -1,5 +1,5 @@
 import Pagination from './Pagination.jsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const FilmsCard = () => {
     const movies =
@@ -77,6 +77,17 @@ const FilmsCard = () => {
                 img: 'https://m.media-amazon.com/images/M/MV5BMmE4ZmE5NTMtZTZmNi00YWZjLTk0MjYtOGViZDdhZWMyZmRmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
             },
         ]
+    const [isSuggestion, setisSuggestion] = useState(false)
+
+    useEffect(() => {
+        const HomePage = () => {
+            if (window.location.pathname === '/suggestion') {
+                return setisSuggestion(true);
+            }
+            return setisSuggestion(false);
+        }
+        HomePage();
+    }, []);
 
     // they are typically 24
     const [currentMovies, setCurrentMovies] = useState(movies.slice(0, 6));
@@ -115,7 +126,7 @@ const FilmsCard = () => {
                 </div>
             </div>
 
-            <div className="mb-16">
+            <div className={`mb-16 ${isSuggestion ? 'hidden' : 'block'}`}>
                 <Pagination
                     totalItems={movies.length}
                     itemsPerPage={itemsPerPage}
