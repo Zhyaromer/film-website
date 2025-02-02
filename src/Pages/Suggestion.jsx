@@ -35,12 +35,12 @@ const Suggestion = () => {
             </div>
 
             <div className="mt-12 px-8 flex justify-end items-center">
-                <h4 className="text-lg md:text-3xl font-bold text-center text-white">فیلمەکان</h4>
+                <h4 className="text-2xl md:text-3xl font-bold text-center text-white">فیلمەکان</h4>
             </div>
             <FilmsCard/>
 
             <div className="mt-4 px-8 flex justify-end items-center">
-                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەکان</h4>
+                <h4 className="text-2xl md:text-3xl font-bold text-center text-white">زنجیرەکان</h4>
             </div>
 
             <FilmsCard/>
