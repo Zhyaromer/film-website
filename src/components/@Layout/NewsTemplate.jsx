@@ -6,7 +6,7 @@ const NewsTemplateComponent = () => {
         {
             title: "سپایدەرمان",
             image: "https://cdn.europosters.eu/image/750/posters/blade-runner-2049-flying-car-i50060.jpg",
-            description: 'لێسلی گرۆڤس جوونیەر، فیزیاناس جەی ڕۆبەرت ئۆپنهایمەری دەستنیشان کرد بۆ کارکردن لەسەر پڕۆژەی ',
+            description: 'لێسلی گرۆڤس جوونیەر، فیزیاناس جەی ڕۆبەرت ئۆپنهایمەری دەستنیشان کرد بۆ کارکردن لەسەر پڕۆژەی',
             views: 700,
             dateOfNews: 'دوو ڕۆأ لەمەو پێش',
         },
