@@ -9,7 +9,7 @@ const Navigation = () => {
     const [issearchxshown, setsearchxshown] = useState(false)
     
     return (
-        <div className='w-full'>
+        <div className='w-full shadow-2xl shadow-[hsl(195,9%,0%)]'>
             <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
                 <input
                     dir='rtl'
@@ -20,7 +20,7 @@ const Navigation = () => {
                 <i className="fa-solid text-white text-xl fa-magnifying-glass absolute right-4 top-4 z-20"></i>
                 <i onClick={() => setsearchxshown(!issearchxshown)} className="fa-solid text-white text-xl fa-x absolute left-4 top-4 z-20 cursor-pointer"></i>
             </div>
-            <nav className="w-full h-16 bg-[#282e30] flex flex-row-reverse items-center md:justify-start justify-between px-4">
+            <nav className="w-full h-16 bg-[hsl(195,9%,20%)] flex flex-row-reverse items-center md:justify-start justify-between px-4">
                 <div className='flex flex-row lg:flex-row-reverse gap-8 items-center justify-end lg:justify-start w-4/5'>
                     <div className='flex flex-row justify-center text-center items-center'>
                         <p className='text-xl font-bold text-white'>Kurdish <span className='text-sky-500'>Movie</span></p>

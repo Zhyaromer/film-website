@@ -81,7 +81,7 @@ const FilmsCard = () => {
 
     useEffect(() => {
         const HomePage = () => {
-            if (window.location.pathname === '/suggestion') {
+            if (window.location.pathname === '/suggestion' || window.location.pathname === '/filmdetails') {
                 return setisSuggestion(true);
             }
             return setisSuggestion(false);
@@ -98,7 +98,7 @@ const FilmsCard = () => {
     };
 
     return (
-        <div>
+        <div className='bg-[#282e30]'>
             <div className="mx-auto px-4 py-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {currentMovies.map((movie, index) => (
