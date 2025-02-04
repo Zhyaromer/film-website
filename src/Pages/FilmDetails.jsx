@@ -80,9 +80,9 @@ const FilmDetails = () => {
             <Navigation />
 
             <div className='bg-gradient-to-b from-black/90 to-gray-900/100 h-full relative px-4 py-12 '>
-                {/* <div className='absolute top-0 left-0 z-0 opacity-10 blur-sm inset-0 object-cover right-0 w-full h-full'>
-                    <img className="absolute inset-0 w-full h-full object-cover" src="https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_.jpg" alt="" />
-                </div> */}
+                <div className='absolute top-0 left-0 z-0 opacity-10 blur-xs inset-0 object-cover right-0 w-full h-full'>
+                    <img className="absolute inset-0 w-full h-full object-top" src="https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_.jpg" alt="" />
+                </div>
 
                 <div className='flex flex-col-reverse lg:flex-row justify-center lg:items-start items-center'>
                     <div dir='rtl' className='relative z-10 w-full sm:w-[100%] flex flex-col justify-center text-right lg:px-4'>
@@ -231,10 +231,10 @@ const FilmDetails = () => {
                         <div dir='rtl' className='flex justify-start pt-12 shadow-lg'>
                             <div className='flex flex-col gap-2 border border-gray-500 rounded-lg p-2 px-4'>
                                 <div className='flex flex-wrap flex-row items-center'>
-                                    <div>
+                                    <div className='me-2 lg:me-1'>
                                         <p className='text-white'>وەرگێڕان:</p>
                                     </div>
-                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -242,7 +242,7 @@ const FilmDetails = () => {
                                             <p className='font-semibold text-white'>ژیار عومەر</p>
                                         </div>
                                     </div>
-                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -250,7 +250,7 @@ const FilmDetails = () => {
                                             <p className='font-semibold text-white'>هالان دیاری</p>
                                         </div>
                                     </div>
-                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -265,7 +265,7 @@ const FilmDetails = () => {
                                     <div>
                                         <p className='text-white lg:text-md'>تەکنیک:</p>
                                     </div>
-                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-2 lg:px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -278,7 +278,7 @@ const FilmDetails = () => {
                                     <div>
                                         <p >بەرگساز:</p>
                                     </div>
-                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-2 lg:px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -340,7 +340,7 @@ const FilmDetails = () => {
                         </div>
 
                         <div className='flex justify-center'>
-                            <div className='flex flex-row items-center gap-2 mt-4 px-8 bg-yellow-500/20 w-[80%] border border-yellow-500 text-md text-white rounded py-3 px-2 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='flex flex-row items-center gap-2 mt-4 px-4 py-4 bg-yellow-500/20 w-[100%] border border-yellow-500 text-md text-white rounded hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
                                     <FaFilm />
                                 </div>
@@ -351,21 +351,16 @@ const FilmDetails = () => {
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
 
-
-
-            <div className="bg-[#282e30] pt-16 flex flex-row justify-between items-center px-12">
+            <div className="bg-[#282e30] pt-16 flex flex-row justify-between items-center px-6 lg:px-8">
                 <div>
-                    <button className="text-md relative z-10 font-semibold text-white bg-sky-500 py-1 px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                    <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                         دانانی هەڵسەنگاندن
                     </button>
                 </div>
                 <div>
-                    <h2 className="text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
+                    <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
                 </div>
             </div>
 

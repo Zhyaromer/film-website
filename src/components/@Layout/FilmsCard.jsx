@@ -99,7 +99,7 @@ const FilmsCard = () => {
 
     return (
         <div className='bg-[#282e30]'>
-            <div className="mx-auto px-4 py-8">
+            <div dir="rtl" className="mx-auto px-4 py-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {currentMovies.map((movie, index) => (
                         <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
@@ -113,10 +113,10 @@ const FilmsCard = () => {
                                 </div>
                             </div>
                             <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
+                                <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">{movie.movieName}</p>
                                 </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                                <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
                                     <p className='text-white'>{movie.year}</p>
                                     <p className='text-white'>{movie.genre}</p>
                                 </div>
