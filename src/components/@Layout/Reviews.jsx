@@ -41,7 +41,7 @@ const ReviewCard = ({ name, rating, review }) => {
                 <div className="flex justify-between items-center mb-3">
                     <div className="flex items-center gap-2">
                         <UserCircle2 className="w-10 h-10 text-white" />
-                        <span className="font-medium text-white">{name}</span>
+                        <span className="font-medium text-white cursor-pointer">{name}</span>
                     </div>
                     <button className="text-white rounded-full p-1">
                         <MoreVertical className="w-5 h-5" />
@@ -143,7 +143,7 @@ const CustomSlider = () => {
                     <button
                         onClick={prevSlide}
                         disabled={startIndex === 0}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-sky-500 hover:bg-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-sky-500 hover:bg-sky-600 disabled:bg-gray-400 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200"
                     >
                         <i className="fa-solid fa-arrow-right"></i>
                     </button>
@@ -151,7 +151,7 @@ const CustomSlider = () => {
                     <button
                         onClick={nextSlide}
                         disabled={startIndex >= reviews.length - itemsPerPage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-sky-500 hover:bg-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-sky-500 hover:bg-sky-600 disabled:bg-gray-400 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200"
                     >
                         <i className="fa-solid fa-arrow-left"></i>
                     </button>
@@ -161,7 +161,7 @@ const CustomSlider = () => {
             <div className=" max-w-8xl mx-auto overflow-hidden">
                 <div
                     ref={sliderRef}
-                    className="flex touch-pan-y select-none transition-transform duration-300 ease-in-out cursor-grab active:cursor-grabbing"
+                    className="flex touch-pan-y select-none transition-transform duration-300 ease-in-out  active:cursor-grabbing"
                     style={{
                         transform: `translateX(${(startIndex * (100 / itemsPerPage)) - (dragOffset / (sliderRef.current?.offsetWidth || 1) * 100)}%)`,
                     }}

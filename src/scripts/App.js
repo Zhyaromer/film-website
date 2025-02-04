@@ -6,6 +6,7 @@ import MovieSeries from '../Pages/MovieSeries.jsx';
 import Suggestion from '../Pages/Suggestion.jsx';
 import News from '../Pages/News.jsx'
 import FilmDetails from '../Pages/FilmDetails.jsx';
+import SerieDetails from '../Pages/SerieDetails.jsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/suggestion" element={<Suggestion />} />
         <Route path="/News" element={<News />} />
         <Route path="/filmdetails" element={<FilmDetails />} />
+        <Route path="/seriesdetails" element={<SerieDetails />} />
       </Routes>
     </Router>
   );

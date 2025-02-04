@@ -81,7 +81,7 @@ const FilmsCard = () => {
 
     useEffect(() => {
         const HomePage = () => {
-            if (window.location.pathname === '/suggestion' || window.location.pathname === '/filmdetails') {
+            if (window.location.pathname === '/suggestion' || window.location.pathname === '/filmdetails' || window.location.pathname === '/seriesdetails') {
                 return setisSuggestion(true);
             }
             return setisSuggestion(false);

@@ -5,7 +5,7 @@ import ReviewSection from '../components/@Layout/Reviews.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import { FaFilm } from 'react-icons/fa';
 
-const FilmDetails = () => {
+const SerieDetails = () => {
 
     const actors = [
         {
@@ -71,7 +71,6 @@ const FilmDetails = () => {
     ]
 
     const [showAll, setShowAll] = useState(false);
-
     const displayedActors = showAll ? actors : actors.slice(0, 3);
     const hasMore = actors.length > 3;
 
@@ -82,8 +81,8 @@ const FilmDetails = () => {
             <div className='bg-gradient-to-b from-black/90 to-gray-900/100 h-full relative px-4 py-12 '>
                 <div className='flex flex-col-reverse lg:flex-row justify-center lg:items-start items-center'>
                     <div dir='rtl' className='relative z-10 w-full sm:w-[100%] flex flex-col justify-center text-right lg:px-4'>
-                        <div className='lg:mt-0 mt-10 lg:text-right text-center'>
-                            <h1 className='text-4xl font-bold text-sky-500'>Spiderman no way home (2024)</h1>
+                        <div className='lg:mt-0 mt-8 lg:text-right text-center'>
+                            <h1 className='text-3xl lg:text-4xl font-bold text-sky-500'>Breaking Bad (2008)</h1>
                         </div>
 
                         <div className='flex flex-wrap gap-4 mt-5'>
@@ -123,7 +122,7 @@ const FilmDetails = () => {
 
                         <div className='flex gap-4 mt-5'>
                             <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white transition-all duration-300 ease-in-out'>
-                                <p className='font-semibold'>ئاکشن | نهێنی ئامێز | تاوانکاری</p>
+                                <p className='font-semibold'>تاوانکاری | دراما | هەستبزوێن</p>
                             </div>
                             <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <p className='font-semibold'>بینینی ترایلەر</p>
@@ -134,7 +133,7 @@ const FilmDetails = () => {
                             <div className='flex flex-row items-center gap-4 text-lg text-white font-semibold'>
                                 <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
                                 <div>
-                                    <p>178 خولەک</p>
+                                    <p>45 خولەک</p>
                                 </div>
                                 <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
                                 <div>
@@ -150,24 +149,24 @@ const FilmDetails = () => {
 
                         <div className='mt-4'>
                             <p className='text-xl font-bold text-sky-500'>کورتە چیرۆک</p>
-                            <p className='mt-3 text-gray-300 text-xl lg:w-[80%] w-[97%]'>نەلسۆن پێشەنگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی کەسایەتی فەرمی، ڕووداوەکان زیاتر بەرەو ڕووداوی ئیشە بەرەو کۆمپلیتەسەر و کەیسی</p>
+                            <p className='mt-3 text-gray-300 text-xl lg:w-[80%] w-[97%]'>کاتێک (واڵتەر وایت) کە مامۆستایەکی کیمیایە، بۆی دەردەکەوێت کە توشی شێرپەنجەی سییەکان هاتووە و ماوەیەکی کەمی ماوە لەژیانیدا هەموو تواناکانی خۆی دەخاتە گەڕ تا لەژیاندا ماوە بتوانێ داهاتێکی باش بۆ خێزانەکەی کۆبکاتەوە تاکو دوای مردنی پێی بژینباشترین زنجیرەی مێژووە و بەرزترین پلەی وەرگرتووە</p>
                         </div>
 
                         <div className='flex flex-row items-center gap-6 mt-4'>
                             <div className='flex flex-row items-center gap-2 text-lg text-white'>
                                 <div>
-                                    <p>بودجە:</p>
+                                    <p>ژمارەی وەرزەکان:</p>
                                 </div>
                                 <div>
-                                    <p className='text-sky-500'>1 بلیۆن دۆلار</p>
+                                    <p className='text-sky-500'>5</p>
                                 </div>
                             </div>
                             <div className='flex flex-row items-center gap-2 text-lg text-white'>
                                 <div>
-                                    <p >داهات:</p>
+                                    <p >ژمارەی ئەلقەکان:</p>
                                 </div>
                                 <div>
-                                    <p className='text-sky-500'>3 بلیۆن دۆلار</p>
+                                    <p className='text-sky-500'>62</p>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +177,7 @@ const FilmDetails = () => {
                                     <p >بەرهەم  هێنان:</p>
                                 </div>
                                 <div>
-                                    <p className='text-sky-500'>Marvel Studios</p>
+                                    <p className='text-sky-500'>AMC</p>
                                 </div>
                             </div>
                         </div>
@@ -189,7 +188,7 @@ const FilmDetails = () => {
                                     <p >دەرهێنان:</p>
                                 </div>
                                 <div>
-                                    <p className='text-sky-500'>Jon Watts</p>
+                                    <p className='text-sky-500'>Vince Gilligan</p>
                                 </div>
                             </div>
                         </div>
@@ -363,7 +362,7 @@ const FilmDetails = () => {
             <ReviewSection className="bg-[#282e30]" />
 
             <div className="bg-[#282e30] mb-0 pt-12 px-8 flex justify-end items-center">
-                <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
+                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەی هاوشێوە</h4>
             </div>
 
             <FilmsCard className="bg-[#282e30]" />
@@ -373,4 +372,4 @@ const FilmDetails = () => {
     )
 }
 
-export default FilmDetails
+export default SerieDetails
