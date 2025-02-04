@@ -3,7 +3,8 @@ import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import ReviewSection from '../components/@Layout/Reviews.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
-import { FaFilm } from 'react-icons/fa';
+import Seasonscard from '../components/@Layout/Seasonscard.jsx'
+import seriesData from '../helpers/Seasonsoption.jsx'
 
 const SerieDetails = () => {
 
@@ -75,7 +76,7 @@ const SerieDetails = () => {
     const hasMore = actors.length > 3;
 
     return (
-        <div>
+        <div className='bg-[#282e30]'>
             <Navigation />
 
             <div className='bg-gradient-to-b from-black/90 to-gray-900/100 h-full relative px-4 py-12 '>
@@ -290,7 +291,7 @@ const SerieDetails = () => {
                         <div className='relative mb-4'>
                             <img
                                 className=' rounded-xl  w-full h-auto object-cover aspect-[2/3]'
-                                src="https://www.komar.de/media/catalog/product/cache/5/image/9df78eab33525d08d6e5fb8d27136e95/4/-/4-4126_avengers_infinity_war_movie_poster_web.jpg"
+                                src="https://i.redd.it/5czve5czxtf61.jpg"
                                 alt="Movie poster"
                             />
                             <div className='absolute left-1/2 -translate-x-1/2 -bottom-4 flex flex-row items-center gap-2 text-lg text-white'>
@@ -315,32 +316,10 @@ const SerieDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex justify-center gap-4 mt-5'>
-                            <div className='flex flex-row items-center gap-3 bg-gray-500/20 border border-white text-md text-white rounded py-3 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='font-semibold'>دابەزاندن</p>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-download"></i>
-                                </div>
-                            </div>
-                            <div className='flex flex-row items-center gap-3 bg-gray-500/20 border border-white text-md text-white rounded py-3 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='font-semibold'>سەیرکردن</p>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-film"></i>
-                                </div>
-                            </div>
-                        </div>
-
                         <div className='flex justify-center'>
                             <div className='flex flex-row items-center gap-2 mt-4 px-4 py-4 bg-yellow-500/20 w-[100%] border border-yellow-500 text-md text-white rounded hover:bg-yellow-700/80 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <FaFilm />
-                                </div>
-                                <div>
-                                    <p className='font-semibold text-center'>بەشەکانی تری ئەم فلیمە ببینە </p>
+                                    <p className='font-semibold text-center'>ئەم زنجیرەیە تەواو نەبووە</p>
                                 </div>
                             </div>
                         </div>
@@ -348,7 +327,7 @@ const SerieDetails = () => {
                 </div>
             </div>
 
-            <div className="bg-[#282e30] pt-16 flex flex-row justify-between items-center px-6 lg:px-8">
+            <div className="pt-16 flex flex-row justify-between items-center px-6 lg:px-8">
                 <div>
                     <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                         دانانی هەڵسەنگاندن
@@ -359,13 +338,15 @@ const SerieDetails = () => {
                 </div>
             </div>
 
-            <ReviewSection className="bg-[#282e30]" />
+            <ReviewSection />
 
-            <div className="bg-[#282e30] mb-0 pt-12 px-8 flex justify-end items-center">
+            <Seasonscard series={seriesData} />
+
+            <div className="mb-0 pt-12 px-8 flex justify-end items-center">
                 <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەی هاوشێوە</h4>
             </div>
 
-            <FilmsCard className="bg-[#282e30]" />
+            <FilmsCard />
 
             <Footer />
         </div>
