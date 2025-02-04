@@ -90,34 +90,34 @@ const FilmDetails = () => {
                             <h1 className='text-4xl font-bold text-sky-500'>Spiderman no way home (2024)</h1>
                         </div>
 
-                        <div className='flex gap-4 mt-5'>
-                            <div className='flex flex-row gap-2 bg-gray-500/20 border border-sky-500 py-2 px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
+                        <div className='flex flex-wrap gap-4 mt-5'>
+                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-0 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <p className='text-white text-md font-semibold'>بینینی دواتر</p>
+                                    <p className='text-white lg:text-lg text-sm font-semibold'>بینینی دواتر</p>
                                 </div>
                                 <div className='flex justify-center items-center'>
                                     <i class="fa-solid fa-bookmark text-xs text-white"></i>
                                 </div>
                             </div>
-                            <div className='flex flex-row gap-2 bg-gray-500/20 border border-sky-500 py-2 px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <p className='text-white text-md  font-semibold'>لیستی دڵخواز</p>
+                                    <p className='text-white lg:text-lg text-sm font-semibold'>لیستی دڵخواز</p>
                                 </div>
                                 <div>
-                                    <i class="fa-regular text-red-500 text-xs fa-heart"></i>
+                                    <i class="fa-regular  text-red-500 text-xs fa-heart"></i>
                                 </div>
                             </div>
-                            <div className='flex flex-row gap-2 bg-gray-500/20 border border-sky-500 py-2 px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <p className='text-white text-md font-semibold'>بینراو</p>
+                                    <p className='text-white lg:text-lg text-sm font-semibold'>بینراو</p>
                                 </div>
                                 <div>
                                     <i class="fa-solid text-green-500 text-xs fa-square-check"></i>
                                 </div>
                             </div>
-                            <div className='flex flex-row gap-2 bg-gray-500/20 border border-sky-500 py-2 px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <p className='text-white text-md'>2000</p>
+                                    <p className='text-white lg:text-lg text-sm'>2000</p>
                                 </div>
                                 <div className='flex justify-center items-center'>
                                     <i class="fa-solid text-sm fa-eye text-white "></i>
@@ -126,16 +126,17 @@ const FilmDetails = () => {
                         </div>
 
                         <div className='flex gap-4 mt-5'>
-                            <div className='bg-gray-500/20 border border-white text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <p className='font-semibold'>ئاکشن | نهێنی ئامێز | تاوانکاری</p>
                             </div>
-                            <div className='bg-gray-500/20 border border-white text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                            <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <p className='font-semibold'>بینینی ترایلەر</p>
                             </div>
                         </div>
 
                         <div className='mt-4'>
                             <div className='flex flex-row items-center gap-4 text-lg text-white font-semibold'>
+                                <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
                                 <div>
                                     <p>178 خولەک</p>
                                 </div>
@@ -148,18 +149,15 @@ const FilmDetails = () => {
                                     <p>ئەمریکی</p>
                                 </div>
                                 <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
-                                <div>
-                                    <p>ئینگلیزی</p>
-                                </div>
                             </div>
                         </div>
 
                         <div className='mt-4'>
                             <p className='text-xl font-bold text-sky-500'>کورتە چیرۆک</p>
-                            <p className='mt-3 text-gray-300 text-xl w-[80%]'>نەلسۆن پێشەنگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی کەسایەتی فەرمی، ڕووداوەکان زیاتر بەرەو ڕووداوی ئیشە بەرەو کۆمپلیتەسەر و کەیسی</p>
+                            <p className='mt-3 text-gray-300 text-xl lg:w-[80%] w-[97%]'>نەلسۆن پێشەنگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی کەسایەتی فەرمی، ڕووداوەکان زیاتر بەرەو ڕووداوی ئیشە بەرەو کۆمپلیتەسەر و کەیسی</p>
                         </div>
 
-                        <div className='flex flex-row items-center gap-6 mt-3 '>
+                        <div className='flex flex-row items-center gap-6 mt-4'>
                             <div className='flex flex-row items-center gap-2 text-lg text-white'>
                                 <div>
                                     <p>بودجە:</p>
@@ -201,12 +199,12 @@ const FilmDetails = () => {
                         </div>
 
                         <div className="mt-4">
-                            <div className="flex flex-row items-start gap-2 text-lg text-white">
+                            <div className="flex lg:flex-row flex-col items-start gap-2 text-lg text-white">
                                 <div className="flex items-end justify-end">
                                     <p>ئەکتەرەکان:</p>
                                 </div>
 
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col lg:mt-0 mt-2 gap-2">
                                     <div className="max-w-[500px] flex flex-row flex-wrap gap-2">
                                         {displayedActors.map((actor, index) => (
                                             <div
@@ -219,7 +217,7 @@ const FilmDetails = () => {
                                         {hasMore && (
                                             <button
                                                 onClick={() => setShowAll(!showAll)}
-                                                className="flex tetx-sm w-[100px] flex-row bg-transparent border border-sky-500 py-0 px-3 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out"
+                                                className="flex tetx-sm lg:w-[100px] flex-row bg-transparent border border-sky-500 py-0 px-3 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out"
                                             >
                                                 {showAll ? 'شاردنەوە' : `بینینی زیاتر`}
                                             </button>
@@ -230,29 +228,44 @@ const FilmDetails = () => {
                             </div>
                         </div>
 
-                        <div dir='rtl' className='px-12 pt-4 shadow-lg'>
+                        <div dir='rtl' className='flex justify-start pt-12 shadow-lg'>
                             <div className='flex flex-col gap-2 border border-gray-500 rounded-lg p-2 px-4'>
-                                <div className='flex flex-wrap flex-row items-center text-lg text-white'>
+                                <div className='flex flex-wrap flex-row items-center'>
                                     <div>
-                                        <p >وەرگێڕان:</p>
+                                        <p className='text-white'>وەرگێڕان:</p>
                                     </div>
-                                    <div className='flex flex-row gap-2 text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
                                         <div>
-                                            <p className='font-semibold'>ژیار عومەر</p>
+                                            <p className='font-semibold text-white'>ژیار عومەر</p>
                                         </div>
                                     </div>
-                                    <div className='flex flex-row gap-2 text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
                                         <div>
-                                            <p className='font-semibold'>هالان دیاری</p>
+                                            <p className='font-semibold text-white'>هالان دیاری</p>
                                         </div>
                                     </div>
-                                    <div className='flex flex-row gap-2 text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row lg:text-md gap-2 rounded py-2 px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
+                                        <div>
+                                            <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
+                                        </div>
+                                        <div>
+                                            <p className='font-semibold text-white'>ئەحمەد ئەردەلان</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='flex flex-col w-[100%] h-[2px] bg-sky-500 rounded-full'></div>
+                                <div className='flex flex-row items-center gap-2 text-white'>
+                                    <div>
+                                        <p className='text-white lg:text-md'>تەکنیک:</p>
+                                    </div>
+                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
@@ -261,24 +274,11 @@ const FilmDetails = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='flex flex-row items-center gap-2 text-lg text-white'>
-                                    <div>
-                                        <p >تەکنیک:</p>
-                                    </div>
-                                    <div className='flex flex-row gap-2 text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold'>ئەحمەد ئەردەلان</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex flex-row items-center gap-2 text-lg text-white'>
+                                <div className='flex flex-row items-center gap-2 text-white'>
                                     <div>
                                         <p >بەرگساز:</p>
                                     </div>
-                                    <div className='flex flex-row gap-2 text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
+                                    <div className='flex flex-row gap-2 lg:text-md text-white rounded py-2 px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                         <div>
                                             <img className='w-6 h-6 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
                                         </div>
