@@ -7,8 +7,8 @@ const SimilarSeries = ({ series }) => {
                 {series.map((item, index) => (
                     <div key={index} className="mb-0 pt-12 lg:px-8 px-2">
                         <div className="w-full">
-                            <div className='mb-2'>
-                                <h4 className="text-lg md:text-2xl font-bold text-right text-white">
+                            <div className='mb-4 pr-2'>
+                                <h4 className="text-xl md:text-2xl font-bold text-right text-white">
                                 {item.title}
                                 </h4>
                             </div>

@@ -319,7 +319,7 @@ const SerieDetails = () => {
                         <div className='flex justify-center'>
                             <div className='flex flex-row items-center gap-2 mt-4 px-4 py-4 bg-yellow-500/20 w-[100%] border border-yellow-500 text-md text-white rounded hover:bg-yellow-700/80 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
                                 <div>
-                                    <p className='font-semibold text-center'>ئەم زنجیرەیە تەواو نەبووە</p>
+                                    <p className='font-semibold text-center'>ئەم زنجیرەیە تەواو بووە</p>
                                 </div>
                             </div>
                         </div>
