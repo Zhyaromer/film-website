@@ -7,6 +7,7 @@ import Suggestion from '../Pages/Suggestion.jsx';
 import News from '../Pages/News.jsx'
 import FilmDetails from '../Pages/FilmDetails.jsx';
 import SerieDetails from '../Pages/SerieDetails.jsx';
+import Loginpage from '../Pages/Login.jsx'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/News" element={<News />} />
         <Route path="/filmdetails" element={<FilmDetails />} />
         <Route path="/seriesdetails" element={<SerieDetails />} />
+        <Route path="/login" element={<Loginpage />} />
       </Routes>
     </Router>
   );
