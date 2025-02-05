@@ -8,6 +8,7 @@ import News from '../Pages/News.jsx'
 import FilmDetails from '../Pages/FilmDetails.jsx';
 import SerieDetails from '../Pages/SerieDetails.jsx';
 import Loginpage from '../Pages/Login.jsx'
+import Signuppage from '../Pages/Signup.jsx'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/filmdetails" element={<FilmDetails />} />
         <Route path="/seriesdetails" element={<SerieDetails />} />
         <Route path="/login" element={<Loginpage />} />
+        <Route path="/signup" element={<Signuppage />} />
       </Routes>
     </Router>
   );
