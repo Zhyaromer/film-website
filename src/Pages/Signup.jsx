@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
+import axios from 'axios';
 
 const Signuppage = () => {
     const [name, setName] = useState('');
-    const [displayName, setDisplayName] = useState('');
+    const [username, setusername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
-    const handleSubmit = (e) => {
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Signup attempt', { name, displayName, email, password });
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/register', { name, username, email, password });
+            console.log(response.status);
+            if (response.status === 201) {
+                console.log('Signup successful');
+            } else if (response.status === 400) {
+                console.log(response.data.message);
+            } else{
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+        }
     };
 
     return (
@@ -45,8 +58,8 @@ const Signuppage = () => {
                             <input
                                 type="text"
                                 id="displayName"
-                                value={displayName}
-                                onChange={(e) => setDisplayName(e.target.value)}
+                                value={username}
+                                onChange={(e) => setusername(e.target.value)}
                                 className="w-full bg-[hsl(195,9%,28%)] px-4 py-3 border text-white placeholder:text-gray-300 border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                                 placeholder="نازناوەکەت بنووسە"
                                 required

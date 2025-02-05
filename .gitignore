@@ -6,6 +6,8 @@
 .pnp.js
 /public/node_modules
 /backend/node_modules
+/backend/config/Firebase
+/.env
 
 # testing
 /coverage
