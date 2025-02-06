@@ -1,333 +1,323 @@
 import React, { useState } from 'react';
+import { Clock, ChevronDown, PlayCircle, Bookmark, Heart, CheckCircle, Star, MoreVertical, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
-import ReviewSection from '../components/@Layout/Reviews.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
-import Seasonscard from '../components/@Layout/Seasonscard.jsx'
-import seriesData from '../helpers/Seasonsoption.jsx'
 
-const SerieDetails = () => {
+const Serisdetailss = () => {
+    const [activeTab, setActiveTab] = useState('زانیاری');
+    const [watchLater, setWatchLater] = useState(false);
+    const [favorite, setFavorite] = useState(false);
+    const [watched, setWatched] = useState(false);
 
-    const actors = [
+    const movieData = {
+        title: 'Breaking Bad (2008)',
+        genre: 'سەرکێشێ - ئاکشن - خەیاڵی',
+        date: '2008-1-20',
+        duration: '50 خولەک',
+        director: 'Vince Gilligan',
+        producer: 'AMC',
+        country: 'ئەمریکا',
+        views: 876543,
+        ratings: {
+            imdb: 9.7,
+            rottenTomatoes: 99
+        },
+        seasons: 5,
+        eps: 62,
+        cast: ['Marcus Chen', 'Aria Nakamura', 'David Okonkwo'],
+        backgroundUrl: 'https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2018/01/walter-white-breaking-bad-grande.jpg',
+        posterUrl: 'https://fr.web.img5.acsta.net/pictures/19/06/18/12/11/3956503.jpg',
+        synopsis: 'مامۆستایەکی دواناوەندی بەناوی واڵتەر وایت کەوا تووشی نەخۆشی شێرپەنجەی سییەکان دێت، ڕوودەکاتە فرۆشتنی ماددە هۆشبەرەکان بە مەبەستی زامنکردنی داهاتوویەکی باش بۆ خێزانەکەی دوای مردنە چاوەڕوانکراوەکەی.',
+        trailer: 'https://youtu.be/XZ8daibM3AE?si=fkemLcMX3qXNPwje',
+    };
+
+    const castMembers = [
         {
-            "id": 1,
-            "name": "Tom Holland"
+            name: "Bryan Cranston",
+            photo: 'https://m.media-amazon.com/images/M/MV5BMTA2NjEyMTY4MTVeQTJeQWpwZ15BbWU3MDQ5NDAzNDc@._V1_.jpg'
         },
         {
-            "id": 2,
-            "name": "Zendaya"
+            name: "Aaron Paul",
+            photo: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQqeBib4y76gx8cdFrtdmQ6umr4HrAP8zvTxAIGCTy-LXQtCkb82EaQVZdkmOoo-93RJW3UXISrds85PAJvXGVk5XgDeIzXkwwVNc-IZA'
         },
         {
-            "id": 3,
-            "name": "Jacob Batalon"
+            name: "Anna Gunn",
+            photo: "https://m.media-amazon.com/images/M/MV5BMTU0NTk3MDQ3OV5BMl5BanBnXkFtZTcwNDY3NzQ4Mg@@._V1_FMjpg_UX1000_.jpg"
         },
         {
-            "id": 4,
-            "name": "Marisa Tomei"
+            name: "Dean Norris",
+            photo: "https://ntvb.tmsimg.com/assets/assets/182558_v9_bb.jpg?w=360&h=480"
         },
         {
-            "id": 5,
-            "name": "Jon Favreau"
+            name: "RJ Mitte",
+            photo: "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTvezEDZV2OUb1duOzJOMK8ZLM53zaoh0zN8me93NTVgqGkJLkZ_EQufhPr-JPs4saHZVUajuur35FHCL4"
         },
         {
-            "id": 6,
-            "name": "Benedict Cumberbatch"
+            name: "Bob Odenkirk",
+            photo: "https://imaging.broadway.com/images/regular-43/w735/129920-11.jpg"
         },
         {
-            "id": 7,
-            "name": "Willem Dafoe"
+            name: "Betsy Brandt",
+            photo: "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQTkRr8Tutr_0P8_UAuPpviiYlTAsawfoM7jKEcYlmv2LGR9GEZS7M0U3deR34wiJNuPCYTESl5DyIoEZI"
         },
         {
-            "id": 8,
-            "name": "Alfred Molina"
+            name: "Jonathan Banks",
+            photo: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/83234_v9_bb.jpg"
         },
         {
-            "id": 9,
-            "name": "Jamie Foxx"
+            name: "Giancarlo Esposito",
+            photo: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQkJ5ojo_Qzd95_dLcoN7l1KL12lD-ZrhzcnHWvW1xSN6yS8YM6PG2M96RwptE834HCznMaY3Zke4X2YlDds7uTdlbHshiUdFY_O2lIVDk"
         },
         {
-            "id": 10,
-            "name": "Tobey Maguire"
+            name: "Steven Michael",
+            photo: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/538726_v9_bb.jpg"
+        }
+    ];
+
+    const reviews = [
+        {
+            id: 1,
+            name: "حەسەن ڕەزا",
+            rating: 3,
+            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
         },
         {
-            "id": 11,
-            "name": "Andrew Garfield"
+            id: 2,
+            name: "محەمەد ڕزگار",
+            rating: 3,
+            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
         },
         {
-            "id": 12,
-            "name": "Charlie Cox"
+            id: 3,
+            name: "Sarah Kim",
+            rating: 3,
+            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
         },
         {
-            "id": 13,
-            "name": "J.K. Simmons"
+            id: 4,
+            name: "Alex Wong",
+            rating: 5,
+            review: "Exceptional quality and customer service Exceptional quality and customer service Exceptional quality and customer service",
         },
         {
-            "id": 14,
-            "name": "Angourie Rice"
+            id: 5,
+            name: "Jessica Lee",
+            rating: 3,
+            review: "Solid performance with great features.",
+        }
+    ];
+
+    const technicalMembers = [
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
         },
         {
-            "id": 15,
-            "name": "Tony Revolori"
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "بەرگساز"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "بەرگساز"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "تەکنیکار"
         }
     ]
 
-    const [showAll, setShowAll] = useState(false);
-    const displayedActors = showAll ? actors : actors.slice(0, 3);
-    const hasMore = actors.length > 3;
+    const [selectedSeason, setSelectedSeason] = useState("1");
+    const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <div className='bg-[#282e30]'>
-            <Navigation />
+    const episodes = [
+        {
+            id: 1,
+            title: "Pilot",
+            image: "https://images.genius.com/9cb7e19233ebb2693a005c8621504c34.1000x1000x1.jpg",
+            season: "1"
+        },
+        {
+            id: 2,
+            title: "Cat's in the Bag",
+            image: "https://processedmedia.wordpress.com/wp-content/uploads/2011/08/breakingbad_post38_1280x1024_062.jpg?w=1200",
+            season: "2"
+        },
+        {
+            id: 3,
+            title: "And the Bag's in the River",
+            image: "https://i.pinimg.com/736x/12/1d/49/121d497eca520d0ee217c77891e95ce3.jpg",
+            season: "3",
+        }
+    ];
 
-            <div className='bg-gradient-to-b from-black/90 to-gray-900/100 h-full relative px-4 py-12 '>
-                <div className='flex flex-col-reverse lg:flex-row justify-center lg:items-start items-center'>
-                    <div dir='rtl' className='relative z-10 w-full sm:w-[100%] flex flex-col justify-center text-right lg:px-4'>
-                        <div className='lg:mt-0 mt-8 lg:text-right text-center'>
-                            <h1 className='text-3xl lg:text-4xl font-bold text-sky-500'>Breaking Bad (2008)</h1>
-                        </div>
+    const seasons = [
+        { value: "1", label: "Season 1" },
+        { value: "2", label: "Season 2" },
+        { value: "3", label: "Season 3" },
+        { value: "4", label: "Season 4" },
+    ];
 
-                        <div className='flex flex-wrap gap-4 mt-5'>
-                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-0 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='text-white lg:text-lg text-sm font-semibold'>بینینی دواتر</p>
-                                </div>
-                                <div className='flex justify-center items-center'>
-                                    <i class="fa-solid fa-bookmark text-xs text-white"></i>
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='text-white lg:text-lg text-sm font-semibold'>لیستی دڵخواز</p>
-                                </div>
-                                <div>
-                                    <i class="fa-regular  text-red-500 text-xs fa-heart"></i>
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='text-white lg:text-lg text-sm font-semibold'>بینراو</p>
-                                </div>
-                                <div>
-                                    <i class="fa-solid text-green-500 text-xs fa-square-check"></i>
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-2 items-center bg-gray-500/20 border border-sky-500 py-1 lg:py-2 px-3 lg:px-4 rounded-full hover:bg-gray-600 transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='text-white lg:text-lg text-sm'>2000</p>
-                                </div>
-                                <div className='flex justify-center items-center'>
-                                    <i class="fa-solid text-sm fa-eye text-white "></i>
-                                </div>
-                            </div>
-                        </div>
+    const filteredEpisodes = episodes.filter(episode => episode.season === selectedSeason);
 
-                        <div className='flex gap-4 mt-5'>
-                            <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white transition-all duration-300 ease-in-out'>
-                                <p className='font-semibold'>تاوانکاری | دراما | هەستبزوێن</p>
-                            </div>
-                            <div className='bg-gray-500/20 text-white border border-white text-sm md:text-md lg:px-4 rounded py-2 px-2 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                <p className='font-semibold'>بینینی ترایلەر</p>
-                            </div>
-                        </div>
 
-                        <div className='mt-4'>
-                            <div className='flex flex-row items-center gap-4 text-lg text-white font-semibold'>
-                                <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
-                                <div>
-                                    <p>45 خولەک</p>
-                                </div>
-                                <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
-                                <div>
-                                    <p>2024-12-12</p>
-                                </div>
-                                <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
-                                <div>
-                                    <p>ئەمریکی</p>
-                                </div>
-                                <div className='flex flex-row w-[2px] h-[15px] bg-sky-500'></div>
-                            </div>
-                        </div>
-
-                        <div className='mt-4'>
-                            <p className='text-xl font-bold text-sky-500'>کورتە چیرۆک</p>
-                            <p className='mt-3 text-gray-300 text-xl lg:w-[80%] w-[97%]'>کاتێک (واڵتەر وایت) کە مامۆستایەکی کیمیایە، بۆی دەردەکەوێت کە توشی شێرپەنجەی سییەکان هاتووە و ماوەیەکی کەمی ماوە لەژیانیدا هەموو تواناکانی خۆی دەخاتە گەڕ تا لەژیاندا ماوە بتوانێ داهاتێکی باش بۆ خێزانەکەی کۆبکاتەوە تاکو دوای مردنی پێی بژینباشترین زنجیرەی مێژووە و بەرزترین پلەی وەرگرتووە</p>
-                        </div>
-
-                        <div className='flex flex-row items-center gap-6 mt-4'>
-                            <div className='flex flex-row items-center gap-2 text-lg text-white'>
-                                <div>
-                                    <p>ژمارەی وەرزەکان:</p>
-                                </div>
-                                <div>
-                                    <p className='text-sky-500'>5</p>
-                                </div>
-                            </div>
-                            <div className='flex flex-row items-center gap-2 text-lg text-white'>
-                                <div>
-                                    <p >ژمارەی ئەلقەکان:</p>
-                                </div>
-                                <div>
-                                    <p className='text-sky-500'>62</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='mt-4'>
-                            <div className='flex flex-row items-center gap-2 text-lg text-white'>
-                                <div>
-                                    <p >بەرهەم  هێنان:</p>
-                                </div>
-                                <div>
-                                    <p className='text-sky-500'>AMC</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='mt-4'>
-                            <div className='flex flex-row items-center gap-2 text-lg text-white'>
-                                <div>
-                                    <p >دەرهێنان:</p>
-                                </div>
-                                <div>
-                                    <p className='text-sky-500'>Vince Gilligan</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-4">
-                            <div className="flex lg:flex-row flex-col items-start gap-2 text-lg text-white">
-                                <div className="flex items-end justify-end">
-                                    <p>ئەکتەرەکان:</p>
-                                </div>
-
-                                <div className="flex flex-col lg:mt-0 mt-2 gap-2">
-                                    <div className="max-w-[500px] flex flex-row flex-wrap gap-2">
-                                        {displayedActors.map((actor, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex flex-row gap-2 bg-transparent border border-sky-500 py-1 px-3 rounded-full hover:bg-sky-600 cursor-pointer transition-all duration-300 ease-in-out"
-                                            >
-                                                <p className="text-white text-sm font-semibold">{actor.name}</p>
-                                            </div>
-                                        ))}
-                                        {hasMore && (
-                                            <button
-                                                onClick={() => setShowAll(!showAll)}
-                                                className="flex tetx-sm lg:w-[100px] flex-row bg-transparent border border-sky-500 py-0 px-3 rounded-full hover:bg-gray-600 cursor-pointer transition-all duration-300 ease-in-out"
-                                            >
-                                                {showAll ? 'شاردنەوە' : `بینینی زیاتر`}
-                                            </button>
-                                        )}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div dir='rtl' className='flex justify-start pt-12 shadow-lg'>
-                            <div className='flex flex-col gap-2 border border-gray-500 rounded-lg p-2 px-4'>
-                                <div className='flex flex-wrap flex-row items-center'>
-                                    <div className='me-2 lg:me-1'>
-                                        <p className='font-semibold text-white'>وەرگێڕان:</p>
-                                    </div>
-                                    <div className='flex flex-row items-center lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-9 h-9 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold text-white'>ژیار عومەر</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex items-center flex-row lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-9 h-9 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold text-white'>هالان دیاری</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex items-center flex-row lg:text-md gap-2 rounded py-2 px-2 lg:px-4 hover:bg-sky-500 cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-9 h-9 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold text-white'>هالان دیاری</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='flex flex-col w-[100%] h-[2px] bg-sky-500 rounded-full'></div>
-                                <div className='flex flex-row items-center gap-2 text-white'>
-                                    <div>
-                                        <p className='font-semibold'>تەکنیک:</p>
-                                    </div>
-                                    <div className='flex items-center flex-row gap-2 lg:text-md text-white rounded py-2 px-2 lg:px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-9 h-9 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold'>ئەحمەد ئەردەلان</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex flex-row items-center gap-2 text-white'>
-                                    <div>
-                                        <p className='font-semibold'>بەرگساز:</p>
-                                    </div>
-                                    <div className='flex items-center flex-row gap-2 lg:text-md text-white rounded py-2 px-2 lg:px-4 hover:bg-sky-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                        <div>
-                                            <img className='w-9 h-9 rounded-full' src="https://cdn-icons-png.flaticon.com/512/146/146007.png" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className='font-semibold'>دیاکۆ سۆران</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='w-1/4 min-w-[340px] h-full md:min-w-[300px] flex flex-col items-center justify-end'>
-                        <div className='relative mb-4'>
-                            <img
-                                className=' rounded-xl  w-full h-auto object-cover aspect-[2/3]'
-                                src="https://i.redd.it/5czve5czxtf61.jpg"
-                                alt="Movie poster"
-                            />
-                            <div className='absolute left-1/2 -translate-x-1/2 -bottom-4 flex flex-row items-center gap-2 text-lg text-white'>
-                                <div className="flex justify-evenly items-center  gap-4">
-                                    <div className='bg-black/70 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
-                                        <div>
-                                            <img src="16eff6124a5658f3defb294987d2afed.png" className="w-4 h-4" alt='IMDB Logo' />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-white"> 88</p>
-                                        </div>
-                                    </div>
-
-                                    <div className='bg-black/70 rounded w-16 h-8 border outline-white flex justify-center items-center flex-row gap-1'>
-                                        <div>
-                                            <img src="Rotten_Tomatoes_alternative_logo.svg" className="w-4 h-4" alt='Rotten Tomatoes Logo' />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-white"> 94</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='flex justify-center'>
-                            <div className='flex flex-row items-center gap-2 mt-4 px-4 py-4 bg-yellow-500/20 w-[100%] border border-yellow-500 text-md text-white rounded hover:bg-yellow-700/80 hover:text-white cursor-pointer transition-all duration-300 ease-in-out'>
-                                <div>
-                                    <p className='font-semibold text-center'>ئەم زنجیرەیە تەواو بووە</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
+        <button
+            className={`flex items-center justify-center p-2 rounded-full 
+        ${active ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-400'}`}
+            onClick={onClick}
+            title={label}
+        >
+            <div className="flex items-center gap-2">
+                <div>
+                    <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                    <p className="font-semibold lg:text-base text-xs">{text}</p>
                 </div>
             </div>
+        </button>
+    );
 
-            <div className="pt-16 flex flex-row justify-between items-center px-6 lg:px-8">
+    const renderOverview = () => (
+        <div className="space-y-4">
+            <div>
+                <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">کورتەی جیرۆک</h2>
+            </div>
+            <p className="text-gray-200 text-lg">{movieData.synopsis}</p>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-center">
+                <div onClick={() => window.open(movieData.trailer, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
+                    <i class="fa-brands fa-youtube mx-auto mb-2 text-red-400"></i>
+                    <p className="font-bold">بینینی ترایلەر</p>
+                </div>
+                <div className="bg-gray-800 p-3 rounded">
+                    <Clock className="mx-auto mb-2 text-green-400" />
+                    <p className="font-bold">{movieData.duration}</p>
+                </div>
+                <div className="bg-gray-800 p-3 rounded">
+                    <i class="fa-solid fa-clock-rotate-left mx-auto mb-2 text-white"></i>
+                    <p className="font-bold">{movieData.date}</p>
+                </div>
+            </div>
+        </div>
+    );
+
+    const renderEps = () => (
+        <div className="space-y-4">
+            <div className="container mx-auto p-4">
+                <div className="relative mb-6">
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="flex items-center justify-between w-48 px-4 py-2 text-white bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    >
+                        <span>{`Season ${selectedSeason}`}</span>
+                        <ChevronDown
+                            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
+                        />
+                    </button>
+
+                    {isOpen && (
+                        <div className="absolute z-10 w-48 mt-2 bg-gray-800 rounded-lg shadow-lg">
+                            {seasons.map((season) => (
+                                <button
+                                    key={season.value}
+                                    onClick={() => {
+                                        setSelectedSeason(season.value);
+                                        setIsOpen(false);
+                                    }}
+                                    className="w-full px-4 py-2 text-left text-white hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg"
+                                >
+                                    {season.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {filteredEpisodes.map((episode) => (
+                        <div key={episode.id} className="flex flex-col">
+                            <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                                <img
+                                    src={episode.image}
+                                    alt={episode.title}
+                                    className="object-cover w-full h-full"
+                                />
+                            </div>
+                            <div className="mt-2 text-left flex flex-row-reverse">
+                                <h2 className="text-xl font-bold text-gray-100">
+                                    . {episode.id}
+                                </h2>
+                                <h2 className="text-xl font-bold text-gray-100">
+                                    {episode.title}
+                                </h2>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+    const renderCast = () => (
+        <div className="space-y-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+
+                {castMembers.map((member, index) => (
+                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
+                        <div>
+                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
+                        </div>
+                        <div>
+                            <p className="font-bold">{member.name}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderTechnical = () => (
+        <div className="space-y-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                {technicalMembers.map((member, index) => (
+                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800/60 p-3 rounded">
+                        <div>
+                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
+                        </div>
+                        <div>
+                            <p className="font-bold">{member.name}</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">{member.role}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderReviews = () => (
+        <div>
+            <div className="py-4 flex flex-row-reverse justify-between items-center px-4">
                 <div>
                     <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                         دانانی هەڵسەنگاندن
@@ -337,20 +327,195 @@ const SerieDetails = () => {
                     <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
                 </div>
             </div>
+            <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
+                {reviews.map((review, index) => (
+                    <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
+                        <div className="flex justify-between items-center mb-3">
+                            <div className="flex items-center gap-2">
+                                <UserCircle2 className="w-10 h-10 text-white" />
+                                <span className="font-medium text-white cursor-pointer">{review.name}</span>
+                            </div>
+                            <button className="text-white rounded-full p-1">
+                                <MoreVertical className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="flex items-center mb-2 justify-start">
+                            {[...Array(5)].map((_, index) => (
+                                <Star
+                                    key={index}
+                                    className={`w-5 h-5 ${index > review.rating - 1 ? 'text-gray-100' : 'text-sky-500'}`}
+                                    fill={index > review.rating - 1 ? 'none' : 'currentColor'}
+                                />
+                            ))}
+                        </div>
+                        <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
+                            <p className="text-white text-right">{review.review}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 
-            <ReviewSection />
+    return (
+        <div>
+            <Navigation className="relative z-40" />
+            <div className="relative z-0 min-h-screen">
+                <div
+                    className="fixed inset-0 z-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${movieData.backgroundUrl})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'top'
+                    }}
+                />
+                <div dir="rtl" className="relative z-10 min-h-screen bg-transparent text-white">
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid md:grid-cols-[300px_1fr] gap-8">
+                            <div>
+                                <img
+                                    src={movieData.posterUrl}
+                                    alt={movieData.title}
+                                    className="w-full rounded-lg shadow-2xl"
+                                />
+                                <p
+                                    className="mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <div>
+                                            <PlayCircle className="ms-2" />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                            <div>
+                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{movieData.title}</h1>
+                                <div className='flex items-center gap-2 mb-6 mt-6'>
+                                    <div>
+                                        <p className="text-gray-400 text-xl cursor-pointer">{movieData.genre}</p>
+                                    </div>
+                                </div>
 
-            <Seasonscard series={seriesData} />
+                                <div className="flex gap-4 mb-4">
+                                    <ActionButton
+                                        icon={Bookmark}
+                                        active={watchLater}
+                                        onClick={() => setWatchLater(!watchLater)}
+                                        label="Watch Later"
+                                        text={'بینینی دواتر'}
+                                    />
+                                    <ActionButton
+                                        icon={Heart}
+                                        active={favorite}
+                                        onClick={() => setFavorite(!favorite)}
+                                        label="Favorite"
+                                        text={'لیستی دڵخوازی'}
+                                    />
+                                    <ActionButton
+                                        icon={CheckCircle}
+                                        active={watched}
+                                        onClick={() => setWatched(!watched)}
+                                        label="Watched"
+                                        text={'بینراو'}
+                                    />
+                                </div>
 
-            <div className="mb-0 pt-12 px-8 flex justify-end items-center">
-                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەی هاوشێوە</h4>
+                                <div className="bg-gray-800 p-4 rounded mb-4">
+                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <div>
+                                            <p className="text-gray-400">بەرهەمهێنان</p>
+                                            <p className="font-semibold">{movieData.producer}</p>
+                                        </div>
+                                        <div className='mb-4'>
+                                            <p className="text-gray-400">وڵات</p>
+                                            <p className="font-semibold">{movieData.country}</p>
+                                        </div>
+                                        <div >
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="font-semibold">{movieData.ratings.imdb}/10</p>
+                                                </div>
+                                                <div>
+                                                    <img className="w-6 h-6" src="https://m.media-amazon.com/images/G/01/imdb/images/social/imdb_logo.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="font-semibold">{movieData.ratings.rottenTomatoes}%</p>
+                                                </div>
+                                                <div>
+                                                    <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Rotten_Tomatoes_alternative_logo.svg/1031px-Rotten_Tomatoes_alternative_logo.svg.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-gray-400">ژمارەی وەرزەکان</p>
+                                            <p className="font-semibold">{movieData.seasons}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-gray-400">ژمارەی ئەڵقەکان</p>
+                                            <p className="font-semibold">{movieData.eps}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-gray-400">دەرهێنان</p>
+                                            <p className="font-semibold">{movieData.director}</p>
+                                        </div>
+
+
+                                        <div>
+                                            <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
+                                            <p className="font-semibold">{movieData.views}</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="flex border-b border-gray-700 mb-4">
+                                    {['زانیاری', 'ئەکتەرەکان', 'سەیرکردن', 'هەڵسەنگاندن', 'تەکنیک'].map(tab => (
+                                        <button
+                                            key={tab}
+                                            className={`lg:px-4 px-2 text-md lg:text-xl py-2 capitalize ${activeTab === tab
+                                                ? 'border-b-2 border-sky-500 text-sky-500'
+                                                : 'text-white'
+                                                }`}
+                                            onClick={() => setActiveTab(tab)}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div>
+                                    {activeTab === 'زانیاری' && renderOverview()}
+                                    {activeTab === 'ئەکتەرەکان' && renderCast()}
+                                    {activeTab === 'تەکنیک' && renderTechnical()}
+                                    {activeTab === 'سەیرکردن' && renderEps()}
+                                    {activeTab === 'هەڵسەنگاندن' && renderReviews()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="relative z-50 mb-0 pt-12 px-8 flex justify-end items-center">
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
+                </div>
+
+                <FilmsCard />
             </div>
 
-            <FilmsCard />
 
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default SerieDetails
+export default Serisdetailss;
