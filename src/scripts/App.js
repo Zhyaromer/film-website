@@ -10,6 +10,8 @@ import SerieDetails from '../Pages/SerieDetails.jsx';
 import Loginpage from '../Pages/Login.jsx'
 import Signuppage from '../Pages/Signup.jsx'
 import Profile from '../Pages/Profile.jsx'
+import MovieDetailsPage from '../Pages/Idk.jsx';
+import Serisdetailss from '../Pages/Serisdetailss.jsx';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<Signuppage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/idk" element={<MovieDetailsPage />} />
       </Routes>
     </Router>
   );

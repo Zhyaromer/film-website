@@ -36,7 +36,7 @@ const reviews = [
 
 const ReviewCard = ({ name, rating, review }) => {
     return (
-        <div className="min-w-full lg:min-w-[33.333%] md:min-w-[50%] p-2">
+        <div className="w-full">
             <div dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
                 <div className="flex justify-between items-center mb-3">
                     <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ const CustomSlider = () => {
     };
 
     return (
-        <div className="relative bg-[#282e30] p-4" dir="rtl">
+        <div className="relative">
             {itemsPerPage > 1 && (
                 <>
                     <button
