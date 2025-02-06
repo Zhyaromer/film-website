@@ -4,7 +4,7 @@ import '../Styles/landingpage.css'
 import '../index.css'
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
-import Sliderr from '../components/@Layout/Slider.jsx'
+import MovieSlider from '../components/@Layout/Slider.jsx'
 import MoviesCard from '../components/@Layout/MoviesCard.jsx'
 
 const A = () => {
@@ -128,7 +128,7 @@ const A = () => {
         <div className='bg-[#282e30]'>
             <Navigation />
 
-            <Sliderr />
+            <MovieSlider />
 
             <div className="mx-auto px-4 py-8">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">

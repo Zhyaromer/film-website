@@ -57,7 +57,7 @@ const getNewestMoviesAndSeries = async (req, res) => {
             return snapshot.docs.map(doc => doc.data());
         };
 
-        const newestMovies = await fetchNewestDocuments('movies', 6);
+        const newestMovies = await fetchNewestDocuments('movies', 12);
         const newestSeries = await fetchNewestDocuments('series', 6);
 
         return res.status(200).json({ movies: newestMovies, series: newestSeries });

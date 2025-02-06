@@ -3,7 +3,7 @@ body {
 }
 
 .slick-dots li {
-    margin: 0px 3px !important;
+    margin: 0px 1px !important;
 }
 
 .slick-dots li button:before {
