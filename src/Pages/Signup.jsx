@@ -2,28 +2,56 @@ import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import axios from 'axios';
+import { auth, signInWithEmailAndPassword } from '../Firebase/frontendfb.js';
+import { useNavigate } from 'react-router-dom';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaSpinner } from 'react-icons/fa'; // Example: FontAwesome spinner
 
 const Signuppage = () => {
     const [name, setName] = useState('');
     const [username, setusername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [hasSubmitted, setHasSubmitted] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
+        setHasSubmitted(true);
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/api/auth/register', { name, username, email, password });
             console.log(response.status);
             if (response.status === 201) {
-                console.log('Signup successful');
+                const credentials = await signInWithEmailAndPassword(auth, email, password);
+                const id = await credentials.user.getIdToken();
+                const response = await axios.post("http://localhost:5000/api/auth/login", { email, password }, {
+                    headers: {
+                        Authorization: `Bearer ${id}`,
+                    },
+                    withCredentials: true,
+                });
+                if (response.status === 201) {
+                    toast.success("هەژمارەکەت بە سەرکەوتووی دروستکرا!", { transition: Slide, autoClose: 3000 });
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000)
+                } else if (response.status === 401) {
+                    toast.error(response.data.message, { transition: Slide, autoClose: 3000 });
+                } else {
+                    toast.error(response.data.message, { transition: Slide, autoClose: 3000 });
+                }
             } else if (response.status === 400) {
-                console.log(response.data.message);
-            } else{
-                console.log(response.data.message);
+                toast.error(response.data.message, { transition: Slide, autoClose: 3000 });
+            } else {
+                toast.error(response.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
-            console.error('Signup error:', error);
+            const errorMessage = error.response?.data?.message || error.message;
+            toast.error(errorMessage, { transition: Slide, autoClose: 3000 });
+        } finally {
+            setHasSubmitted(false);
         }
     };
 
@@ -103,10 +131,24 @@ const Signuppage = () => {
                             </div>
                         </div>
                         <button
+                            disabled={hasSubmitted}
                             type="submit"
                             className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-sky-700 transition duration-300 text-lg"
                         >
-                            دروستکردن
+                            {hasSubmitted ? (
+                                <>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div>
+                                            <FaSpinner className="text-center animate-spin" size={20} />
+                                        </div>
+                                        <div>
+                                            درستکردنی هەژماری نوێ
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                "دروستکردنی هەژماری نوێ"
+                            )}
                         </button>
                         <div className="text-center">
                             <p className="text-white text-sm">
@@ -119,6 +161,7 @@ const Signuppage = () => {
                     </form>
                 </div>
             </div>
+            <ToastContainer transition={Slide} />
         </div>
     );
 };

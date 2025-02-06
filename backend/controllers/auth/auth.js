@@ -13,6 +13,7 @@ const register = async (req, res) => {
             email,
             password,
             displayName: username,
+            emailVerified: true
         });
 
         try {
@@ -24,18 +25,22 @@ const register = async (req, res) => {
         } catch (error) {
             console.error("Error writing to Firestore:", error);
             await auth.deleteUser(user.uid);
-            return res.status(500).json({ message: "Error creating user in database", errorCode: "FIRESTORE_ERROR" });
+            return res.status(500).json({ message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە" });
         }
 
         return res.status(201).json({
-            message: "User created successfully"
+            message: "هەژمارەکەت بە سەرکەوتوی دروستکرا"
         })
     } catch (error) {
         console.error("Registration error:", error);
-        if (error.code === 'auth/email-already-in-use') { 
-            return res.status(400).json({ message: "User with this email already exists" });
+        if (error.code === 'auth/email-already-exists') {
+            return res.status(400).json({ message: "ئیمەیڵەکە پێشتر بەکارهێنراوە" }); 
+        } else if (error.code === 'auth/weak-password') {
+            return res.status(400).json({ message: "وشەی نهێنیەکی باشتر بەکار بهێنە" });
+        } else if (error.code === 'auth/invalid-email') {
+            return res.status(400).json({ message: "ئیمەیڵێکی دروست بەکار بهێنە" });
         }
-        return res.status(500).json({ message: "Something went wrong" }); 
+        return res.status(500).json({ message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە" });
     }
 }
 
@@ -47,21 +52,33 @@ const login = async (req, res) => {
         })
     }
     try {
-        const user = await auth.signInWithEmailAndPassword(email, password);
+        const user = await auth.getUserByEmail(email);
         if (!user) {
             return res.status(404).json({
-                message: "no user found",
+                message: "هیج هەژمارێک نەدۆزرایەوە",
             })
         }
 
-        return res.status(200).json({
-            message: "User logged in successfully",
-            uid: user.user.uid
-        })
+        const idToken = req.headers.authorization?.split("Bearer ")[1];
+        if (!idToken) {
+            res.status(401).send("Token required");
+        }
 
+        const authorization = await auth.verifyIdToken(idToken);
+        if (!authorization) {
+            return res.send(401).json({ message: 'رێگەپێنەدراوە' });
+        }
+        const expiresIn = 60 * 60 * 24 * 13 * 1000;
+        const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
+        res.cookie('idToken', sessionCookie, { httpOnly: false, maxAge: expiresIn, sameSite: 'strict' });
+
+        return res.status(201).json({
+            message: "بە سەرکەوتووی جویتە ژورەوە"
+        })
     } catch (error) {
+        console.error("Login error:", error);
         return res.status(500).json({
-            message: "Something went wrong"
+            message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە"
         })
     }
 }
