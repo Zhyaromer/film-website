@@ -144,7 +144,7 @@ const Footer = () => {
         { id: 2, text: 'بینراوی هەفتە' }
     ];
     return (
-        <footer className="w-full bg-[hsl(195,9%,10%)] p-4">
+        <footer className="relative z-50 w-full bg-[hsl(195,9%,10%)] p-4">
             <div className="flex justify-center md:justify-end items-center gap-6 pr-0 md:pr-4 mt-6">
                 {mostViewButtons.map((button) => (
                     <div key={button.id}>

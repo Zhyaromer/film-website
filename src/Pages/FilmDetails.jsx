@@ -362,7 +362,7 @@ const FilmDetails = () => {
 
             <ReviewSection className="bg-[#282e30]" />
 
-            <div className="bg-[#282e30] mb-0 pt-12 px-8 flex justify-end items-center">
+            <div className="bg-[#282e30] relative z-50 mb-0 pt-12 px-8 flex justify-end items-center">
                 <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
             </div>
 

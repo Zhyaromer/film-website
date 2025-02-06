@@ -9,7 +9,7 @@ const Navigation = () => {
     const [issearchxshown, setsearchxshown] = useState(false)
     
     return (
-        <div className='w-full shadow-xs shadow-[hsl(195,9%,0%)]'>
+        <div className='relative z-50 w-full shadow-xs shadow-[hsl(195,9%,0%)]'>
             <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
                 <input
                     dir='rtl'

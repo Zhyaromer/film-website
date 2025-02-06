@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Clock, PlayCircle, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2 } from 'lucide-react';
+import Navigation from '../components/@Layout/Navigation.jsx'
+import Footer from '../components/@Layout/Footer.jsx'
+import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 
 const MovieDetailsPage = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
@@ -107,6 +110,44 @@ const MovieDetailsPage = () => {
         }
     ];
 
+    const technicalMembers = [
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "وەرگێر"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "بەرگساز"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "بەرگساز"
+        },
+        {
+            name: "John Doe",
+            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
+            role: "تەکنیکار"
+        }
+    ]
+
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
             className={`flex items-center justify-center p-2 rounded-full 
@@ -127,7 +168,10 @@ const MovieDetailsPage = () => {
 
     const renderOverview = () => (
         <div className="space-y-4">
-            <p className="text-gray-300">{movieData.synopsis}</p>
+            <div>
+                <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">کورتەی جیرۆک</h2>
+            </div>
+            <p className="text-gray-200 text-lg">{movieData.synopsis}</p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-center">
                 <div onClick={() => window.open(movieData.trailer, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
                     <i class="fa-brands fa-youtube mx-auto mb-2 text-red-400"></i>
@@ -163,191 +207,238 @@ const MovieDetailsPage = () => {
         </div>
     );
 
-    const renderReviews = () => (
-        <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
-            {reviews.map((review, index) => (
-                <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
-                    <div className="flex justify-between items-center mb-3">
-                        <div className="flex items-center gap-2">
-                            <UserCircle2 className="w-10 h-10 text-white" />
-                            <span className="font-medium text-white cursor-pointer">{review.name}</span>
+    const renderTechnical = () => (
+        <div className="space-y-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                {technicalMembers.map((member, index) => (
+                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800/60 p-3 rounded">
+                        <div>
+                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
                         </div>
-                        <button className="text-white rounded-full p-1">
-                            <MoreVertical className="w-5 h-5" />
-                        </button>
+                        <div>
+                            <p className="font-bold">{member.name}</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">{member.role}</p>
+                        </div>
                     </div>
-                    <div className="flex items-center mb-2 justify-start">
-                        {[...Array(5)].map((_, index) => (
-                            <Star
-                                key={index}
-                                className={`w-5 h-5 ${index > review.rating - 1 ? 'text-gray-100' : 'text-sky-500'}`}
-                                fill={index > review.rating - 1 ? 'none' : 'currentColor'}
-                            />
-                        ))}
-                    </div>
-                    <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
-                        <p className="text-white text-right">{review.review}</p>
-                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderReviews = () => (
+        <div>
+            <div className="py-4 flex flex-row-reverse justify-between items-center px-4">
+                <div>
+                    <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                        دانانی هەڵسەنگاندن
+                    </button>
                 </div>
-            ))}
+                <div>
+                    <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
+                </div>
+            </div>
+            <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
+                {reviews.map((review, index) => (
+                    <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
+                        <div className="flex justify-between items-center mb-3">
+                            <div className="flex items-center gap-2">
+                                <UserCircle2 className="w-10 h-10 text-white" />
+                                <span className="font-medium text-white cursor-pointer">{review.name}</span>
+                            </div>
+                            <button className="text-white rounded-full p-1">
+                                <MoreVertical className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="flex items-center mb-2 justify-start">
+                            {[...Array(5)].map((_, index) => (
+                                <Star
+                                    key={index}
+                                    className={`w-5 h-5 ${index > review.rating - 1 ? 'text-gray-100' : 'text-sky-500'}`}
+                                    fill={index > review.rating - 1 ? 'none' : 'currentColor'}
+                                />
+                            ))}
+                        </div>
+                        <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
+                            <p className="text-white text-right">{review.review}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 
     return (
-        <div
-            dir="rtl"
-            className="min-h-screen bg-gray-900 text-white"
-            style={{
-                backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${movieData.backgroundUrl})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-            }}
-        >
-            <div className="container mx-auto px-4 py-8">
-                <div className="grid md:grid-cols-[300px_1fr] gap-8">
-                    <div>
-                        <img
-                            src={movieData.posterUrl}
-                            alt={movieData.title}
-                            className="w-full rounded-lg shadow-2xl"
-                        />
-                        <div className="grid grid-cols-2 gap-4 mt-4">
-                            <button className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white py-3 rounded">
-                                <div className="flex items-center gap-2">
-                                    <div>
-                                        <Tv className="mr-2" />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">سەیرکردن</p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded">
-                                <div className="flex items-center gap-2">
-                                    <div>
-                                        <Download className="mr-2" />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold">دابەزاندن</p>
-                                    </div>
-                                </div>
-                            </button>
-                        </div>
-                        <a
-                            href={movieData.trailer}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded"
-                        >
-                            <div className="flex items-center gap-2">
-                                <div>
-                                    <PlayCircle className="ms-2" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{movieData.title}</h1>
-                        <div className='flex items-center gap-2 mb-6 mt-6'>
+        <div>
+            <Navigation className="relative z-40" />
+            <div className="relative z-0 min-h-screen">
+                <div
+                    className="fixed inset-0 z-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${movieData.backgroundUrl})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                />
+                <div dir="rtl" className="relative z-10 min-h-screen bg-transparent text-white">
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid md:grid-cols-[300px_1fr] gap-8">
                             <div>
-                                <p className="text-gray-400 text-xl cursor-pointer">{movieData.genre}</p>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-4 mb-4">
-                            <ActionButton
-                                icon={Bookmark}
-                                active={watchLater}
-                                onClick={() => setWatchLater(!watchLater)}
-                                label="Watch Later"
-                                text={'بینینی دواتر'}
-                            />
-                            <ActionButton
-                                icon={Heart}
-                                active={favorite}
-                                onClick={() => setFavorite(!favorite)}
-                                label="Favorite"
-                                text={'لیستی دڵخوازی'}
-                            />
-                            <ActionButton
-                                icon={CheckCircle}
-                                active={watched}
-                                onClick={() => setWatched(!watched)}
-                                label="Watched"
-                                text={'بینراو'}
-                            />
-                        </div>
-
-                        <div className="bg-gray-800 p-4 rounded mb-4">
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                <div>
-                                    <p className="text-gray-400">بەرهەمهێنان</p>
-                                    <p className="font-semibold">{movieData.producer}</p>
-                                </div>
-                                <div className='mb-4'>
-                                    <p className="text-gray-400">وڵات</p>
-                                    <p className="font-semibold">{movieData.country}</p>
-                                </div>
-                                <div >
-                                    <div className="flex items-center gap-2">
-                                        <div>
-                                            <p className="font-semibold">{movieData.ratings.imdb}/10</p>
+                                <img
+                                    src={movieData.posterUrl}
+                                    alt={movieData.title}
+                                    className="w-full rounded-lg shadow-2xl"
+                                />
+                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                    <button className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white py-3 rounded">
+                                        <div className="flex items-center gap-2">
+                                            <div>
+                                                <Tv className="mr-2" />
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold">سەیرکردن</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <img className="w-6 h-6" src="https://m.media-amazon.com/images/G/01/imdb/images/social/imdb_logo.png" alt="" />
+                                    </button>
+                                    <button className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded">
+                                        <div className="flex items-center gap-2">
+                                            <div>
+                                                <Download className="mr-2" />
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold">دابەزاندن</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </button>
                                 </div>
-                                <div>
-                                    <div className="flex items-center gap-2">
-                                        <div>
-                                            <p className="font-semibold">{movieData.ratings.rottenTomatoes}%</p>
-                                        </div>
-                                        <div>
-                                            <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Rotten_Tomatoes_alternative_logo.svg/1031px-Rotten_Tomatoes_alternative_logo.svg.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="text-gray-400">دەرهێنان</p>
-                                    <p className="font-semibold">{movieData.director}</p>
-                                </div>
-
-                                <div>
-                                    <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
-                                    <p className="font-semibold">{movieData.views}</p>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div className="flex border-b border-gray-700 mb-4">
-                            {['زانیاری', 'ئەکتەرەکان', 'هەڵسەنگاندن'].map(tab => (
-                                <button
-                                    key={tab}
-                                    className={`px-4 py-2 capitalize ${activeTab === tab
-                                        ? 'border-b-2 border-blue-500 text-blue-500'
-                                        : 'text-gray-400'
-                                        }`}
-                                    onClick={() => setActiveTab(tab)}
+                                <a
+                                    href={movieData.trailer}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded"
                                 >
-                                    {tab}
-                                </button>
-                            ))}
-                        </div>
+                                    <div className="flex items-center gap-2">
+                                        <div>
+                                            <PlayCircle className="ms-2" />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{movieData.title}</h1>
+                                <div className='flex items-center gap-2 mb-6 mt-6'>
+                                    <div>
+                                        <p className="text-gray-400 text-xl cursor-pointer">{movieData.genre}</p>
+                                    </div>
+                                </div>
 
-                        <div>
-                            {activeTab === 'زانیاری' && renderOverview()}
-                            {activeTab === 'ئەکتەرەکان' && renderCast()}
-                            {activeTab === 'هەڵسەنگاندن' && renderReviews()}
+                                <div className="flex gap-4 mb-4">
+                                    <ActionButton
+                                        icon={Bookmark}
+                                        active={watchLater}
+                                        onClick={() => setWatchLater(!watchLater)}
+                                        label="Watch Later"
+                                        text={'بینینی دواتر'}
+                                    />
+                                    <ActionButton
+                                        icon={Heart}
+                                        active={favorite}
+                                        onClick={() => setFavorite(!favorite)}
+                                        label="Favorite"
+                                        text={'لیستی دڵخوازی'}
+                                    />
+                                    <ActionButton
+                                        icon={CheckCircle}
+                                        active={watched}
+                                        onClick={() => setWatched(!watched)}
+                                        label="Watched"
+                                        text={'بینراو'}
+                                    />
+                                </div>
+
+                                <div className="bg-gray-800 p-4 rounded mb-4">
+                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <div>
+                                            <p className="text-gray-400">بەرهەمهێنان</p>
+                                            <p className="font-semibold">{movieData.producer}</p>
+                                        </div>
+                                        <div className='mb-4'>
+                                            <p className="text-gray-400">وڵات</p>
+                                            <p className="font-semibold">{movieData.country}</p>
+                                        </div>
+                                        <div >
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="font-semibold">{movieData.ratings.imdb}/10</p>
+                                                </div>
+                                                <div>
+                                                    <img className="w-6 h-6" src="https://m.media-amazon.com/images/G/01/imdb/images/social/imdb_logo.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="font-semibold">{movieData.ratings.rottenTomatoes}%</p>
+                                                </div>
+                                                <div>
+                                                    <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Rotten_Tomatoes_alternative_logo.svg/1031px-Rotten_Tomatoes_alternative_logo.svg.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-gray-400">دەرهێنان</p>
+                                            <p className="font-semibold">{movieData.director}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
+                                            <p className="font-semibold">{movieData.views}</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="flex border-b border-gray-700 mb-4">
+                                    {['زانیاری', 'ئەکتەرەکان', 'هەڵسەنگاندن', 'تەکنیک'].map(tab => (
+                                        <button
+                                            key={tab}
+                                            className={`px-4 py-2 capitalize ${activeTab === tab
+                                                ? 'border-b-2 border-sky-500 text-sky-500'
+                                                : 'text-white'
+                                                }`}
+                                            onClick={() => setActiveTab(tab)}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div>
+                                    {activeTab === 'زانیاری' && renderOverview()}
+                                    {activeTab === 'ئەکتەرەکان' && renderCast()}
+                                    {activeTab === 'تەکنیک' && renderTechnical()}
+                                    {activeTab === 'هەڵسەنگاندن' && renderReviews()}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div className="relative z-50 mb-0 pt-12 px-8 flex justify-end items-center">
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
+                </div>
+
+                <FilmsCard />
             </div>
+
+
+            <Footer />
         </div>
     );
 };

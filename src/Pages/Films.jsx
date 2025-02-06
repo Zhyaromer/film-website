@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navigation from '../components/@Layout/Navigation.jsx'
+import Footer from '../components/@Layout/Footer.jsx'
 import MultiSelect from '../components/@UI/Filtersinput.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
-import Footer from '../components/@Layout/Footer.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
 
 const Films = () => {
