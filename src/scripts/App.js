@@ -10,7 +10,7 @@ import SerieDetails from '../Pages/SerieDetails.jsx';
 import Loginpage from '../Pages/Login.jsx'
 import Signuppage from '../Pages/Signup.jsx'
 import Profile from '../Pages/Profile.jsx'
-
+import ForgotPassword from '../Pages/Forgotpass.jsx'
 function App() {
   return (
     <Router>
@@ -26,6 +26,7 @@ function App() {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<Signuppage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

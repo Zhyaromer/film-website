@@ -6,7 +6,7 @@ import { auth, signInWithEmailAndPassword } from '../Firebase/frontendfb.js';
 import { useNavigate } from 'react-router-dom';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSpinner } from 'react-icons/fa'; // Example: FontAwesome spinner
+import { FaSpinner } from 'react-icons/fa';
 
 const Signuppage = () => {
     const [name, setName] = useState('');
@@ -32,7 +32,7 @@ const Signuppage = () => {
                     },
                     withCredentials: true,
                 });
-                if (response.status === 201) {
+                if (response.status === 200) {
                     toast.success("هەژمارەکەت بە سەرکەوتووی دروستکرا!", { transition: Slide, autoClose: 3000 });
                     setTimeout(() => {
                         navigate('/');
@@ -66,7 +66,7 @@ const Signuppage = () => {
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                            <label htmlFor="name" className="block text-sky-500 text-right mb-2">
+                            <label htmlFor="name" className="block text-lg text-sky-500 text-right mb-2">
                                 ناو
                             </label>
                             <input
@@ -80,7 +80,7 @@ const Signuppage = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="displayName" className="block text-sky-500 text-right mb-2">
+                            <label htmlFor="displayName" className="block text-lg text-sky-500 text-right mb-2">
                                 نازناو
                             </label>
                             <input
@@ -102,13 +102,13 @@ const Signuppage = () => {
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-[hsl(195,9%,28%)] px-4 py-3 border text-white placeholder:text-gray-300 border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
+                                className="w-full text-lg bg-[hsl(195,9%,28%)] px-4 py-3 border text-white placeholder:text-gray-300 border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                                 placeholder="ئیمەیڵەکەت بنووسە"
                                 required
                             />
                         </div>
                         <div>
-                            <label htmlFor="password" className="block text-sky-500 text-right mb-2">
+                            <label htmlFor="password" className="block text-lg text-sky-500 text-right mb-2">
                                 تێپەڕەوشە
                             </label>
                             <div className="relative">
@@ -151,9 +151,9 @@ const Signuppage = () => {
                             )}
                         </button>
                         <div className="text-center">
-                            <p className="text-white text-sm">
+                            <p className="text-white text-md">
                                 پێشتر هەژمارت هەیە؟{' '}
-                                <a href="#" className="text-sky-400 hover:underline font-semibold">
+                                <a href="/login" className="text-sky-400 hover:underline font-semibold">
                                     چوونەژوورەوە
                                 </a>
                             </p>
