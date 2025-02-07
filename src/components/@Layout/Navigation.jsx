@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
+import Onauth from '../../helpers/Onauth.jsx'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import { auth, signOut } from '../../Firebase/frontendfb.js';
 
 const Navigation = () => {
-    const[isshown, setshown] = useState(true)
+    const [isshown, setshown] = useState(true)
     const [issubshown, setsubshown] = useState(false)
     const [issubshown2, setsubshown2] = useState(false)
     const [issidebarshown, setsidebarshown] = useState(false)
     const [issidebarshown2, setsidebarshown2] = useState(false)
     const [issearchxshown, setsearchxshown] = useState(false)
-    
+    const [isuseropen, setisuseropen] = useState(false)
+    const user = Onauth()
+
+    const logingOut = async () => {
+        try {
+            await signOut(auth);
+            document.cookie = `${`idToken`}=; Max-Age=0; path=/;`;
+            toast.success('لە هەژمارەکەت جویتە دەر', { transition: Slide, autoClose: 3000 })
+        } catch (error) {
+            toast.error('کێشەیەک ڕویدا تکایە هەوڵبدەوە', { transition: Slide, autoClose: 3000 })
+        }
+    }
+
     return (
         <div className='relative z-50 w-full shadow-xs shadow-[hsl(195,9%,0%)]'>
             <div className={`absolute top-0 left-0 right-0 lg:hidden flex w-full ${issearchxshown ? 'visible' : 'invisible'}`}>
@@ -45,6 +62,7 @@ const Navigation = () => {
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">کۆری</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">ئەنیمی</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">فارسی</p>
+                                ئەنیمی کۆری بۆلیود  سەرجەم فیلمەکان هۆلیود کۆری
                             </div>
                         </div>
                         <div className='relative'>
@@ -220,10 +238,36 @@ const Navigation = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-row items-center justify-start'>
-                        <h3 className='cursor-pointer text-2xl font-bold text-white p-2'>
+                    <div onClick={() => setisuseropen(!isuseropen)} className='relative flex flex-row items-center justify-start'>
+                        <h3 className={`cursor-pointer text-2xl font-bold ${user ? 'text-sky-500' : 'text-white'} p-2`}>
                             <i className="fa-solid fa-user"></i>
                         </h3>
+                        {user ? (
+                            <div className={`absolute ${isuseropen ? 'block' : 'hidden'} text-right left-0 group-hover:block bg-gray-800 text-white rounded-lg shadow-lg p-0 top-full right-0 mt-2 w-48 z-50`}>
+                                <div className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
+                                    <div>
+                                        <a href="/login" className="font-semibold">پرۆفایل</a>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid text-gray-500 fa-user-gear"></i>
+                                    </div>
+                                </div>
+
+                                <div onClick={() => logingOut()} className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
+                                    <div>
+                                        <a href="#" className="font-semibold">چونەدەرەوە</a>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid text-red-500 fa-right-from-bracket"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={`absolute ${isuseropen ? 'block' : 'hidden'} text-right left-0 group-hover:block bg-gray-800 text-white rounded-lg shadow-lg p-0 top-full right-0 mt-2 w-48 z-50`}>
+                                <a href="/login" className="block p-4 hover:bg-gray-700">چوونەژورەوە</a>
+                                <a href="/register" className="block p-4 hover:bg-gray-700">دروستکردنی هەژمار</a>
+                            </div>
+                        )}
                     </div>
                 </div>
             </nav>

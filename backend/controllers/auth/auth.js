@@ -1,4 +1,4 @@
-const { auth, db } = require('../../config/Firebase/firebase');
+const { auth, db, signOut } = require('../../config/Firebase/firebase');
 const xss = require('xss')
 
 const register = async (req, res) => {
@@ -32,7 +32,7 @@ const register = async (req, res) => {
             await db.collection('users').doc(user.uid).set({
                 email: sanEmail,
                 name: sanName,
-                username:sanUsername
+                username: sanUsername
             });
         } catch (error) {
             console.error("Error writing to Firestore:", error);
@@ -84,7 +84,7 @@ const login = async (req, res) => {
 
         const expiresIn = 60 * 60 * 24 * 13 * 1000;
         const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
-        res.cookie('idToken', sessionCookie, { httpOnly: false, maxAge: expiresIn, sameSite: 'strict' });
+        res.cookie('idToken', sessionCookie, { httpOnly: false, maxAge: expiresIn, sameSite: 'lax' });
 
         return res.status(200).json({
             message: "بە سەرکەوتووی چویتە ژورەوە"
@@ -99,16 +99,13 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        await auth.signOut();
-        return res.status(200).json({
-            message: "User logged out successfully"
-        })
+        res.clearCookie('idToken');
+        res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
-        return res.status(500).json({
-            message: "Something went wrong"
-        })
+        console.error(error);
+        res.status(500).json({ message: "Logout failed" });
     }
-}
+};
 
 const passwordReset = async (req, res) => {
     const { email } = req.body;
