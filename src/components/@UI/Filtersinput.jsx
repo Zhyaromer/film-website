@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '../../Styles/filters.css'
 
-const MultiSelect = ({ options, placeholder }) => {
+const MultiSelect = ({ options, placeholder, onSelectionChange, singleSelect = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
     const dropdownRef = useRef(null);
@@ -19,14 +19,22 @@ const MultiSelect = ({ options, placeholder }) => {
         };
     }, []);
 
+    useEffect(() => {
+        onSelectionChange(selectedItems);
+    }, [selectedItems, onSelectionChange]);
+
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const toggleOption = (option) => {
         setSelectedItems(prev => {
-            if (prev.find(item => item.id === option.id)) {
-                return prev.filter(item => item.id !== option.id);
+            if (singleSelect) {
+                return prev.find(item => item.id === option.id) ? [] : [option];
+            } else {
+                if (prev.find(item => item.id === option.id)) {
+                    return prev.filter(item => item.id !== option.id);
+                }
+                return [...prev, option];
             }
-            return [...prev, option];
         });
     };
 
@@ -52,8 +60,8 @@ const MultiSelect = ({ options, placeholder }) => {
     };
 
     return (
-        <div className="relative w-72 " ref={dropdownRef}>
-            <div >
+        <div className="relative w-72 z-40" ref={dropdownRef}>
+            <div>
                 <button
                     onClick={toggleDropdown}
                     className="w-full p-2 text-right bg-[hsl(195,9%,25%)] rounded-md shadow-sm"
@@ -80,7 +88,7 @@ const MultiSelect = ({ options, placeholder }) => {
                             <input
                                 type="checkbox"
                                 checked={selectedItems.some(item => item.id === option.id)}
-                                onChange={() => { }}
+                                onChange={() => {}}
                                 className="h-4 w-4 text-blue-600 rounded"
                             />
                             <span className="ml-2 text-md text-white me-3">{option.label}</span>

@@ -1,4 +1,4 @@
-const { auth, db, signOut } = require('../../config/Firebase/firebase');
+const { auth, db } = require('../../config/Firebase/firebase');
 const xss = require('xss')
 
 const register = async (req, res) => {

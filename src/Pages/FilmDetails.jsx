@@ -271,7 +271,7 @@ const MovieDetailsPage = () => {
 
     return (
         <div>
-            <Navigation className="relative z-40" />
+            <Navigation className="relative" />
             <div className="relative z-0 min-h-screen">
                 <div
                     className="fixed inset-0 z-0"

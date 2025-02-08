@@ -3,11 +3,19 @@
 const FiltersOption = () => {
     const genre = [
         { id: 1, label: 'ئاکشن', value: 'ئاکشن' },
-        { id: 2, label: 'ڕۆمانس', value: 'ڕۆمانس' },
+        { id: 2, label: 'ڕۆمانسی', value: 'ڕۆمانسی' },
         { id: 3, label: 'دراما', value: 'دراما' },
-        { id: 4, label: 'مێژووی', value: 'مێژووی' },
-        { id: 5, label: 'تاوانکاری ', value: 'تاوانکاری' },
-        { id: 6, label: 'نهێنی', value: 'نهێنی' }
+        { id: 4, label: 'مێژوویی', value: 'مێژوویی' },
+        { id: 5, label: 'سەرکێشی ', value: 'سەرکێشی' },
+        { id: 6, label: 'کۆمیدی ', value: 'کۆمیدی' },
+        { id: 7, label: 'تاوان ', value: 'تاوان' },
+        { id: 8, label: 'فەنتازی ', value: 'فەنتازی' },
+        { id: 9, label: 'مۆزیکاڵ ', value: 'مۆزیکاڵ' },
+        { id: 10, label: 'ژیاننامە ', value: 'ژیاننامە' },
+        { id: 11, label: 'جەنگی ', value: 'جەنگی' },
+        { id: 12, label: 'زانستی ', value: 'زانستی' },
+        { id: 13, label: 'ئەنیمەیشن ', value: 'ئەنیمەیشن' },
+        { id: 14, label: 'نهێنی', value: 'نهێنی' }
     ];
 
     const year = [
@@ -23,7 +31,6 @@ const FiltersOption = () => {
     const sorting = [
         { id: 1, label: 'تازەترین', value: 'newest' },
         { id: 2, label: 'پڕ بینەرترین', value: 'popularity' },
-        { id: 3, label: 'ساڵ', value: 'yearofmovie' }
     ];
 
     return { genre, year, sorting };

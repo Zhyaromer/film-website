@@ -1,9 +1,49 @@
 const { db } = require('../../config/Firebase/firebase');
 
 const getAllMovies = async (req, res) => {
-    const movies = await db.collection('movies').get();
-    return res.status(200).json(movies.docs.map(doc => doc.data()));
-}
+    try {
+        const { year, genre, sorting } = req.query;
+        console.log(genre)
+        let moviesQuery = db.collection('movies');
+
+        if (year) {
+            const years = year.split(',');
+            console.log(years)
+            moviesQuery = moviesQuery.where('year', 'in', years);
+        }
+
+        if (genre) {
+            const genres = genre.split(',');
+            console.log(genres)
+            moviesQuery = moviesQuery.where('genre', 'array-contains-any', genres);
+        }
+
+        const moviesSnapshot = await moviesQuery.get();
+
+        const movies = [];
+        moviesSnapshot.forEach(doc => {
+            movies.push({ id: doc.id, ...doc.data() });
+        });
+
+        if (sorting) {
+            switch (sorting) {
+                case 'popularity':
+                    movies.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
+                case 'newest':
+                    movies.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res.status(200).json({ movies });
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 const getAllSeries = async (req, res) => {
     const series = await db.collection('series').get();
@@ -51,7 +91,7 @@ const getNewestMoviesAndSeries = async (req, res) => {
     try {
         const fetchNewestDocuments = async (collectionName, count) => {
             const snapshot = await db.collection(collectionName)
-                .orderBy('createdAt', 'desc') 
+                .orderBy('createdAt', 'desc')
                 .limit(count)
                 .get();
             return snapshot.docs.map(doc => doc.data());

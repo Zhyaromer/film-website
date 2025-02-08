@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Onauth from '../../helpers/Onauth.jsx'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import { auth, signOut } from '../../Firebase/frontendfb.js';
@@ -244,9 +243,9 @@ const Navigation = () => {
                         </h3>
                         {user ? (
                             <div className={`absolute ${isuseropen ? 'block' : 'hidden'} text-right left-0 group-hover:block bg-gray-800 text-white rounded-lg shadow-lg p-0 top-full right-0 mt-2 w-48 z-50`}>
-                                <div className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
+                                <div onClick={() => window.location.href='/profile'} className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
                                     <div>
-                                        <a href="/login" className="font-semibold">پرۆفایل</a>
+                                        <a href="#" className="font-semibold">پرۆفایل</a>
                                     </div>
                                     <div>
                                         <i class="fa-solid text-gray-500 fa-user-gear"></i>
