@@ -47,14 +47,61 @@ const getAllMovies = async (req, res) => {
 
 const getMovieById = async (req, res) => {
     const { filmId } = req.params;
-    console.log(filmId)
     const movieDoc = await db.collection('movies').doc(filmId).get();
     if (!movieDoc.exists) {
         return res.status(404).json({ message: 'Movie not found' });
     }
     const movie = movieDoc.data();
-    console.log(movie)
     return res.status(200).json({ movie });
+};
+
+const getSimilarMovies = async (req, res) => {
+    try {
+        const { filmId } = req.params;
+        const movieDoc = await db.collection('movies').doc(filmId).get();
+
+        if (!movieDoc.exists) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+
+        const movie = movieDoc.data();
+        const genres = movie.genre;
+
+        const moviesSnapshot = await db.collection('movies')
+            .where('genre', 'array-contains-any', genres)
+            .get();
+
+        const movies = moviesSnapshot.docs
+            .map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            .filter(m => m.id !== filmId);
+
+        const moviesWithScores = movies.map(m => {
+            const matchingGenres = m.genre.filter(g => genres.includes(g));
+            return {
+                ...m,
+                matchScore: matchingGenres.length
+            };
+        });
+
+        const sortedMovies = moviesWithScores
+            .sort((a, b) => {
+                if (b.matchScore !== a.matchScore) {
+                    return b.matchScore - a.matchScore;
+                }
+                return 0;
+            })
+            .slice(0, 6);
+
+        return res.status(200).json({
+            similarMovies: sortedMovies.map(({ matchScore, ...movie }) => movie)
+        });
+    } catch (error) {
+        console.error('Error getting similar movies:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 const getAllSeries = async (req, res) => {
@@ -120,4 +167,4 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getAllMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

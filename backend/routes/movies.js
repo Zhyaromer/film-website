@@ -7,5 +7,6 @@ router.get('/series', moviesController.getAllSeries);
 router.get('/random', moviesController.getRandomMoveandSeries);
 router.get('/newest', moviesController.getNewestMoviesAndSeries);
 router.get('/movie/:filmId', moviesController.getMovieById);
+router.get('/similar/:filmId', moviesController.getSimilarMovies);
 
 module.exports = router;

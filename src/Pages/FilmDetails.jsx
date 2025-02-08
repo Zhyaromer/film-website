@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Clock, PlayCircle, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
-import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import SimiliarFilmsCard from '../components/@Layout/Similiarfilm.jsx'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -12,6 +12,7 @@ const MovieDetailsPage = () => {
     const [favorite, setFavorite] = useState(false);
     const [watched, setWatched] = useState(false);
     const [film, setFilm] = useState({});
+    const [similarMovies, setSimilarMovies] = useState([]);
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -145,9 +146,21 @@ const MovieDetailsPage = () => {
                 console.error(error);
             }
         }
-
         fetchMovieData();
     }, [filmId]);
+
+    useEffect(() => {
+        const fetchSimiliarMovies = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/movies/similar/${filmId}`);
+                setSimilarMovies(res.data.similarMovies);
+                console.log(res.data.similarMovies);
+            } catch (error) {
+                
+            }
+        }
+        fetchSimiliarMovies();
+    },[filmId])
 
     const hasMultipleParts = film.otherParts && film.otherParts.length > 0;
 
@@ -316,9 +329,8 @@ const MovieDetailsPage = () => {
                     <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
                 </div>
 
-                <FilmsCard />
+                <SimiliarFilmsCard moviesData={similarMovies} />
             </div>
-
 
             <Footer />
         </div>
