@@ -12,7 +12,7 @@ import Signuppage from '../Pages/Signup.jsx'
 import Profile from '../Pages/Profile.jsx'
 import ForgotPassword from '../Pages/Forgotpass.jsx'
 import Navbar from '../Pages/Test.jsx'
-
+import Actors from '../Pages/Actors.jsx'
 function App() {
   return (
     <Router>
@@ -24,6 +24,7 @@ function App() {
         <Route path="/suggestion" element={<Suggestion />} />
         <Route path="/News" element={<News />} />
         <Route path="/filmdetails/:filmId" element={<FilmDetails />} />
+        <Route path="/actors/:actor" element={<Actors />} />
         <Route path="/seriesdetails" element={<SerieDetails />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<Signuppage />} />

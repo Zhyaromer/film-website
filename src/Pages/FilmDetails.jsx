@@ -59,7 +59,7 @@ const MovieDetailsPage = () => {
         <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
                 {film.cast.map((member, index) => (
-                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
+                    <div key={index} onClick={() => window.location.href = `/actors/${member.name}`} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
                         <div>
                             <img className='w-24 h-24 rounded-full' src={member.imgurl} alt="" />
                         </div>
