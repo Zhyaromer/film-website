@@ -45,6 +45,18 @@ const getAllMovies = async (req, res) => {
     }
 };
 
+const getMovieById = async (req, res) => {
+    const { filmId } = req.params;
+    console.log(filmId)
+    const movieDoc = await db.collection('movies').doc(filmId).get();
+    if (!movieDoc.exists) {
+        return res.status(404).json({ message: 'Movie not found' });
+    }
+    const movie = movieDoc.data();
+    console.log(movie)
+    return res.status(200).json({ movie });
+};
+
 const getAllSeries = async (req, res) => {
     const series = await db.collection('series').get();
     return res.status(200).json(series.docs.map(doc => doc.data()));
@@ -108,4 +120,4 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getAllMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

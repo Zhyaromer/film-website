@@ -4,37 +4,33 @@ import { useState, useEffect } from 'react'
 const FilmsCard = ({ moviesData }) => {
     const [isSuggestion, setIsSuggestion] = useState(false)
     const [currentMovies, setCurrentMovies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // Add this line
     const itemsPerPage = 6;
-
+    
     const movies = Array.isArray(moviesData) ? moviesData : (moviesData?.movies || []);
 
     useEffect(() => {
-        const HomePage = () => {
-            if (window.location.pathname === '/suggestion' ||
-                window.location.pathname === '/filmdetails' ||
-                window.location.pathname === '/seriesdetails') {
-                setIsSuggestion(true);
-            } else {
-                setIsSuggestion(false);
-            }
-        }
-        HomePage();
+        const isOnSuggestionPages = window.location.pathname === '/suggestion' ||
+            window.location.pathname === '/filmdetails' ||
+            window.location.pathname === '/seriesdetails';
 
+        if (isSuggestion !== isOnSuggestionPages) {
+            setIsSuggestion(isOnSuggestionPages);
+        }
+
+        // Calculate the start and end indices for the current page
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        // Only update if we have movies
         if (movies.length > 0) {
-            setCurrentMovies(movies.slice(0, itemsPerPage));
-        } else {
-            setCurrentMovies([]); 
+            setCurrentMovies(movies.slice(startIndex, endIndex));
         }
-    }, [movies]); 
+    }, [movies, currentPage, isSuggestion]); // Removed currentMovies from dependencies
 
-    const handlePageChange = (page, startIndex, endIndex) => {
-        if (!Array.isArray(movies)) return;
-
-        const start = Math.max(0, startIndex);
-        const end = Math.min(movies.length, endIndex);
-
-        const newMovies = movies.slice(start, end);
-        setCurrentMovies(newMovies);
+    // Simplified handlePageChange
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
     };
 
     if (movies.length === 0) {

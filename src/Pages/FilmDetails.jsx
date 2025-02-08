@@ -1,152 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Clock, PlayCircle, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const MovieDetailsPage = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
     const [watchLater, setWatchLater] = useState(false);
     const [favorite, setFavorite] = useState(false);
     const [watched, setWatched] = useState(false);
-
-    const movieData = {
-        title: 'Spider man : No way home (2021)',
-        genre: 'سەرکێشێ - ئاکشن - خەیاڵی',
-        date: '2021-12-15',
-        duration: '258 خولەک',
-        director: 'Jon watts',
-        producer: 'Marvel Studios',
-        country: 'ئەمریکا',
-        views: 24561,
-        ratings: {
-            imdb: 8.7,
-            rottenTomatoes: 92
-        },
-        cast: ['Marcus Chen', 'Aria Nakamura', 'David Okonkwo'],
-        posterUrl: 'https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_.jpg',
-        backgroundUrl: 'https://occ-0-8407-1723.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRDQOzGC_rInp4gFvqFPDF3mcWchowjepe5uTldav_Sx1QgJlpJG-ATT_PcYJbF-y5AtlC9koSScBJPATb4JET65SrkrgOl92SGl.jpg?r=c9b',
-        synopsis: 'دوای ئاشکرابوونس ناسنامەی "سپایدرەمان" پیتەر داوای له دکتۆر "سترەینج" دەکات یارمەتی بدات تا بگەڕێتەوە ژیانە ئاسایییەکەی. بەڵام هەڵەیەک لە جادووەکەی دکتۆر "سترەینج" دەبێتە هۆی شێواندنی فرە گەردوونی',
-        trailer: 'https://youtu.be/JfVOs4VSpmA?si=8Z9M-ScFciGU3WSE',
-        reviews: [
-            { name: 'CinemaToday', quote: 'A mind-bending masterpiece of modern sci-fi' },
-            { name: 'FilmWire', quote: 'Breathtaking visuals and compelling narrative' }
-        ]
-    };
-
-    const castMembers = [
-        {
-            name: "Tom Holland",
-            photo: "https://hips.hearstapps.com/hmg-prod/images/tom-holland-attends-the-los-angeles-premiere-of-sony-news-photo-1683915930.jpg?crop=0.596xw:0.894xh;0.226xw,0.106xh&resize=1200:*"
-        },
-        {
-            name: "Benedict Cumberbatch",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaYAfu0kG389lUu25CUX5yRjHXmtN2s4ORqg&s"
-        },
-        {
-            name: "Zendaya",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs8c4o19zp0i2ztJIke2VkvbA64DhpNdVIGQ&s"
-        },
-        {
-            name: "Jacob Batalon",
-            photo: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Jacob_Batalon_%2828035642754%29_%28cropped%29.jpg"
-        },
-        {
-            name: "Marisa Tomei",
-            photo: "https://m.media-amazon.com/images/M/MV5BZTJiNTYxMGYtYzM5OS00N2EzLTk0NDktZjkwZGIyMzlmYWU2XkEyXkFqcGc@._V1_.jpg"
-        },
-        {
-            name: "Jon Favreau",
-            photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Jon_Favreau_2016.jpeg/1200px-Jon_Favreau_2016.jpeg"
-        },
-        {
-            name: "Willem Dafoe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s"
-        },
-        {
-            name: "Alfred Molina",
-            photo: "https://static.independent.co.uk/2022/11/25/16/shutterstock_editorial_12866542o.jpg"
-        },
-        {
-            name: "Tobey Maguire",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHU0gPKpbl4Ly5Uk-Hlhg7szYqBbPnSl7RHDvVcjAZ2EFu2YhBROPce5jpKs5pa1aYxgvtP7QiAVTS9UhaDkEBdQ"
-        },
-        {
-            name: "Andrew Garfield",
-            photo: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQABvLfxHx7OiVWX1GKXyCdbHf8HwKkZ88iwx_Pv9L2LJntjkknjKuRlVAd2GRoVcchBUGCusxf7zx8Elpy4FzUmQ"
-        }
-    ];
-
-    const reviews = [
-        {
-            id: 1,
-            name: "حەسەن ڕەزا",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 2,
-            name: "محەمەد ڕزگار",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 3,
-            name: "Sarah Kim",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 4,
-            name: "Alex Wong",
-            rating: 5,
-            review: "Exceptional quality and customer service Exceptional quality and customer service Exceptional quality and customer service",
-        },
-        {
-            id: 5,
-            name: "Jessica Lee",
-            rating: 3,
-            review: "Solid performance with great features.",
-        }
-    ];
-
-    const technicalMembers = [
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "بەرگساز"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "بەرگساز"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "تەکنیکار"
-        }
-    ]
+    const [film, setFilm] = useState({});
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -171,19 +36,19 @@ const MovieDetailsPage = () => {
             <div>
                 <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">کورتەی جیرۆک</h2>
             </div>
-            <p className="text-gray-200 text-lg">{movieData.synopsis}</p>
+            <p className="text-gray-200 text-lg">{film.story}</p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-center">
-                <div onClick={() => window.open(movieData.trailer, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
+                <div onClick={() => window.open(film.trailerUrl, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
                     <i class="fa-brands fa-youtube mx-auto mb-2 text-red-400"></i>
                     <p className="font-bold">بینینی ترایلەر</p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
                     <Clock className="mx-auto mb-2 text-green-400" />
-                    <p className="font-bold">{movieData.duration}</p>
+                    <p className="font-bold">{film.min} خولەک</p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                    <i class="fa-solid fa-clock-rotate-left mx-auto mb-2 text-white"></i>
-                    <p className="font-bold">{movieData.date}</p>
+                    <p>بەرواری بڵاوبوونەوە</p>
+                    <p className="font-bold">{film.date}</p>
                 </div>
             </div>
         </div>
@@ -192,11 +57,10 @@ const MovieDetailsPage = () => {
     const renderCast = () => (
         <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-
-                {castMembers.map((member, index) => (
+                {film.cast.map((member, index) => (
                     <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
                         <div>
-                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
+                            <img className='w-24 h-24 rounded-full' src={member.imgurl} alt="" />
                         </div>
                         <div>
                             <p className="font-bold">{member.name}</p>
@@ -210,17 +74,17 @@ const MovieDetailsPage = () => {
     const renderTechnical = () => (
         <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                {technicalMembers.map((member, index) => (
+                {film.translators.map((member, index) => (
                     <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800/60 p-3 rounded">
                         <div>
-                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
+                            <img className='w-24 h-24 rounded-full' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUiF_OQ_-RS1ksidGVXXFQ-nJehHFxbHfIoQ&s' alt="" />
                         </div>
                         <div>
-                            <p className="font-bold">{member.name}</p>
+                            <p className="font-bold">{member}</p>
                         </div>
-                        <div>
+                        {/* <div>
                             <p className="font-bold">{member.role}</p>
-                        </div>
+                        </div> */}
                     </div>
                 ))}
             </div>
@@ -240,7 +104,7 @@ const MovieDetailsPage = () => {
                 </div>
             </div>
             <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
-                {reviews.map((review, index) => (
+                {film.comments.map((review, index) => (
                     <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
                         <div className="flex justify-between items-center mb-3">
                             <div className="flex items-center gap-2">
@@ -255,19 +119,37 @@ const MovieDetailsPage = () => {
                             {[...Array(5)].map((_, index) => (
                                 <Star
                                     key={index}
-                                    className={`w-5 h-5 ${index > review.rating - 1 ? 'text-gray-100' : 'text-sky-500'}`}
-                                    fill={index > review.rating - 1 ? 'none' : 'currentColor'}
+                                    className={`w-5 h-5 ${index > review.star - 1 ? 'text-gray-100' : 'text-sky-500'}`}
+                                    fill={index > review.star - 1 ? 'none' : 'currentColor'}
                                 />
                             ))}
                         </div>
                         <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
-                            <p className="text-white text-right">{review.review}</p>
+                            <p className="text-white text-right">{review.reviewmsg}</p>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
     );
+
+    const { filmId } = useParams();
+
+    useEffect(() => {
+        const fetchMovieData = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/movies/movie/${filmId}`);
+                setFilm(res.data.movie);
+                console.log(res.data.movie);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchMovieData();
+    }, [filmId]);
+
+    const hasMultipleParts = film.otherParts && film.otherParts.length > 0;
 
     return (
         <div>
@@ -276,7 +158,8 @@ const MovieDetailsPage = () => {
                 <div
                     className="fixed inset-0 z-0"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${movieData.backgroundUrl})`,
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${film.imgUrl
+                            })`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center'
                     }}
@@ -286,8 +169,8 @@ const MovieDetailsPage = () => {
                         <div className="grid md:grid-cols-[300px_1fr] gap-8">
                             <div>
                                 <img
-                                    src={movieData.posterUrl}
-                                    alt={movieData.title}
+                                    src={film.posterUrl}
+                                    alt={film.filmtitle}
                                     className="w-full rounded-lg shadow-2xl"
                                 />
                                 <div className="grid grid-cols-2 gap-4 mt-4">
@@ -312,13 +195,10 @@ const MovieDetailsPage = () => {
                                         </div>
                                     </button>
                                 </div>
-                                <a
-                                    href={movieData.trailer}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded"
+                                <p
+                                    className={`${hasMultipleParts ? 'block' : 'hidden'} cursor-pointer mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded`}
                                 >
-                                    <div className="flex items-center gap-2">
+                                    <div className={`flex items-center gap-2`}>
                                         <div>
                                             <PlayCircle className="ms-2" />
                                         </div>
@@ -326,13 +206,15 @@ const MovieDetailsPage = () => {
                                             <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
                                         </div>
                                     </div>
-                                </a>
+                                </p>
                             </div>
                             <div>
-                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{movieData.title}</h1>
+                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{film.filmtitle} {`(${film.year})`}</h1>
                                 <div className='flex items-center gap-2 mb-6 mt-6'>
                                     <div>
-                                        <p className="text-gray-400 text-xl cursor-pointer">{movieData.genre}</p>
+                                        <p className="text-gray-400 text-xl cursor-pointer"> {film.genre && Array.isArray(film.genre)
+                                            ? film.genre.join(" - ")
+                                            : ''}</p>
                                     </div>
                                 </div>
 
@@ -364,16 +246,16 @@ const MovieDetailsPage = () => {
                                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                         <div>
                                             <p className="text-gray-400">بەرهەمهێنان</p>
-                                            <p className="font-semibold">{movieData.producer}</p>
+                                            <p className="font-semibold">{film.producer}</p>
                                         </div>
                                         <div className='mb-4'>
                                             <p className="text-gray-400">وڵات</p>
-                                            <p className="font-semibold">{movieData.country}</p>
+                                            <p className="font-semibold">{film.country}</p>
                                         </div>
                                         <div >
                                             <div className="flex items-center gap-2">
                                                 <div>
-                                                    <p className="font-semibold">{movieData.ratings.imdb}/10</p>
+                                                    <p className="font-semibold">{film.imdb}/10</p>
                                                 </div>
                                                 <div>
                                                     <img className="w-6 h-6" src="https://m.media-amazon.com/images/G/01/imdb/images/social/imdb_logo.png" alt="" />
@@ -383,7 +265,7 @@ const MovieDetailsPage = () => {
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <div>
-                                                    <p className="font-semibold">{movieData.ratings.rottenTomatoes}%</p>
+                                                    <p className="font-semibold">{film.rottenTomatoes}%</p>
                                                 </div>
                                                 <div>
                                                     <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Rotten_Tomatoes_alternative_logo.svg/1031px-Rotten_Tomatoes_alternative_logo.svg.png" alt="" />
@@ -393,12 +275,12 @@ const MovieDetailsPage = () => {
 
                                         <div>
                                             <p className="text-gray-400">دەرهێنان</p>
-                                            <p className="font-semibold">{movieData.director}</p>
+                                            <p className="font-semibold">{film.director}</p>
                                         </div>
 
                                         <div>
                                             <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
-                                            <p className="font-semibold">{movieData.views}</p>
+                                            <p className="font-semibold">{film.view}</p>
                                         </div>
 
                                     </div>
