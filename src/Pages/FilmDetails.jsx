@@ -259,7 +259,7 @@ const MovieDetailsPage = () => {
                                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                         <div>
                                             <p className="text-gray-400">بەرهەمهێنان</p>
-                                            <p className="font-semibold">{film.producer}</p>
+                                            <p onClick={() => window.location.href = `/company/${film.producer}`} className="font-semibold cursor-pointer">{film.producer}</p>
                                         </div>
                                         <div className='mb-4'>
                                             <p className="text-gray-400">وڵات</p>
@@ -286,7 +286,7 @@ const MovieDetailsPage = () => {
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div className='cursor-pointer' onClick={() => window.location.href = `/directors/${film.director}`}>
                                             <p className="text-gray-400">دەرهێنان</p>
                                             <p className="font-semibold">{film.director}</p>
                                         </div>

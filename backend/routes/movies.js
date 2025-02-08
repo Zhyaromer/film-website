@@ -9,5 +9,7 @@ router.get('/newest', moviesController.getNewestMoviesAndSeries);
 router.get('/movie/:filmId', moviesController.getMovieById);
 router.get('/similar/:filmId', moviesController.getSimilarMovies);
 router.get('/actor/:actor', moviesController.getActorMovies);
+router.get('/company/:company', moviesController.getCompanyMovies);
+router.get('/director/:director', moviesController.getDirectorMovies);
 
 module.exports = router;

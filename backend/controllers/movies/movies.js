@@ -133,7 +133,141 @@ const getActorMovies = async (req, res) => {
         if (genre) {
             const genreArray = genre.split(',').map(g => g.trim());
             movies = movies.filter(movie =>
-                movie.genre.some(movieGenre => 
+                movie.genre.some(movieGenre =>
+                    genreArray.includes(movieGenre)
+                )
+            );
+        }
+        if (sorting) {
+            switch (sorting) {
+                case 'newest':
+                    movies.sort((a, b) => b.year - a.year);
+                    break;
+                case 'oldest':
+                    movies.sort((a, b) => a.year - b.year);
+                    break;
+                case 'rating-high':
+                    movies.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'rating-low':
+                    movies.sort((a, b) => a.rating - b.rating);
+                    break;
+                case 'title-asc':
+                    movies.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'title-desc':
+                    movies.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                default:
+                    movies.sort((a, b) => b.year - a.year);
+            }
+        }
+
+        return res.status(200).json({ movies });
+    } catch (error) {
+        console.error('Error in getActorMovies:', error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+const getCompanyMovies = async (req, res) => {
+    try {
+        const { company } = req.params;
+        const { year, genre, sorting } = req.query;
+        console.log(company);
+        const moviesSnapshot = await db.collection('movies').get();
+
+            let movies = moviesSnapshot.docs
+            .filter(doc => {
+                const movieData = doc.data();
+                return movieData.producer.toLowerCase() === company.toLowerCase();
+            })
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+        if (year) {
+            const yearArray = year.split(',').map(y => y.trim());
+            movies = movies.filter(movie =>
+                yearArray.includes(movie.year.toString())
+            );
+        }
+
+        if (genre) {
+            const genreArray = genre.split(',').map(g => g.trim());
+            movies = movies.filter(movie =>
+                movie.genre.some(movieGenre =>
+                    genreArray.includes(movieGenre)
+                )
+            );
+        }
+        if (sorting) {
+            switch (sorting) {
+                case 'newest':
+                    movies.sort((a, b) => b.year - a.year);
+                    break;
+                case 'oldest':
+                    movies.sort((a, b) => a.year - b.year);
+                    break;
+                case 'rating-high':
+                    movies.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'rating-low':
+                    movies.sort((a, b) => a.rating - b.rating);
+                    break;
+                case 'title-asc':
+                    movies.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'title-desc':
+                    movies.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                default:
+                    movies.sort((a, b) => b.year - a.year);
+            }
+        }
+
+        return res.status(200).json({ movies });
+    } catch (error) {
+        console.error('Error in getActorMovies:', error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+const getDirectorMovies = async (req, res) => {
+    try {
+        const { director } = req.params;
+        console.log(director);
+        const { year, genre, sorting } = req.query;
+        const moviesSnapshot = await db.collection('movies').get();
+
+            let movies = moviesSnapshot.docs
+            .filter(doc => {
+                const movieData = doc.data();
+                return movieData.director.toLowerCase() === director.toLowerCase();
+            })
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+        if (year) {
+            const yearArray = year.split(',').map(y => y.trim());
+            movies = movies.filter(movie =>
+                yearArray.includes(movie.year.toString())
+            );
+        }
+
+        if (genre) {
+            const genreArray = genre.split(',').map(g => g.trim());
+            movies = movies.filter(movie =>
+                movie.genre.some(movieGenre =>
                     genreArray.includes(movieGenre)
                 )
             );
@@ -236,4 +370,4 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getAllMovies,getDirectorMovies, getCompanyMovies,getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

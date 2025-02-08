@@ -13,6 +13,9 @@ import Profile from '../Pages/Profile.jsx'
 import ForgotPassword from '../Pages/Forgotpass.jsx'
 import Navbar from '../Pages/Test.jsx'
 import Actors from '../Pages/Actors.jsx'
+import Companies from '../Pages/Company.jsx'
+import Directors from '../Pages/Directors.jsx'
+
 function App() {
   return (
     <Router>
@@ -25,6 +28,8 @@ function App() {
         <Route path="/News" element={<News />} />
         <Route path="/filmdetails/:filmId" element={<FilmDetails />} />
         <Route path="/actors/:actor" element={<Actors />} />
+        <Route path="/company/:company" element={<Companies />} />
+        <Route path="/directors/:director" element={<Directors />} />
         <Route path="/seriesdetails" element={<SerieDetails />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<Signuppage />} />
