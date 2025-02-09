@@ -11,10 +11,11 @@ import Loginpage from '../Pages/Login.jsx'
 import Signuppage from '../Pages/Signup.jsx'
 import Profile from '../Pages/Profile.jsx'
 import ForgotPassword from '../Pages/Forgotpass.jsx'
-import Navbar from '../Pages/Test.jsx'
+import SeriesViewer from '../Pages/Test.jsx'
 import Actors from '../Pages/Actors.jsx'
 import Companies from '../Pages/Company.jsx'
 import Directors from '../Pages/Directors.jsx'
+import SeriesPage from '../Pages/B.jsx'
 
 function App() {
   return (
@@ -35,7 +36,8 @@ function App() {
         <Route path="/signup" element={<Signuppage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/Navbar" element={<Navbar />} />
+        <Route path="/aa" element={<SeriesViewer />} />
+        <Route path="/b" element={<SeriesPage />} />
       </Routes>
     </Router>
   );

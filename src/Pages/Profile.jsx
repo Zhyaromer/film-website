@@ -1,42 +1,34 @@
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Settings, X, EyeOff, Eye } from 'lucide-react';
+import axios from 'axios';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaSpinner } from 'react-icons/fa';
+import { auth,EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
 
 const Profile = () => {
     const [activeSection, setActiveSection] = useState('favorites');
     const [filmordrama, setFilmordrama] = useState('film')
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [user, setUser] = useState({
-        username: 'zhyar omer',
-        name: 'zhika',
-        email: 'filmbin@example.com',
-        avatar: '/api/placeholder/100/100'
-    });
-
     const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        email: '',
+    const [user, setUser] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [form, setForm] = useState({
+        name: user.name,
+        username: user.username,
         password: '',
-        confirmPassword: ''
+        newPassword: '',
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:', formData);
-        setIsOpen(false);
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        });
     };
 
     const renderProfileContent = () => {
@@ -122,6 +114,83 @@ const Profile = () => {
         }
     };
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await axios.get(`http://localhost:5000/api/profile/settings`, { withCredentials: true });
+            setUser(res.data.userData);
+            setForm(res.data.userData);
+        }
+        fetchUser();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                toast.error('تکایە دووبارە بچۆرەوە ژوورەوە', { transition: Slide, autoClose: 3000 });
+                return;
+            }
+
+            if (form.password && form.newPassword) {
+                if (form.password === form.newPassword) {
+                    toast.error('وشەی نهێنی نوێ دەبێت جیاواز بێت لە وشەی نهێنی کۆن', { transition: Slide, autoClose: 3000 });
+                    return;
+                }
+    
+                if (form.newPassword.length < 8) {
+                    toast.error('وشەی نهێنیەکەت ئەبێت لە هەشت کارەکتەر زیاتر بێت', { transition: Slide, autoClose: 3000 });
+                    return;
+                }
+    
+                try {
+                    const credential = EmailAuthProvider.credential(user.email, form.password);
+                    await reauthenticateWithCredential(user, credential);
+                    await updatePassword(user, form.newPassword);
+                } catch (error) {
+                    if (error.code === 'auth/wrong-password') {
+                        toast.error('وشەی نهێنیەکەت هەڵەیە', { transition: Slide, autoClose: 3000 });
+                    } else {
+                        toast.error('هەڵەیەک ڕوویدا لە گۆڕینی وشەی نهێنیدا', { transition: Slide, autoClose: 3000 });
+                    }
+                    console.error('Password update error:', error);
+                    return;
+                }
+            }
+    
+            const requestBody = {
+                name: form.name,
+                username: form.username
+            };
+    
+            const res = await axios.post(
+                'http://localhost:5000/api/profile/changename',
+                requestBody,
+                { withCredentials: true }
+            );
+    
+            if (res.status === 200) {
+                setUser(prevUser => ({
+                    ...prevUser,
+                    name: form.name,
+                    username: form.username
+                }));
+                toast.success('زانیاریەکانت تازە کرانەوە', { transition: Slide, autoClose: 3000 });
+                setIsOpen(false);
+                form.password = '';
+                form.newPassword = '';
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || 'هەڵەیەک ڕوویدا تکایە دوبارە هەوڵ بدەوە';
+            toast.error(errorMessage, { transition: Slide, autoClose: 3000 });
+            console.error('Profile update error:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
         <div className='bg-[#282e30]'>
             <Navigation />
@@ -147,7 +216,7 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         name="name"
-                                        value={formData.name}
+                                        value={form.name}
                                         onChange={handleChange}
                                         className="w-full bg-[hsl(195,9%,28%)] border text-white placeholder:text-gray-300 border-gray-500 focus:border-0 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                                         required
@@ -162,7 +231,7 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         name="username"
-                                        value={formData.username}
+                                        value={form.username}
                                         onChange={handleChange}
                                         className="w-full px-3 py-2  bg-[hsl(195,9%,28%)] border text-white placeholder:text-gray-300 border-gray-500 focus:border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                                         required
@@ -172,13 +241,13 @@ const Profile = () => {
 
                                 <div>
                                     <label className="block text-right text-base font-medium text-sky-500 mb-1">
-                                        ئیمەیڵ
+                                        (ناتوانی ئیمەیڵەکەت بگۆریت)ئیمەیڵ
                                     </label>
                                     <input
                                         type="email"
                                         name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
+                                        value={form.email}
+                                        readOnly
                                         className="w-full px-3 py-2  bg-[hsl(195,9%,28%)] border text-white placeholder:text-gray-300 border-gray-500 focus:border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                                         required
                                         placeholder="example@email.com"
@@ -193,10 +262,9 @@ const Profile = () => {
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             name="password"
-                                            value={formData.password}
+                                            value={form.password}
                                             onChange={handleChange}
                                             className="w-full px-3 py-2  bg-[hsl(195,9%,28%)] border text-white placeholder:text-gray-300 border-gray-500 focus:border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
-                                            required
                                             placeholder="وشەی نهێنی"
                                         />
                                         <button
@@ -217,11 +285,10 @@ const Profile = () => {
                                     <div className="relative">
                                         <input
                                             type={showConfirmPassword ? "text" : "password"}
-                                            name="confirmPassword"
-                                            value={formData.confirmPassword}
+                                            name="newPassword"
+                                            value={form.newPassword}
                                             onChange={handleChange}
                                             className="w-full px-3 py-2  bg-[hsl(195,9%,28%)] border text-white placeholder:text-gray-300 border-gray-500 focus:border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
-                                            required
                                             placeholder="دووبارەکردنەوەی وشەی نهێنی"
                                         />
                                         <button
@@ -238,7 +305,20 @@ const Profile = () => {
                                     type="submit"
                                     className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors mt-6"
                                 >
-                                    تازەکردنەوەی
+                                    {isLoading ? (
+                                        <>
+                                            <div className="flex items-center justify-center gap-2">
+                                                <div>
+                                                    <FaSpinner className="text-center animate-spin" size={20} />
+                                                </div>
+                                                <div>
+                                                    تازەکردنەوە
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        "تازەکردنەوە"
+                                    )}
                                 </button>
                             </div>
                         </form>
@@ -262,7 +342,7 @@ const Profile = () => {
                                     <p className="text-base text-white lg:text-xl text-gray-600">{user.name}</p>
                                 </div>
                                 <img
-                                    src={user.avatar}
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                                     alt="پرۆفایل"
                                     className="lg:w-32 lg:h-32 w-16 h-16 rounded-full border-2 border-blue-500"
                                 />
@@ -310,6 +390,7 @@ const Profile = () => {
                     {renderProfileContent()}
                 </div>
             </div>
+            <ToastContainer />
             <Footer />
         </div>
     )
