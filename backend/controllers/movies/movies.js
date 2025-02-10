@@ -55,6 +55,16 @@ const getMovieById = async (req, res) => {
     return res.status(200).json({ movie });
 };
 
+const getSeriesById = async (req, res) => {
+    const { seriesId } = req.params;
+    const movieDoc = await db.collection('series').doc(seriesId).get();
+    if (!movieDoc.exists) {
+        return res.status(404).json({ message: 'Movie not found' });
+    }
+    const movie = movieDoc.data();
+    return res.status(200).json({ movie });
+};
+
 const getSimilarMovies = async (req, res) => {
     try {
         const { filmId } = req.params;
@@ -107,16 +117,18 @@ const getSimilarMovies = async (req, res) => {
 const getActorMovies = async (req, res) => {
     try {
         const { actor } = req.params;
+        console.log(actor);
+
         const { year, genre, sorting } = req.query;
-        console.log(genre);
         const moviesSnapshot = await db.collection('movies').get();
 
         let movies = moviesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.cast.some(castMember =>
-                    castMember.name.toLowerCase() === actor.toLowerCase()
-                );
+                return movieData.cast && Array.isArray(movieData.cast) &&
+                    movieData.cast.some(castMember =>
+                        castMember.name.toLowerCase() === actor.toLowerCase()
+                    );
             })
             .map(doc => ({
                 id: doc.id,
@@ -180,10 +192,10 @@ const getCompanyMovies = async (req, res) => {
         console.log(company);
         const moviesSnapshot = await db.collection('movies').get();
 
-            let movies = moviesSnapshot.docs
+        let movies = moviesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.producer.toLowerCase() === company.toLowerCase();
+                return movieData.producer && movieData.producer.toLowerCase() === company.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
@@ -247,10 +259,10 @@ const getDirectorMovies = async (req, res) => {
         const { year, genre, sorting } = req.query;
         const moviesSnapshot = await db.collection('movies').get();
 
-            let movies = moviesSnapshot.docs
+        let movies = moviesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.director.toLowerCase() === director.toLowerCase();
+                return movieData.director && movieData.director.toLowerCase() === director.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
@@ -308,9 +320,49 @@ const getDirectorMovies = async (req, res) => {
 };
 
 const getAllSeries = async (req, res) => {
-    const series = await db.collection('series').get();
-    return res.status(200).json(series.docs.map(doc => doc.data()));
-}
+    try {
+        const { year, genre, sorting } = req.query;
+        console.log(genre)
+        let moviesQuery = db.collection('series');
+
+        if (year) {
+            const years = year.split(',');
+            console.log(years)
+            moviesQuery = moviesQuery.where('year', 'in', years);
+        }
+
+        if (genre) {
+            const genres = genre.split(',');
+            console.log(genres)
+            moviesQuery = moviesQuery.where('genre', 'array-contains-any', genres);
+        }
+
+        const moviesSnapshot = await moviesQuery.get();
+
+        const movies = [];
+        moviesSnapshot.forEach(doc => {
+            movies.push({ id: doc.id, ...doc.data() });
+        });
+
+        if (sorting) {
+            switch (sorting) {
+                case 'popularity':
+                    movies.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
+                case 'newest':
+                    movies.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res.status(200).json({ movies });
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 const getRandomMoveandSeries = async (req, res) => {
     try {
@@ -370,4 +422,4 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies,getDirectorMovies, getCompanyMovies,getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getAllMovies,getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

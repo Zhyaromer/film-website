@@ -1,7 +1,7 @@
 import Pagination from './Pagination.jsx'
 import { useState, useEffect } from 'react'
 
-const FilmsCard = ({ moviesData }) => {
+const SeriesCards = ({ moviesData }) => {
     const [isSuggestion, setIsSuggestion] = useState(false)
     const [currentMovies, setCurrentMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // Add this line
@@ -33,7 +33,7 @@ const FilmsCard = ({ moviesData }) => {
     if (movies.length === 0) {
         return (
             <div className="text-center py-20">
-                <p className="text-white text-xl">هیچ فیلمێک نەدۆزرایەوە</p>
+                <p className="text-white text-xl">هیچ زنجیرەیەک نەدۆزرایەوە</p>
             </div>
         );
     }
@@ -43,12 +43,12 @@ const FilmsCard = ({ moviesData }) => {
             <div dir="rtl" className="relative z-30 mx-auto px-4 py-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {currentMovies.map((movie, index) => (
-                        <div key={movie.id || index} onClick={() => window.location.href = `/filmdetails/${movie.id}`} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                        <div key={movie.id || index} onClick={() => window.location.href = `/seriesdetails/${movie.id}`} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
                             <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
                                 <div className="h-full w-full relative">
                                     <img
                                         src={movie.posterUrl}
-                                        alt={movie.filmtitle || movie.title}
+                                        alt={movie.title}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
@@ -56,14 +56,14 @@ const FilmsCard = ({ moviesData }) => {
                             <div className="mt-2 space-y-2 text-center">
                                 <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">
-                                        {movie.filmtitle}
+                                        {movie.title}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year}</p>
+                                    <p className='text-white'>{movie.date.year}</p>
                                     <p className='text-white'>
-                                        {movie.genre && Array.isArray(movie.genre)
-                                            ? movie.genre.slice(0, 2).join(" - ")
+                                        {movie.genres && Array.isArray(movie.genres)
+                                            ? movie.genres.slice(0, 2).join(" - ")
                                             : ''}
                                     </p>
                                 </div>
@@ -84,4 +84,4 @@ const FilmsCard = ({ moviesData }) => {
     )
 }
 
-export default FilmsCard
+export default SeriesCards

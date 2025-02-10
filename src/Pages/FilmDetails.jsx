@@ -154,15 +154,12 @@ const MovieDetailsPage = () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/similar/${filmId}`);
                 setSimilarMovies(res.data.similarMovies);
-                console.log(res.data.similarMovies);
             } catch (error) {
-                
+                console.error(error);
             }
         }
         fetchSimiliarMovies();
     },[filmId])
-
-    const hasMultipleParts = film.otherParts && film.otherParts.length > 0;
 
     return (
         <div>
@@ -208,18 +205,6 @@ const MovieDetailsPage = () => {
                                         </div>
                                     </button>
                                 </div>
-                                <p
-                                    className={`${hasMultipleParts ? 'block' : 'hidden'} cursor-pointer mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded`}
-                                >
-                                    <div className={`flex items-center gap-2`}>
-                                        <div>
-                                            <PlayCircle className="ms-2" />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
-                                        </div>
-                                    </div>
-                                </p>
                             </div>
                             <div>
                                 <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{film.filmtitle} {`(${film.year})`}</h1>

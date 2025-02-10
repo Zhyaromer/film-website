@@ -61,7 +61,6 @@ const Navigation = () => {
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">کۆری</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">ئەنیمی</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">فارسی</p>
-                                ئەنیمی کۆری بۆلیود  سەرجەم فیلمەکان هۆلیود کۆری
                             </div>
                         </div>
                         <div className='relative'>

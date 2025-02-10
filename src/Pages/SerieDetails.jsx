@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Clock, ChevronDown, PlayCircle, Bookmark, Heart, CheckCircle, Star, MoreVertical, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
+import { useParams } from 'react-router-dom';
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import axios from 'axios';
 
 const Serisdetailss = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
     const [watchLater, setWatchLater] = useState(false);
     const [favorite, setFavorite] = useState(false);
     const [watched, setWatched] = useState(false);
+    const [series, setseries] = useState({});
+
 
     const movieData = {
         title: 'Breaking Bad (2008)',
@@ -31,120 +35,6 @@ const Serisdetailss = () => {
         synopsis: 'مامۆستایەکی دواناوەندی بەناوی واڵتەر وایت کەوا تووشی نەخۆشی شێرپەنجەی سییەکان دێت، ڕوودەکاتە فرۆشتنی ماددە هۆشبەرەکان بە مەبەستی زامنکردنی داهاتوویەکی باش بۆ خێزانەکەی دوای مردنە چاوەڕوانکراوەکەی.',
         trailer: 'https://youtu.be/XZ8daibM3AE?si=fkemLcMX3qXNPwje',
     };
-
-    const castMembers = [
-        {
-            name: "Bryan Cranston",
-            photo: 'https://m.media-amazon.com/images/M/MV5BMTA2NjEyMTY4MTVeQTJeQWpwZ15BbWU3MDQ5NDAzNDc@._V1_.jpg'
-        },
-        {
-            name: "Aaron Paul",
-            photo: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQqeBib4y76gx8cdFrtdmQ6umr4HrAP8zvTxAIGCTy-LXQtCkb82EaQVZdkmOoo-93RJW3UXISrds85PAJvXGVk5XgDeIzXkwwVNc-IZA'
-        },
-        {
-            name: "Anna Gunn",
-            photo: "https://m.media-amazon.com/images/M/MV5BMTU0NTk3MDQ3OV5BMl5BanBnXkFtZTcwNDY3NzQ4Mg@@._V1_FMjpg_UX1000_.jpg"
-        },
-        {
-            name: "Dean Norris",
-            photo: "https://ntvb.tmsimg.com/assets/assets/182558_v9_bb.jpg?w=360&h=480"
-        },
-        {
-            name: "RJ Mitte",
-            photo: "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTvezEDZV2OUb1duOzJOMK8ZLM53zaoh0zN8me93NTVgqGkJLkZ_EQufhPr-JPs4saHZVUajuur35FHCL4"
-        },
-        {
-            name: "Bob Odenkirk",
-            photo: "https://imaging.broadway.com/images/regular-43/w735/129920-11.jpg"
-        },
-        {
-            name: "Betsy Brandt",
-            photo: "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQTkRr8Tutr_0P8_UAuPpviiYlTAsawfoM7jKEcYlmv2LGR9GEZS7M0U3deR34wiJNuPCYTESl5DyIoEZI"
-        },
-        {
-            name: "Jonathan Banks",
-            photo: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/83234_v9_bb.jpg"
-        },
-        {
-            name: "Giancarlo Esposito",
-            photo: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQkJ5ojo_Qzd95_dLcoN7l1KL12lD-ZrhzcnHWvW1xSN6yS8YM6PG2M96RwptE834HCznMaY3Zke4X2YlDds7uTdlbHshiUdFY_O2lIVDk"
-        },
-        {
-            name: "Steven Michael",
-            photo: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/538726_v9_bb.jpg"
-        }
-    ];
-
-    const reviews = [
-        {
-            id: 1,
-            name: "حەسەن ڕەزا",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 2,
-            name: "محەمەد ڕزگار",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 3,
-            name: "Sarah Kim",
-            rating: 3,
-            review: "نگی تیمێکی تایبەتی دەکات بۆ مەشەقی پەیڤاندن بە تەلابانەکان لە ئەفغانستان. هەندێك بەکاربردنی یارمەتی لە سویەیەکی",
-        },
-        {
-            id: 4,
-            name: "Alex Wong",
-            rating: 5,
-            review: "Exceptional quality and customer service Exceptional quality and customer service Exceptional quality and customer service",
-        },
-        {
-            id: 5,
-            name: "Jessica Lee",
-            rating: 3,
-            review: "Solid performance with great features.",
-        }
-    ];
-
-    const technicalMembers = [
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "وەرگێر"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "بەرگساز"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "بەرگساز"
-        },
-        {
-            name: "John Doe",
-            photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx5AxkRXIDEgNolo8gEBeAxzerpSuq3ByJng&s",
-            role: "تەکنیکار"
-        }
-    ]
 
     const [selectedSeason, setSelectedSeason] = useState("1");
     const [isOpen, setIsOpen] = useState(false);
@@ -203,19 +93,19 @@ const Serisdetailss = () => {
             <div>
                 <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">کورتەی جیرۆک</h2>
             </div>
-            <p className="text-gray-200 text-lg">{movieData.synopsis}</p>
+            <p className="text-gray-200 text-lg">{series.description}</p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-center">
-                <div onClick={() => window.open(movieData.trailer, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
+                <div onClick={() => window.open(series.trailerUrl, '_blank')} className="cursor-pointer bg-gray-800 p-3 rounded">
                     <i class="fa-brands fa-youtube mx-auto mb-2 text-red-400"></i>
                     <p className="font-bold">بینینی ترایلەر</p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
                     <Clock className="mx-auto mb-2 text-green-400" />
-                    <p className="font-bold">{movieData.duration}</p>
+                    <p className="font-bold"> {series.filmTime} خولەک</p>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
                     <i class="fa-solid fa-clock-rotate-left mx-auto mb-2 text-white"></i>
-                    <p className="font-bold">{movieData.date}</p>
+                    <p className="font-bold">{series?.date?.fullDate}</p>
                 </div>
             </div>
         </div>
@@ -277,11 +167,12 @@ const Serisdetailss = () => {
             </div>
         </div>
     );
+
     const renderCast = () => (
         <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
 
-                {castMembers.map((member, index) => (
+                {series.casts.map((member, index) => (
                     <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
                         <div>
                             <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
@@ -298,16 +189,29 @@ const Serisdetailss = () => {
     const renderTechnical = () => (
         <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                {technicalMembers.map((member, index) => (
+                {series.technical.bargTaknik.map((member, index) => (
                     <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800/60 p-3 rounded">
                         <div>
-                            <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
+                            <img className='w-24 h-24 rounded-full' src={member?.imgUrl} alt="" />
                         </div>
                         <div>
-                            <p className="font-bold">{member.name}</p>
+                            <p className="font-bold">{member?.name}</p>
                         </div>
                         <div>
-                            <p className="font-bold">{member.role}</p>
+                            <p className="font-bold">{member?.role}</p>
+                        </div>
+                    </div>
+                ))}
+                {series.technical.translators.map((member, index) => (
+                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800/60 p-3 rounded">
+                        <div>
+                            <img className='w-24 h-24 rounded-full' src={member?.imgUrl} alt="" />
+                        </div>
+                        <div>
+                            <p className="font-bold">{member?.name}</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">{member?.role}</p>
                         </div>
                     </div>
                 ))}
@@ -328,7 +232,7 @@ const Serisdetailss = () => {
                 </div>
             </div>
             <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
-                {reviews.map((review, index) => (
+                {series.comments.reviews.map((review, index) => (
                     <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
                         <div className="flex justify-between items-center mb-3">
                             <div className="flex items-center gap-2">
@@ -349,13 +253,28 @@ const Serisdetailss = () => {
                             ))}
                         </div>
                         <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
-                            <p className="text-white text-right">{review.review}</p>
+                            <p className="text-white text-right">{review.msg}</p>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
     );
+
+    const { seriesId } = useParams();
+
+    useEffect(() => {
+        const fetchMovieData = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/movies/seriesDetails/${seriesId}`);
+                setseries(res.data.movie);
+                console.log(res.data.movie);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchMovieData();
+    }, [seriesId]);
 
     return (
         <div>
@@ -364,7 +283,7 @@ const Serisdetailss = () => {
                 <div
                     className="fixed inset-0 z-0"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${movieData.backgroundUrl})`,
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url(${series.backgroundUrl})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'top'
                     }}
@@ -374,28 +293,16 @@ const Serisdetailss = () => {
                         <div className="grid md:grid-cols-[300px_1fr] gap-8">
                             <div>
                                 <img
-                                    src={movieData.posterUrl}
-                                    alt={movieData.title}
+                                    src={series.posterUrl}
+                                    alt={series.title}
                                     className="w-full rounded-lg shadow-2xl"
                                 />
-                                <p
-                                    className="mt-4 w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 rounded"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <div>
-                                            <PlayCircle className="ms-2" />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold">ئەم فلیمە لە بەشێك زیاتری هەیە</p>
-                                        </div>
-                                    </div>
-                                </p>
                             </div>
                             <div>
-                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{movieData.title}</h1>
+                                <h1 className="text-4xl text-left lg:text-right font-bold mb-2">{series.title}{` (${series?.date?.year})`}</h1>
                                 <div className='flex items-center gap-2 mb-6 mt-6'>
                                     <div>
-                                        <p className="text-gray-400 text-xl cursor-pointer">{movieData.genre}</p>
+                                        <p className="text-gray-400 text-xl cursor-pointer">{series?.genres?.join(' - ')}</p>
                                     </div>
                                 </div>
 
@@ -427,16 +334,16 @@ const Serisdetailss = () => {
                                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                         <div>
                                             <p className="text-gray-400">بەرهەمهێنان</p>
-                                            <p className="font-semibold">{movieData.producer}</p>
+                                            <p className="font-semibold">{series.producer}</p>
                                         </div>
                                         <div className='mb-4'>
                                             <p className="text-gray-400">وڵات</p>
-                                            <p className="font-semibold">{movieData.country}</p>
+                                            <p className="font-semibold">{series.country}</p>
                                         </div>
                                         <div >
                                             <div className="flex items-center gap-2">
                                                 <div>
-                                                    <p className="font-semibold">{movieData.ratings.imdb}/10</p>
+                                                    <p className="font-semibold">{series.imdbRating}/10</p>
                                                 </div>
                                                 <div>
                                                     <img className="w-6 h-6" src="https://m.media-amazon.com/images/G/01/imdb/images/social/imdb_logo.png" alt="" />
@@ -446,7 +353,7 @@ const Serisdetailss = () => {
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <div>
-                                                    <p className="font-semibold">{movieData.ratings.rottenTomatoes}%</p>
+                                                    <p className="font-semibold">{series.rottenTomatoRating}%</p>
                                                 </div>
                                                 <div>
                                                     <img className="w-6 h-6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Rotten_Tomatoes_alternative_logo.svg/1031px-Rotten_Tomatoes_alternative_logo.svg.png" alt="" />
@@ -466,13 +373,13 @@ const Serisdetailss = () => {
 
                                         <div>
                                             <p className="text-gray-400">دەرهێنان</p>
-                                            <p className="font-semibold">{movieData.director}</p>
+                                            <p className="font-semibold">{series.director}</p>
                                         </div>
 
 
                                         <div>
                                             <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
-                                            <p className="font-semibold">{movieData.views}</p>
+                                            <p className="font-semibold">5000</p>
                                         </div>
 
                                     </div>
@@ -506,13 +413,11 @@ const Serisdetailss = () => {
                 </div>
 
                 <div className="relative z-50 mb-0 pt-12 px-8 flex justify-end items-center">
-                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">فلیمی هاوشێوە</h4>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەی هاوشێوە</h4>
                 </div>
 
                 <FilmsCard />
             </div>
-
-
             <Footer />
         </div>
     );
