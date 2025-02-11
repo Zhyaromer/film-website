@@ -1,4 +1,4 @@
-const { db } = require('../../config/Firebase/firebase');
+const { db, FieldValue } = require('../../config/Firebase/firebase');
 
 const saveMovie = async (req, res) => {
     const { uid } = req.user;
@@ -135,4 +135,39 @@ const getwatchedMovies = async (req, res) => {
     }
 };
 
-module.exports = { saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies };
+const addComment = async (req, res) => {
+    const { uid } = req.user;
+    const { filmId, reviewmsg, star, spoiler } = req.body;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const commentData = {
+            uid,
+            name: userDoc.data().username,
+            reviewmsg,
+            star,
+            spoiler
+        };
+
+        const updates = [
+            db.collection('users').doc(uid).update({
+                comments: FieldValue.arrayUnion(filmId)
+            }),
+            db.collection('movies').doc(filmId).update({
+                comments: FieldValue.arrayUnion(commentData)
+            })
+        ];
+
+        await Promise.all(updates);
+        return res.status(200).json({ message: "Comment added successfully" });
+    } catch (error) {
+        console.error("Error adding comment:", error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+module.exports = { saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies, addComment };

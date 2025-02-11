@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2, Watch } from 'lucide-react';
+import { Clock, Bookmark, Heart, CheckCircle, Download, X, Tv, Star, MoreVertical, UserCircle2, Watch } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import SimiliarFilmsCard from '../components/@Layout/Similiarfilm.jsx'
@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import ReviewPopup from '../components/@Layout/AddComment.jsx'
 
 const MovieDetailsPage = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
@@ -15,6 +16,7 @@ const MovieDetailsPage = () => {
     const [watched, setWatched] = useState(false);
     const [film, setFilm] = useState({});
     const [similarMovies, setSimilarMovies] = useState([]);
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -94,10 +96,38 @@ const MovieDetailsPage = () => {
         </div>
     );
 
+    const [reviewData, setReviewData] = useState({
+        reviewmsg: '',
+        star: 0,
+        spoiler: false
+    });
+
+    const { filmId } = useParams();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/addcomment', {
+                filmId,
+                reviewmsg: reviewData.reviewmsg,
+                star: reviewData.star,
+                spoiler: reviewData.spoiler
+            }, { withCredentials: true });
+
+            if (res.status === 200) {
+                toast.success('پێداچونەوەکەتەوە', { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+        }
+    }
+
+    const [showSpoiler, setShowSpoiler] = useState(false);
+
     const renderReviews = () => (
         <div>
             <div className="py-4 flex flex-row-reverse justify-between items-center px-4">
-                <div>
+                <div onClick={() => setIsReviewModalOpen(true)}>
                     <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
                         دانانی هەڵسەنگاندن
                     </button>
@@ -105,6 +135,7 @@ const MovieDetailsPage = () => {
                 <div>
                     <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
                 </div>
+
             </div>
             <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
                 {film.comments.map((review, index) => (
@@ -114,9 +145,6 @@ const MovieDetailsPage = () => {
                                 <UserCircle2 className="w-10 h-10 text-white" />
                                 <span className="font-medium text-white cursor-pointer">{review.name}</span>
                             </div>
-                            <button className="text-white rounded-full p-1">
-                                <MoreVertical className="w-5 h-5" />
-                            </button>
                         </div>
                         <div className="flex items-center mb-2 justify-start">
                             {[...Array(5)].map((_, index) => (
@@ -127,16 +155,93 @@ const MovieDetailsPage = () => {
                                 />
                             ))}
                         </div>
-                        <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
-                            <p className="text-white text-right">{review.reviewmsg}</p>
+                        <div className="relative p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
+                            {review?.spoiler ? (
+                                !showSpoiler ? (
+                                    <button
+                                        onClick={() => setShowSpoiler(true)}
+                                        className="text-2xl w-full h-full flex items-center justify-center text-sky-500"
+                                    >
+                                        سپۆیلەکە ببینە
+                                    </button>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => setShowSpoiler(false)}
+                                            className="text-xl text-sky-400 hover:text-sky-500 mb-2"
+                                        >
+                                            سپیلەکە بشارەوە
+                                        </button>
+                                        <p className="text-white text-right">{review.reviewmsg}</p>
+                                    </>
+                                )
+                            ) : (
+                                <p className="text-white text-right">{review.reviewmsg}</p>
+                            )}
                         </div>
                     </div>
                 ))}
             </div>
+
+
+            <div className={`absolute inset-0 z-50 flex items-center justify-center bg-black/50 ${isReviewModalOpen ? 'visible' : 'hidden'} `}            >
+                <div className="w-full max-w-lg mx-4 bg-gray-800 rounded-lg" onClick={e => e.stopPropagation()}>
+                    <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                        <h2 className="text-xl font-semibold text-white">زیادکردنی پێداچوونەوە</h2>
+                        <button onClick={() => setIsReviewModalOpen(false)} className="text-gray-400 hover:text-white">
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="p-4 space-y-4">
+                        <textarea
+                            value={reviewData.reviewmsg}
+                            onChange={(e) => setReviewData(prev => ({ ...prev, reviewmsg: e.target.value }))}
+                            placeholder="سەرجەمی پێداچوونەوەکەت لێرە بنوسە"
+                            className="w-full p-3 bg-gray-700 rounded text-white placeholder-gray-400"
+                            rows={4}
+                            dir="rtl"
+                        />
+
+                        <div className="flex justify-center gap-2">
+                            {[1, 2, 3, 4, 5].map((value) => (
+                                <button
+                                    key={value}
+                                    type="button"
+                                    onClick={() => setReviewData(prev => ({ ...prev, star: value }))}
+                                    className="p-1"
+                                >
+                                    <Star
+                                        className={`w-8 h-8 ${reviewData.star >= value ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="spoiler"
+                                checked={reviewData.spoiler}
+                                onChange={(e) => setReviewData(prev => ({ ...prev, spoiler: e.target.checked }))}
+                                className="w-4 h-4 rounded bg-gray-700 border-gray-600"
+                            />
+                            <label htmlFor="spoiler" className="text-white">
+                                پێداچوونەوەکە سپۆیلەری لەخۆ دەگرێت؟
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        >
+                            زیادکردن
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
-
-    const { filmId } = useParams();
 
     useEffect(() => {
         const fetchMovieData = async () => {
