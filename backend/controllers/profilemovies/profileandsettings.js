@@ -25,7 +25,7 @@ const getSavedMovies = async (req, res) => {
             const movieData = movieDoc.data();
             return {
                 id: movieDoc.id,
-                filmTitle: movieData.filmTitle,
+                filmtitle: movieData.filmtitle,
                 genre: movieData.genre,
                 posterUrl: movieData.posterUrl,
                 year: movieData.year
@@ -66,7 +66,7 @@ const getfavMovies = async (req, res) => {
             const movieData = movieDoc.data();
             return {
                 id: movieDoc.id,
-                filmTitle: movieData.filmTitle,
+                filmtitle: movieData.filmtitle,
                 genre: movieData.genre,
                 posterUrl: movieData.posterUrl,
                 year: movieData.year
@@ -107,7 +107,7 @@ const getWatchedMovies = async (req, res) => {
             const movieData = movieDoc.data();
             return {
                 id: movieDoc.id,
-                filmTitle: movieData.filmTitle,
+                filmtitle: movieData.filmtitle,
                 genre: movieData.genre,
                 posterUrl: movieData.posterUrl,
                 year: movieData.year
@@ -135,7 +135,7 @@ const getCommentedMovies = async (req, res) => {
         if (commentedMovieIds.length === 0) {
             return res.status(200).json({ movies: [] });
         }
-        
+
         const moviePromises = commentedMovieIds.map(async (movieId) => {
             const movieDoc = await db.collection('movies')
                 .doc(movieId)
@@ -148,7 +148,7 @@ const getCommentedMovies = async (req, res) => {
             const movieData = movieDoc.data();
             return {
                 id: movieDoc.id,
-                filmTitle: movieData.filmTitle,
+                filmtitle: movieData.filmtitle,
                 genre: movieData.genre,
                 posterUrl: movieData.posterUrl,
                 year: movieData.year
@@ -163,6 +163,170 @@ const getCommentedMovies = async (req, res) => {
         return res.status(500).json({ message: 'Something went wrong' });
     }
 };
+//
+const getSavedSeries = async (req, res) => {
+    const { uid } = req.user;
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-module.exports = { getSavedMovies, getfavMovies, getWatchedMovies, getCommentedMovies };
+        const savedSeriesIds = userDoc.data().savedSeries || [];
+        if (savedSeriesIds.length === 0) {
+            return res.status(200).json({ series: [] });
+        }
+
+        const seriesPromises = savedSeriesIds.map(async (seriesId) => {
+            const seriesDoc = await db.collection('series')
+                .doc(seriesId)
+                .get();
+
+            if (!seriesDoc.exists) {
+                return null;
+            }
+
+            const seriesData = seriesDoc.data();
+            return {
+                id: seriesDoc.id,
+                filmtitle: seriesData.filmtitle,
+                genre: seriesData.genre,
+                posterUrl: seriesData.posterUrl,
+                year: seriesData.year
+            };
+        });
+
+        const series = await Promise.all(seriesPromises);
+        const validMovies = series.filter(serie => serie !== null);
+        return res.status(200).json({ series: validMovies });
+    } catch (error) {
+        console.error('Error fetching saved series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getfavSeries = async (req, res) => {
+    const { uid } = req.user;
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const favSeriesIds = userDoc.data().favseries || [];
+        if (favSeriesIds.length === 0) {
+            return res.status(200).json({ series: [] });
+        }
+
+        const SeriesPromises = favSeriesIds.map(async (seriesId) => {
+            const seriesDoc = await db.collection('series')
+                .doc(seriesId)
+                .get();
+
+            if (!seriesDoc.exists) {
+                return null;
+            }
+
+            const seriesData = seriesDoc.data();
+            return {
+                id: seriesDoc.id,
+                filmtitle: seriesData.filmtitle,
+                genre: seriesData.genre,
+                posterUrl: seriesData.posterUrl,
+                year: seriesData.year
+            };
+        });
+
+        const series = await Promise.all(SeriesPromises);
+        const validSeries = series.filter(series => series !== null);
+        return res.status(200).json({ movies: validSeries });
+    } catch (error) {
+        console.error('Error fetching favorited series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getWatchedSeries = async (req, res) => {
+    const { uid } = req.user;
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const watcheddseriesIds = userDoc.data().watchedseries || [];
+        if (watcheddseriesIds.length === 0) {
+            return res.status(200).json({ series: [] });
+        }
+
+        const SeriesPromises = watcheddseriesIds.map(async (seriesId) => {
+            const seriesDoc = await db.collection('series')
+                .doc(seriesId)
+                .get();
+
+            if (!seriesDoc.exists) {
+                return null;
+            }
+
+            const seriesData = seriesDoc.data();
+            return {
+                id: seriesDoc.id,
+                filmtitle: seriesData.filmtitle,
+                genre: seriesData.genre,
+                posterUrl: seriesData.posterUrl,
+                year: seriesData.year
+            };
+        });
+
+        const series = await Promise.all(SeriesPromises);
+        const validSeries = series.filter(series => series !== null);
+        return res.status(200).json({ series: validSeries });
+    } catch (error) {
+        console.error('Error fetching watched series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getCommentedSeries = async (req, res) => {
+    const { uid } = req.user;
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const commentedSeriesIds = userDoc.data().comments || [];
+        if (commentedSeriesIds.length === 0) {
+            return res.status(200).json({ series: [] });
+        }
+
+        const SeriesPromises = commentedSeriesIds.map(async (seriesId) => {
+            const seriesDoc = await db.collection('series')
+                .doc(seriesId)
+                .get();
+
+            if (!seriesDoc.exists) {
+                return null;
+            }
+
+            const seriesData = seriesDoc.data();
+            return {
+                id: seriesDoc.id,
+                filmtitle: seriesData.filmtitle,
+                genre: seriesData.genre,
+                posterUrl: seriesData.posterUrl,
+                year: seriesData.year
+            };
+        });
+
+        const series = await Promise.all(SeriesPromises);
+        const validSeries = series.filter(series => series !== null);
+        return res.status(200).json({ series: validSeries });
+    } catch (error) {
+        console.error('Error fetching commented movies:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { getSavedMovies, getfavMovies, getWatchedMovies, getCommentedMovies, getSavedSeries, getfavSeries, getWatchedSeries,getCommentedSeries };
 

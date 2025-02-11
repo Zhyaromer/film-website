@@ -14,30 +14,8 @@ const Serisdetailss = () => {
     const [series, setseries] = useState({});
     const [seasonsList, setSeasonsList] = useState([]);
     const [episodes, setEpisodes] = useState([]);
-    const[howmanyseasons, sethowmanyseasons] = useState(0);
+    const [howmanyseasons, sethowmanyseasons] = useState(0);
     const [howmanyeps, sethowmanyeps] = useState(0);
-
-    const movieData = {
-        title: 'Breaking Bad (2008)',
-        genre: 'سەرکێشێ - ئاکشن - خەیاڵی',
-        date: '2008-1-20',
-        duration: '50 خولەک',
-        director: 'Vince Gilligan',
-        producer: 'AMC',
-        country: 'ئەمریکا',
-        views: 876543,
-        ratings: {
-            imdb: 9.7,
-            rottenTomatoes: 99
-        },
-        seasons: 5,
-        eps: 62,
-        cast: ['Marcus Chen', 'Aria Nakamura', 'David Okonkwo'],
-        backgroundUrl: 'https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2018/01/walter-white-breaking-bad-grande.jpg',
-        posterUrl: 'https://fr.web.img5.acsta.net/pictures/19/06/18/12/11/3956503.jpg',
-        synopsis: 'مامۆستایەکی دواناوەندی بەناوی واڵتەر وایت کەوا تووشی نەخۆشی شێرپەنجەی سییەکان دێت، ڕوودەکاتە فرۆشتنی ماددە هۆشبەرەکان بە مەبەستی زامنکردنی داهاتوویەکی باش بۆ خێزانەکەی دوای مردنە چاوەڕوانکراوەکەی.',
-        trailer: 'https://youtu.be/XZ8daibM3AE?si=fkemLcMX3qXNPwje',
-    };
 
     const [selectedSeason, setSelectedSeason] = useState("1");
     const [isOpen, setIsOpen] = useState(false);

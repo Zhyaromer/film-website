@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Bookmark, Heart, CheckCircle, Download, X, Tv, Star, MoreVertical, UserCircle2, Watch } from 'lucide-react';
+import { Clock, Bookmark, Heart, CheckCircle, Download, X, Tv, Star, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import SimiliarFilmsCard from '../components/@Layout/Similiarfilm.jsx'
@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import ReviewPopup from '../components/@Layout/AddComment.jsx'
 
 const MovieDetailsPage = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');

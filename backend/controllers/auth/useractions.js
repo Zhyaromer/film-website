@@ -170,4 +170,176 @@ const addComment = async (req, res) => {
     }
 };
 
-module.exports = { saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies, addComment };
+//
+
+const saveSeries = async (req, res) => {
+    const { uid } = req.user;
+    const { seriesId } = req.body;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const savedseriess = userDoc.data().savedseriess || [];
+        if (savedseriess.includes(seriesId)) {
+            savedseriess.splice(savedseriess.indexOf(seriesId), 1);
+            await db.collection('users').doc(uid).update({ savedseriess });
+            return res.status(200).json({ message: 'series removed from saved seriess' });
+        } else {
+            savedseriess.push(seriesId);
+        }
+
+        await db.collection('users').doc(uid).update({ savedseriess });
+        return res.status(200).json({ message: 'series saved successfully' });
+    } catch (error) {
+        console.error('Error saving series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getSavedSeries = async (req, res) => {
+    const { uid } = req.user;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const savedSeries = userDoc.data().savedSeries || [];
+        return res.status(200).json({ savedSeries });
+    } catch (error) {
+        console.error('Error getting saved movies:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const favSeries = async (req, res) => {
+    const { uid } = req.user;
+    const { seriesId } = req.body;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const favSeries = userDoc.data().favSeries || [];
+        if (favSeries.includes(seriesId)) {
+            favSeries.splice(favSeries.indexOf(seriesId), 1);
+            await db.collection('users').doc(uid).update({ favSeries });
+            return res.status(200).json({ message: 'Movie removed from favorited movies' });
+        } else {
+            favSeries.push(seriesId);
+        }
+
+        await db.collection('users').doc(uid).update({ favSeries });
+
+        return res.status(200).json({ message: 'series favorited successfully' });
+    } catch (error) {
+        console.error('Error favoriting series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getfavSeries = async (req, res) => {
+    const { uid } = req.user;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const favSeries = userDoc.data().favSeries || [];
+        return res.status(200).json({ favSeries });
+    } catch (error) {
+        console.error('Error getting favorited series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const watchedSeries = async (req, res) => {
+    const { uid } = req.user;
+    const { seriesId } = req.body;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const watchedSeries = userDoc.data().watchedSeries || [];
+        if (watchedSeries.includes(seriesId)) {
+            watchedSeries.splice(watchedSeries.indexOf(seriesId), 1);
+            await db.collection('users').doc(uid).update({ watchedSeries });
+            return res.status(200).json({ message: 'Movie removed from watched Series' });
+        } else {
+            watchedSeries.push(seriesId);
+        }
+
+        await db.collection('users').doc(uid).update({ watchedSeries });
+
+        return res.status(200).json({ message: 'series watched successfully' });
+    } catch (error) {
+        console.error('Error watching series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const getwatchedSeries = async (req, res) => {
+    const { uid } = req.user;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const watchedSeries = userDoc.data().watchedSeries || [];
+        return res.status(200).json({ watchedSeries });
+    } catch (error) {
+        console.error('Error getting watched Series:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+const addCommentSeries = async (req, res) => {
+    const { uid } = req.user;
+    const { seriesId, reviewmsg, star, spoiler } = req.body;
+
+    try {
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const commentData = {
+            uid,
+            name: userDoc.data().username,
+            reviewmsg,
+            star,
+            spoiler
+        };
+
+        const updates = [
+            db.collection('users').doc(uid).update({
+                comments: FieldValue.arrayUnion(seriesId)
+            }),
+            db.collection('series').doc(seriesId).update({
+                comments: FieldValue.arrayUnion(commentData)
+            })
+        ];
+
+        await Promise.all(updates);
+        return res.status(200).json({ message: "Comment added successfully" });
+    } catch (error) {
+        console.error("Error adding comment:", error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+
+module.exports = {addCommentSeries, watchedSeries, getwatchedSeries, getfavSeries, favSeries, getSavedSeries, saveSeries, saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies, addComment };

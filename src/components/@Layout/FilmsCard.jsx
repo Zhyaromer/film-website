@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 const FilmsCard = ({ moviesData }) => {
     const [isSuggestion, setIsSuggestion] = useState(false)
     const [currentMovies, setCurrentMovies] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Add this line
+    const [currentPage, setCurrentPage] = useState(1); 
     const itemsPerPage = 6;
     
     const movies = Array.isArray(moviesData) ? moviesData : (moviesData?.movies || []);
@@ -48,7 +48,7 @@ const FilmsCard = ({ moviesData }) => {
                                 <div className="h-full w-full relative">
                                     <img
                                         src={movie.posterUrl}
-                                        alt={movie.filmtitle || movie.title}
+                                        alt={movie.filmtitle}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
