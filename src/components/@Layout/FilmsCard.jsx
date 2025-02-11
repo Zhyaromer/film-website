@@ -33,7 +33,7 @@ const FilmsCard = ({ moviesData }) => {
     if (movies.length === 0) {
         return (
             <div className="text-center py-20">
-                <p className="text-white text-xl">هیچ فیلمێک نەدۆزرایەوە</p>
+                <p className="text-white text-xl">هیچ نەدۆزرایەوە</p>
             </div>
         );
     }

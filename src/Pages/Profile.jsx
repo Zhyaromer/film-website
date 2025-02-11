@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
-import { auth,EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
+import { auth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
 
 const Profile = () => {
     const [activeSection, setActiveSection] = useState('favorites');
@@ -47,29 +47,35 @@ const Profile = () => {
                         <div>
                             <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
                         </div>
-                        <div>
+
+                        {filmordrama === 'film' ? (
+                            <FilmsCard moviesData={favMovies} />
+                        ) : (
                             <FilmsCard />
-                        </div>
+                        )}
                     </div>
                 );
             case 'watchLater':
                 return (
                     <div className="p-3 md:p-4 lg:p-6">
-                        <div dir="rtl" className="flex justify-start gap-2">
-                            <div onClick={() => setFilmordrama('film')} className={`border rounded-lg border-sky-500 py-1 px-4 ${filmordrama === 'film' ? 'bg-sky-500' : ''}`}>
-                                <p className="text-white">فیلمەکان</p>
-                            </div>
-                            <div onClick={() => setFilmordrama('drama')} className={`border rounded-lg border-sky-500 py-1 px-4 ${filmordrama === 'drama' ? 'bg-sky-500' : ''}`}>
-                                <p className="text-white">زنجیرەکان</p>
-                            </div>
+                    <div dir="rtl" className="flex justify-start gap-2">
+                        <div onClick={() => setFilmordrama('film')} className={`border rounded-lg border-sky-500 py-1 px-4 ${filmordrama === 'film' ? 'bg-sky-500' : ''}`}>
+                            <p className="text-white">فیلمەکان</p>
                         </div>
-                        <div>
-                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">بینینی دواتر</h2>
-                        </div>
-                        <div>
-                            <FilmsCard />
+                        <div onClick={() => setFilmordrama('drama')} className={`border rounded-lg border-sky-500 py-1 px-4 ${filmordrama === 'drama' ? 'bg-sky-500' : ''}`}>
+                            <p className="text-white">زنجیرەکان</p>
                         </div>
                     </div>
+                    <div>
+                        <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
+                    </div>
+
+                    {filmordrama === 'film' ? (
+                        <FilmsCard moviesData={savedMovies} />
+                    ) : (
+                        <FilmsCard />
+                    )}
+                </div>
                 );
             case 'watched':
                 return (
@@ -83,11 +89,14 @@ const Profile = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">بینراو</h2>
+                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
                         </div>
-                        <div>
+
+                        {filmordrama === 'film' ? (
+                            <FilmsCard moviesData={watchedMovies} />
+                        ) : (
                             <FilmsCard />
-                        </div>
+                        )}
                     </div>
                 );
             case 'comments':
@@ -126,7 +135,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        
+
         try {
             const user = auth.currentUser;
             if (!user) {
@@ -139,12 +148,12 @@ const Profile = () => {
                     toast.error('وشەی نهێنی نوێ دەبێت جیاواز بێت لە وشەی نهێنی کۆن', { transition: Slide, autoClose: 3000 });
                     return;
                 }
-    
+
                 if (form.newPassword.length < 8) {
                     toast.error('وشەی نهێنیەکەت ئەبێت لە هەشت کارەکتەر زیاتر بێت', { transition: Slide, autoClose: 3000 });
                     return;
                 }
-    
+
                 try {
                     const credential = EmailAuthProvider.credential(user.email, form.password);
                     await reauthenticateWithCredential(user, credential);
@@ -159,18 +168,18 @@ const Profile = () => {
                     return;
                 }
             }
-    
+
             const requestBody = {
                 name: form.name,
                 username: form.username
             };
-    
+
             const res = await axios.post(
                 'http://localhost:5000/api/profile/changename',
                 requestBody,
                 { withCredentials: true }
             );
-    
+
             if (res.status === 200) {
                 setUser(prevUser => ({
                     ...prevUser,
@@ -190,6 +199,44 @@ const Profile = () => {
             setIsLoading(false);
         }
     }
+
+    const [savedMovies, setSavedMovies] = useState([]);
+    const [favMovies, setFavMovies] = useState([]);
+    const [watchedMovies, setWatchedMovies] = useState([]);
+
+    useEffect(() => {
+        const fetchSavedMovies = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/savedmoviesprofile`, { withCredentials: true });
+                setSavedMovies(res.data.movies);
+            } catch (error) {
+                console.error('Error fetching saved movies:', error);
+            }
+        }
+
+        const fetchfavMovies = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/favmoviesprofile`, { withCredentials: true });
+                setFavMovies(res.data.movies);
+                console.log(res.data.movies);
+            } catch (error) {
+                console.error('Error fetching saved movies:', error);
+            }
+        }
+
+        const fetchwatchedMovies = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/watchedmoviesprofile`, { withCredentials: true });
+                setWatchedMovies(res.data.movies);
+            } catch (error) {
+                console.error('Error fetching saved movies:', error);
+            }
+        }
+
+        fetchSavedMovies();
+        fetchfavMovies();
+        fetchwatchedMovies();
+    }, []);
 
     return (
         <div className='bg-[#282e30]'>

@@ -170,7 +170,7 @@ const MovieDetailsPage = () => {
                                             onClick={() => setShowSpoiler(false)}
                                             className="text-xl text-sky-400 hover:text-sky-500 mb-2"
                                         >
-                                            سپیلەکە بشارەوە
+                                            سپۆیلەرەکە بشارەوە
                                         </button>
                                         <p className="text-white text-right">{review.reviewmsg}</p>
                                     </>
