@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Clock, ChevronDown, Bookmark, Heart, CheckCircle, Star, MoreVertical, UserCircle2 } from 'lucide-react';
+import { Clock, ChevronDown, Bookmark, Heart, CheckCircle, Star, X, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import { useParams } from 'react-router-dom';
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import axios from 'axios';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Serisdetailss = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
@@ -16,7 +18,7 @@ const Serisdetailss = () => {
     const [episodes, setEpisodes] = useState([]);
     const [howmanyseasons, sethowmanyseasons] = useState(0);
     const [howmanyeps, sethowmanyeps] = useState(0);
-
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [selectedSeason, setSelectedSeason] = useState("1");
     const [isOpen, setIsOpen] = useState(false);
 
@@ -158,48 +160,6 @@ const Serisdetailss = () => {
         </div>
     );
 
-    const renderReviews = () => (
-        <div>
-            <div className="py-4 flex flex-row-reverse justify-between items-center px-4">
-                <div>
-                    <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
-                        دانانی هەڵسەنگاندن
-                    </button>
-                </div>
-                <div>
-                    <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
-                </div>
-            </div>
-            <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
-                {series.comments.reviews.map((review, index) => (
-                    <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
-                        <div className="flex justify-between items-center mb-3">
-                            <div className="flex items-center gap-2">
-                                <UserCircle2 className="w-10 h-10 text-white" />
-                                <span className="font-medium text-white cursor-pointer">{review.name}</span>
-                            </div>
-                            <button className="text-white rounded-full p-1">
-                                <MoreVertical className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <div className="flex items-center mb-2 justify-start">
-                            {[...Array(5)].map((_, index) => (
-                                <Star
-                                    key={index}
-                                    className={`w-5 h-5 ${index > review.rating - 1 ? 'text-gray-100' : 'text-sky-500'}`}
-                                    fill={index > review.rating - 1 ? 'none' : 'currentColor'}
-                                />
-                            ))}
-                        </div>
-                        <div className="p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
-                            <p className="text-white text-right">{review.msg}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-
     const { seriesId } = useParams();
 
     const updateEpisodes = useCallback((seasonNum) => {
@@ -247,6 +207,233 @@ const Serisdetailss = () => {
         updateEpisodes(seasonNum);
     };
 
+    const [reviewData, setReviewData] = useState({
+        reviewmsg: '',
+        star: 0,
+        spoiler: false
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/addcommentseries', {
+                seriesId,
+                reviewmsg: reviewData.reviewmsg,
+                star: reviewData.star,
+                spoiler: reviewData.spoiler
+            }, { withCredentials: true });
+
+            if (res.status === 200) {
+                toast.success('پێداچونەوەکەتەوە', { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+        }
+    }
+
+    const [showSpoiler, setShowSpoiler] = useState(false);
+
+    const renderReviews = () => (
+        <div>
+            <div className="py-4 flex flex-row-reverse justify-between items-center px-4">
+                <div onClick={() => setIsReviewModalOpen(true)}>
+                    <button className="text-sm lg:text-lg relative z-10 font-semibold text-white bg-sky-500 py-1 px-2 lg:px-6 rounded cursor-pointer hover:bg-sky-600 transition-all duration-300 ease-in-out">
+                        دانانی هەڵسەنگاندن
+                    </button>
+                </div>
+                <div>
+                    <h2 className="text-xl lg:text-2xl text-sky-500 text-right font-bold">پێداچونەوەکان</h2>
+                </div>
+
+            </div>
+            <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
+                {series.reviews?.map((review, index) => (
+                    <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
+                        <div className="flex justify-between items-center mb-3">
+                            <div className="flex items-center gap-2">
+                                <UserCircle2 className="w-10 h-10 text-white" />
+                                <span className="font-medium text-white cursor-pointer">{review.name}</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center mb-2 justify-start">
+                            {[...Array(5)].map((_, index) => (
+                                <Star
+                                    key={index}
+                                    className={`w-5 h-5 ${index > review.star - 1 ? 'text-gray-100' : 'text-sky-500'}`}
+                                    fill={index > review.star - 1 ? 'none' : 'currentColor'}
+                                />
+                            ))}
+                        </div>
+                        <div className="relative p-3 rounded-lg bg-[hsl(195,9%,15%)] h-48 overflow-y-auto">
+                            {review?.spoiler ? (
+                                !showSpoiler ? (
+                                    <button
+                                        onClick={() => setShowSpoiler(true)}
+                                        className="text-2xl w-full h-full flex items-center justify-center text-sky-500"
+                                    >
+                                        سپۆیلەکە ببینە
+                                    </button>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => setShowSpoiler(false)}
+                                            className="text-xl text-sky-400 hover:text-sky-500 mb-2"
+                                        >
+                                            سپۆیلەرەکە بشارەوە
+                                        </button>
+                                        <p className="text-white text-right">{review.reviewmsg}</p>
+                                    </>
+                                )
+                            ) : (
+                                <p className="text-white text-right">{review.reviewmsg}</p>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
+            <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${isReviewModalOpen ? 'visible' : 'hidden'} `}            >
+                <div className="w-full max-w-lg mx-4 bg-gray-800 rounded-lg" onClick={e => e.stopPropagation()}>
+                    <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                        <h2 className="text-xl font-semibold text-white">زیادکردنی پێداچوونەوە</h2>
+                        <button onClick={() => setIsReviewModalOpen(false)} className="text-gray-400 hover:text-white">
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="p-4 space-y-4">
+                        <textarea
+                            value={reviewData.reviewmsg}
+                            onChange={(e) => setReviewData(prev => ({ ...prev, reviewmsg: e.target.value }))}
+                            placeholder="سەرجەمی پێداچوونەوەکەت لێرە بنوسە"
+                            className="w-full p-3 bg-gray-700 rounded text-white placeholder-gray-400"
+                            rows={4}
+                            dir="rtl"
+                        />
+
+                        <div className="flex justify-center gap-2">
+                            {[1, 2, 3, 4, 5].map((value) => (
+                                <button
+                                    key={value}
+                                    type="button"
+                                    onClick={() => setReviewData(prev => ({ ...prev, star: value }))}
+                                    className="p-1"
+                                >
+                                    <Star
+                                        className={`w-8 h-8 ${reviewData.star >= value ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="spoiler"
+                                checked={reviewData.spoiler}
+                                onChange={(e) => setReviewData(prev => ({ ...prev, spoiler: e.target.checked }))}
+                                className="w-4 h-4 rounded bg-gray-700 border-gray-600"
+                            />
+                            <label htmlFor="spoiler" className="text-white">
+                                پێداچوونەوەکە سپۆیلەری لەخۆ دەگرێت؟
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        >
+                            زیادکردن
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+
+    const saveSeries = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/saveSeries', { seriesId: seriesId }, { withCredentials: true });
+            if (res.status === 200) {
+                setWatchLater(!watchLater);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    const favSeries = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/favSeries', { seriesId: seriesId }, { withCredentials: true });
+            if (res.status === 200) {
+                setFavorite(!favorite);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    const watchedSeries = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/watchedSeries', { seriesId: seriesId }, { withCredentials: true });
+            if (res.status === 200) {
+                setWatched(!watched);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        const checkSavedStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/savedseries',
+                    { withCredentials: true }
+                );
+                console.log(response.data.savedseries);
+                const isSaved = response.data.savedseries.includes(seriesId);
+                setWatchLater(isSaved);
+            } catch (error) {
+                console.error('Error checking saved status:', error);
+            }
+        };
+
+        const checkFavStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/favseries',
+                    { withCredentials: true }
+                );
+                const isSaved = response.data.favSeries.includes(seriesId);
+                setFavorite(isSaved);
+            } catch (error) {
+                console.error('Error checking saved status:', error);
+            }
+        };
+
+        const checkWatchedStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/watchedseries',
+                    { withCredentials: true }
+                );
+                const isSaved = response.data.watchedSeries.includes(seriesId);
+                setWatched(isSaved);
+            } catch (error) {
+                console.error('Error checking watched status:', error);
+            }
+        };
+
+        checkSavedStatus();
+        checkFavStatus();
+        checkWatchedStatus();
+    }, [seriesId]);
+
     return (
         <div>
             <Navigation className="relative z-40" />
@@ -281,21 +468,21 @@ const Serisdetailss = () => {
                                     <ActionButton
                                         icon={Bookmark}
                                         active={watchLater}
-                                        onClick={() => setWatchLater(!watchLater)}
+                                        onClick={saveSeries}
                                         label="Watch Later"
                                         text={'بینینی دواتر'}
                                     />
                                     <ActionButton
                                         icon={Heart}
                                         active={favorite}
-                                        onClick={() => setFavorite(!favorite)}
+                                        onClick={favSeries}
                                         label="Favorite"
                                         text={'لیستی دڵخوازی'}
                                     />
                                     <ActionButton
                                         icon={CheckCircle}
                                         active={watched}
-                                        onClick={() => setWatched(!watched)}
+                                        onClick={watchedSeries}
                                         label="Watched"
                                         text={'بینراو'}
                                     />
@@ -389,6 +576,7 @@ const Serisdetailss = () => {
 
                 <FilmsCard />
             </div>
+            <ToastContainer />
             <Footer />
         </div>
     );

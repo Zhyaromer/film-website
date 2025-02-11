@@ -182,16 +182,16 @@ const saveSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const savedseriess = userDoc.data().savedseriess || [];
-        if (savedseriess.includes(seriesId)) {
-            savedseriess.splice(savedseriess.indexOf(seriesId), 1);
-            await db.collection('users').doc(uid).update({ savedseriess });
+        const savedseries = userDoc.data().savedseries || [];
+        if (savedseries.includes(seriesId)) {
+            savedseries.splice(savedseries.indexOf(seriesId), 1);
+            await db.collection('users').doc(uid).update({ savedseries });
             return res.status(200).json({ message: 'series removed from saved seriess' });
         } else {
-            savedseriess.push(seriesId);
+            savedseries.push(seriesId);
         }
 
-        await db.collection('users').doc(uid).update({ savedseriess });
+        await db.collection('users').doc(uid).update({ savedseries });
         return res.status(200).json({ message: 'series saved successfully' });
     } catch (error) {
         console.error('Error saving series:', error);
@@ -208,10 +208,10 @@ const getSavedSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const savedSeries = userDoc.data().savedSeries || [];
-        return res.status(200).json({ savedSeries });
+        const savedseries = userDoc.data().savedseries || [];
+        return res.status(200).json({ savedseries });
     } catch (error) {
-        console.error('Error getting saved movies:', error);
+        console.error('Error getting favorited series:', error);
         return res.status(500).json({ message: 'Something went wrong' });
     }
 };
@@ -326,10 +326,10 @@ const addCommentSeries = async (req, res) => {
 
         const updates = [
             db.collection('users').doc(uid).update({
-                comments: FieldValue.arrayUnion(seriesId)
+                Seriescomments: FieldValue.arrayUnion(seriesId)
             }),
             db.collection('series').doc(seriesId).update({
-                comments: FieldValue.arrayUnion(commentData)
+                Seriescomments: FieldValue.arrayUnion(commentData)
             })
         ];
 
@@ -342,4 +342,4 @@ const addCommentSeries = async (req, res) => {
 };
 
 
-module.exports = {addCommentSeries, watchedSeries, getwatchedSeries, getfavSeries, favSeries, getSavedSeries, saveSeries, saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies, addComment };
+module.exports = { addCommentSeries, watchedSeries, getwatchedSeries, getfavSeries, favSeries, getSavedSeries, saveSeries, saveMovie, favMovie, watchedMovie, getSavedMovies, getfavMovies, getwatchedMovies, addComment };
