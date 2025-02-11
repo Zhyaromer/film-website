@@ -3,6 +3,7 @@ const app = express()
 const authRoutes = require('./routes/auth.js')
 const moviesRoutes = require('./routes/movies.js')
 const profileRoutes = require('./routes/profile.js')
+const useractions = require('./routes/useractions.js')
 require('dotenv').config()
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5000
@@ -17,5 +18,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/movies', moviesRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/useractions', useractions);
 
 app.listen(port, () => console.log('> Server is up and running on port : ' + port))

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Clock, ChevronDown, PlayCircle, Bookmark, Heart, CheckCircle, Star, MoreVertical, UserCircle2 } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Clock, ChevronDown, Bookmark, Heart, CheckCircle, Star, MoreVertical, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,10 @@ const Serisdetailss = () => {
     const [favorite, setFavorite] = useState(false);
     const [watched, setWatched] = useState(false);
     const [series, setseries] = useState({});
-
+    const [seasonsList, setSeasonsList] = useState([]);
+    const [episodes, setEpisodes] = useState([]);
+    const[howmanyseasons, sethowmanyseasons] = useState(0);
+    const [howmanyeps, sethowmanyeps] = useState(0);
 
     const movieData = {
         title: 'Breaking Bad (2008)',
@@ -38,37 +41,6 @@ const Serisdetailss = () => {
 
     const [selectedSeason, setSelectedSeason] = useState("1");
     const [isOpen, setIsOpen] = useState(false);
-
-    const episodes = [
-        {
-            id: 1,
-            title: "Pilot",
-            image: "https://images.genius.com/9cb7e19233ebb2693a005c8621504c34.1000x1000x1.jpg",
-            season: "1"
-        },
-        {
-            id: 2,
-            title: "Cat's in the Bag",
-            image: "https://processedmedia.wordpress.com/wp-content/uploads/2011/08/breakingbad_post38_1280x1024_062.jpg?w=1200",
-            season: "2"
-        },
-        {
-            id: 3,
-            title: "And the Bag's in the River",
-            image: "https://i.pinimg.com/736x/12/1d/49/121d497eca520d0ee217c77891e95ce3.jpg",
-            season: "3",
-        }
-    ];
-
-    const seasons = [
-        { value: "1", label: "Season 1" },
-        { value: "2", label: "Season 2" },
-        { value: "3", label: "Season 3" },
-        { value: "4", label: "Season 4" },
-    ];
-
-    const filteredEpisodes = episodes.filter(episode => episode.season === selectedSeason);
-
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -112,58 +84,47 @@ const Serisdetailss = () => {
     );
 
     const renderEps = () => (
-        <div className="space-y-4">
-            <div className="container mx-auto p-4">
-                <div className="relative mb-6">
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="flex items-center justify-between w-48 px-4 py-2 text-white bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+        <div className="p-4">
+            <div className="relative mb-4">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="flex items-center justify-between w-48 px-4 py-2 text-white bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+                >
+                    {`Season ${selectedSeason}`}
+                    <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isOpen && (
+                    <div className="absolute z-10 w-48 mt-2 bg-gray-800 rounded-lg shadow-lg">
+                        {seasonsList.map((season) => (
+                            <button
+                                key={season.value}
+                                onClick={() => handleSeasonChange(season.value)}
+                                className="w-full px-4 py-2 text-left text-white hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg"
+                            >
+                                {season.label}
+                            </button>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                {episodes.map((episode) => (
+                    <div
+                        key={episode.id}
+                        className="p-4 bg-gray-800 rounded-lg text-white hover:bg-gray-700 transition-colors"
                     >
-                        <span>{`Season ${selectedSeason}`}</span>
-                        <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
-                        />
-                    </button>
-
-                    {isOpen && (
-                        <div className="absolute z-10 w-48 mt-2 bg-gray-800 rounded-lg shadow-lg">
-                            {seasons.map((season) => (
-                                <button
-                                    key={season.value}
-                                    onClick={() => {
-                                        setSelectedSeason(season.value);
-                                        setIsOpen(false);
-                                    }}
-                                    className="w-full px-4 py-2 text-left text-white hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg"
-                                >
-                                    {season.label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {filteredEpisodes.map((episode) => (
-                        <div key={episode.id} className="flex flex-col">
-                            <div className="relative aspect-video w-full overflow-hidden rounded-lg">
-                                <img
-                                    src={episode.image}
-                                    alt={episode.title}
-                                    className="object-cover w-full h-full"
-                                />
+                        <div className="flex items-center space-x-4">
+                            <div className="flex-shrink-0 w-8 text-center">
+                                {episode.id}
                             </div>
-                            <div className="mt-2 text-left flex flex-row-reverse">
-                                <h2 className="text-xl font-bold text-gray-100">
-                                    . {episode.id}
-                                </h2>
-                                <h2 className="text-xl font-bold text-gray-100">
-                                    {episode.title}
-                                </h2>
+                            <div className="flex-grow">
+                                {episode.title}
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -263,18 +224,50 @@ const Serisdetailss = () => {
 
     const { seriesId } = useParams();
 
+    const updateEpisodes = useCallback((seasonNum) => {
+        const seasonKey = `season${seasonNum}`;
+        if (series.seasons[seasonKey]) {
+            const episodesList = Object.entries(series.seasons[seasonKey].episodes)
+                .map(([key, episode]) => ({
+                    id: episode.epNumber,
+                    title: episode.epTitle,
+                    url: episode.epUrl
+                }))
+                .sort((a, b) => a.id - b.id);
+            setEpisodes(episodesList);
+        }
+    }, [series]);
+
     useEffect(() => {
         const fetchMovieData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/seriesDetails/${seriesId}`);
                 setseries(res.data.movie);
-                console.log(res.data.movie);
+                const seasons = Object.keys(series.seasons).map(season => ({
+                    value: parseInt(season.replace('season', '')),
+                    label: `Season ${season.replace('season', '')}`
+                }));
+                setSeasonsList(seasons);
+                updateEpisodes(selectedSeason);
+                const seasonCount = Object.keys(res.data.movie.seasons).length;
+                sethowmanyseasons(seasonCount);
+                let episodeCount = 0;
+                Object.values(res.data.movie.seasons).forEach(season => {
+                    episodeCount += Object.keys(season.episodes).length;
+                });
+                sethowmanyeps(episodeCount);
             } catch (error) {
                 console.error(error);
             }
         }
         fetchMovieData();
-    }, [seriesId]);
+    }, [seriesId, series, selectedSeason, updateEpisodes]);
+
+    const handleSeasonChange = (seasonNum) => {
+        setSelectedSeason(seasonNum);
+        setIsOpen(false);
+        updateEpisodes(seasonNum);
+    };
 
     return (
         <div>
@@ -363,12 +356,12 @@ const Serisdetailss = () => {
 
                                         <div>
                                             <p className="text-gray-400">ژمارەی وەرزەکان</p>
-                                            <p className="font-semibold">{movieData.seasons}</p>
+                                            <p className="font-semibold">{howmanyseasons}</p>
                                         </div>
 
                                         <div>
                                             <p className="text-gray-400">ژمارەی ئەڵقەکان</p>
-                                            <p className="font-semibold">{movieData.eps}</p>
+                                            <p className="font-semibold">{howmanyeps}</p>
                                         </div>
 
                                         <div>

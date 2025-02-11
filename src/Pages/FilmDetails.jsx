@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, PlayCircle, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2 } from 'lucide-react';
+import { Clock, Bookmark, Heart, CheckCircle, Download, Tv, Star, MoreVertical, UserCircle2, Watch } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import SimiliarFilmsCard from '../components/@Layout/Similiarfilm.jsx'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const MovieDetailsPage = () => {
     const [activeTab, setActiveTab] = useState('زانیاری');
@@ -159,7 +161,88 @@ const MovieDetailsPage = () => {
             }
         }
         fetchSimiliarMovies();
-    },[filmId])
+    }, [filmId])
+
+    const saveMovie = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/savemovie', { movieId: filmId }, { withCredentials: true });
+            if (res.status === 200) {
+                setWatchLater(!watchLater);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    const favMovie = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/favmovie', { movieId: filmId }, { withCredentials: true });
+            if (res.status === 200) {
+                setFavorite(!favorite);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    const watchedMovie = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/useractions/watchedmovie', { movieId: filmId }, { withCredentials: true });
+            if (res.status === 200) {
+                setWatched(!watched);
+                toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        const checkSavedStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/savedmovies',
+                    { withCredentials: true }
+                );
+                const isSaved = response.data.savedMovies.includes(filmId);
+                setWatchLater(isSaved);
+            } catch (error) {
+                console.error('Error checking saved status:', error);
+            }
+        };
+
+        const checkFavStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/favmovies',
+                    { withCredentials: true }
+                );
+                const isSaved = response.data.favMovies.includes(filmId);
+                setFavorite(isSaved);
+            } catch (error) {
+                console.error('Error checking saved status:', error);
+            }
+        };
+
+        const checkWatchedStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/useractions/watchedmovies',
+                    { withCredentials: true }
+                );
+                const isSaved = response.data.savedMovies.includes(filmId);
+                setWatched(isSaved);
+            } catch (error) {
+                console.error('Error checking watched status:', error);
+            }
+        };
+
+        checkSavedStatus();
+        checkFavStatus();
+        checkWatchedStatus();
+    }, [filmId]);
 
     return (
         <div>
@@ -220,21 +303,21 @@ const MovieDetailsPage = () => {
                                     <ActionButton
                                         icon={Bookmark}
                                         active={watchLater}
-                                        onClick={() => setWatchLater(!watchLater)}
+                                        onClick={() => saveMovie()}
                                         label="Watch Later"
                                         text={'بینینی دواتر'}
                                     />
                                     <ActionButton
                                         icon={Heart}
                                         active={favorite}
-                                        onClick={() => setFavorite(!favorite)}
+                                        onClick={() => favMovie()}
                                         label="Favorite"
                                         text={'لیستی دڵخوازی'}
                                     />
                                     <ActionButton
                                         icon={CheckCircle}
                                         active={watched}
-                                        onClick={() => setWatched(!watched)}
+                                        onClick={() => watchedMovie()}
                                         label="Watched"
                                         text={'بینراو'}
                                     />
@@ -316,6 +399,8 @@ const MovieDetailsPage = () => {
 
                 <SimiliarFilmsCard moviesData={similarMovies} />
             </div>
+
+            <ToastContainer />
 
             <Footer />
         </div>
