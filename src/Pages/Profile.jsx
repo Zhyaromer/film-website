@@ -51,7 +51,7 @@ const Profile = () => {
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={favMovies} />
                         ) : (
-                            <FilmsCard />
+                            <FilmsCard moviesData={favseries} />
                         )}
                     </div>
                 );
@@ -67,13 +67,13 @@ const Profile = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
+                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">بینینی دواتر</h2>
                         </div>
 
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={savedMovies} />
                         ) : (
-                            <FilmsCard />
+                            <FilmsCard moviesData={savedseries} />
                         )}
                     </div>
                 );
@@ -89,13 +89,13 @@ const Profile = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
+                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">بینراوەکان</h2>
                         </div>
 
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={watchedMovies} />
                         ) : (
-                            <FilmsCard />
+                            <FilmsCard moviesData={watchedseries} />
                         )}
                     </div>
                 );
@@ -111,13 +111,13 @@ const Profile = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">لیستی دڵخواز</h2>
+                            <h2 className="text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0">پێداچونەوەکان</h2>
                         </div>
 
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={comments} />
                         ) : (
-                            <FilmsCard />
+                            <FilmsCard moviesData={commentsseries} />
                         )}
                     </div>
                 );
@@ -208,6 +208,11 @@ const Profile = () => {
     const [watchedMovies, setWatchedMovies] = useState([]);
     const [comments, setComments] = useState([]);
 
+    const [savedseries, setSavedseries] = useState([]);
+    const [favseries, setFavseries] = useState([]);
+    const [watchedseries, setWatchedseries] = useState([]);
+    const [commentsseries, setCommentsseries] = useState([]);
+
     useEffect(() => {
         const fetchSavedMovies = async () => {
             try {
@@ -215,6 +220,15 @@ const Profile = () => {
                 setSavedMovies(res.data.movies);
             } catch (error) {
                 console.error('Error fetching saved movies:', error);
+            }
+        }
+
+        const fetchSavedSeries = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/savedseriesprofile`, { withCredentials: true });
+                setSavedseries(res.data.series);
+            } catch (error) {
+                console.error('Error fetching saved series:', error);
             }
         }
 
@@ -228,12 +242,30 @@ const Profile = () => {
             }
         }
 
+        const fetchFavSeries = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/favseriesprofile`, { withCredentials: true });
+                setFavseries(res.data.series);
+            } catch (error) {
+                console.error('Error fetching saved series:', error);
+            }
+        }
+
         const fetchwatchedMovies = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/watchedmoviesprofile`, { withCredentials: true });
                 setWatchedMovies(res.data.movies);
             } catch (error) {
                 console.error('Error fetching saved movies:', error);
+            }
+        }
+
+        const fetchWatchedSeries = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/watchedseriesprofile`, { withCredentials: true });
+                setWatchedseries(res.data.series);
+            } catch (error) {
+                console.error('Error fetching saved series:', error);
             }
         }
 
@@ -246,10 +278,23 @@ const Profile = () => {
             }
         }
 
+        const fetchCommentsSeries = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/profileandsettings/commentedseriesprofile`, { withCredentials: true });
+                setCommentsseries(res.data.series);
+            } catch (error) {
+                console.error('Error fetching saved comments:', error);
+            }
+        }
+
         fetchSavedMovies();
         fetchfavMovies();
         fetchwatchedMovies();
         fetComments();
+        fetchCommentsSeries();
+        fetchSavedSeries();
+        fetchFavSeries();
+        fetchWatchedSeries();
     }, []);
 
     return (

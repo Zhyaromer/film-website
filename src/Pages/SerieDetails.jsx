@@ -247,7 +247,7 @@ const Serisdetailss = () => {
 
             </div>
             <div className="w-[100%] lg:grid grid-cols-2 lg:gap-4 space-y-4 lg:space-y-0">
-                {series.reviews?.map((review, index) => (
+                {series.Seriescomments?.map((review, index) => (
                     <div key={index} dir="rtl" className="bg-[hsl(195,9%,20%)] shadow-md rounded-lg p-4 border border-gray-400 h-full">
                         <div className="flex justify-between items-center mb-3">
                             <div className="flex items-center gap-2">

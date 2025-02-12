@@ -13,6 +13,8 @@ const getSavedMovies = async (req, res) => {
             return res.status(200).json({ movies: [] });
         }
 
+        console.log(savedMovieIds);
+
         const moviePromises = savedMovieIds.map(async (movieId) => {
             const movieDoc = await db.collection('movies')
                 .doc(movieId)
@@ -172,7 +174,7 @@ const getSavedSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const savedSeriesIds = userDoc.data().savedSeries || [];
+        const savedSeriesIds = userDoc.data().savedseries || [];
         if (savedSeriesIds.length === 0) {
             return res.status(200).json({ series: [] });
         }
@@ -189,10 +191,10 @@ const getSavedSeries = async (req, res) => {
             const seriesData = seriesDoc.data();
             return {
                 id: seriesDoc.id,
-                filmtitle: seriesData.filmtitle,
-                genre: seriesData.genre,
+                filmtitle: seriesData.title,
+                genre: seriesData.genres,
                 posterUrl: seriesData.posterUrl,
-                year: seriesData.year
+                year: seriesData.date.year
             };
         });
 
@@ -213,7 +215,7 @@ const getfavSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const favSeriesIds = userDoc.data().favseries || [];
+        const favSeriesIds = userDoc.data().favSeries || [];
         if (favSeriesIds.length === 0) {
             return res.status(200).json({ series: [] });
         }
@@ -230,16 +232,16 @@ const getfavSeries = async (req, res) => {
             const seriesData = seriesDoc.data();
             return {
                 id: seriesDoc.id,
-                filmtitle: seriesData.filmtitle,
-                genre: seriesData.genre,
+                filmtitle: seriesData.title,
+                genre: seriesData.genres,
                 posterUrl: seriesData.posterUrl,
-                year: seriesData.year
+                year: seriesData.date.year
             };
         });
 
         const series = await Promise.all(SeriesPromises);
         const validSeries = series.filter(series => series !== null);
-        return res.status(200).json({ movies: validSeries });
+        return res.status(200).json({ series: validSeries });
     } catch (error) {
         console.error('Error fetching favorited series:', error);
         return res.status(500).json({ message: 'Something went wrong' });
@@ -254,7 +256,7 @@ const getWatchedSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const watcheddseriesIds = userDoc.data().watchedseries || [];
+        const watcheddseriesIds = userDoc.data().watchedSeries || [];
         if (watcheddseriesIds.length === 0) {
             return res.status(200).json({ series: [] });
         }
@@ -271,10 +273,10 @@ const getWatchedSeries = async (req, res) => {
             const seriesData = seriesDoc.data();
             return {
                 id: seriesDoc.id,
-                filmtitle: seriesData.filmtitle,
-                genre: seriesData.genre,
+                filmtitle: seriesData.title,
+                genre: seriesData.genres,
                 posterUrl: seriesData.posterUrl,
-                year: seriesData.year
+                year: seriesData.date.year
             };
         });
 
@@ -295,7 +297,7 @@ const getCommentedSeries = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const commentedSeriesIds = userDoc.data().comments || [];
+        const commentedSeriesIds = userDoc.data().Seriescomments || [];
         if (commentedSeriesIds.length === 0) {
             return res.status(200).json({ series: [] });
         }
@@ -312,10 +314,10 @@ const getCommentedSeries = async (req, res) => {
             const seriesData = seriesDoc.data();
             return {
                 id: seriesDoc.id,
-                filmtitle: seriesData.filmtitle,
-                genre: seriesData.genre,
+                filmtitle: seriesData.title,
+                genre: seriesData.genres,
                 posterUrl: seriesData.posterUrl,
-                year: seriesData.year
+                year: seriesData.date.year
             };
         });
 
@@ -328,5 +330,5 @@ const getCommentedSeries = async (req, res) => {
     }
 };
 
-module.exports = { getSavedMovies, getfavMovies, getWatchedMovies, getCommentedMovies, getSavedSeries, getfavSeries, getWatchedSeries,getCommentedSeries };
+module.exports = { getSavedMovies, getfavMovies, getWatchedMovies, getCommentedMovies, getSavedSeries, getfavSeries, getWatchedSeries, getCommentedSeries };
 

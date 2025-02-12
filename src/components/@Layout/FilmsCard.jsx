@@ -48,7 +48,7 @@ const FilmsCard = ({ moviesData }) => {
                                 <div className="h-full w-full relative">
                                     <img
                                         src={movie.posterUrl}
-                                        alt={movie.filmtitle}
+                                        alt={movie.filmtitle || movie.title}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
@@ -56,7 +56,7 @@ const FilmsCard = ({ moviesData }) => {
                             <div className="mt-2 space-y-2 text-center">
                                 <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">
-                                        {movie.filmtitle}
+                                        {movie.filmtitle || movie.title}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
