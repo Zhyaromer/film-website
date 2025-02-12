@@ -13,8 +13,6 @@ const getSavedMovies = async (req, res) => {
             return res.status(200).json({ movies: [] });
         }
 
-        console.log(savedMovieIds);
-
         const moviePromises = savedMovieIds.map(async (movieId) => {
             const movieDoc = await db.collection('movies')
                 .doc(movieId)

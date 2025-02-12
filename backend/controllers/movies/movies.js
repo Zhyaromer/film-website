@@ -117,8 +117,6 @@ const getSimilarMovies = async (req, res) => {
 const getActorMovies = async (req, res) => {
     try {
         const { actor } = req.params;
-        console.log(actor);
-
         const { year, genre, sorting } = req.query;
         const moviesSnapshot = await db.collection('movies').get();
 
@@ -150,34 +148,81 @@ const getActorMovies = async (req, res) => {
                 )
             );
         }
+
         if (sorting) {
             switch (sorting) {
+                case 'popularity':
+                    movies.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
                 case 'newest':
                     movies.sort((a, b) => b.year - a.year);
                     break;
-                case 'oldest':
-                    movies.sort((a, b) => a.year - b.year);
-                    break;
-                case 'rating-high':
-                    movies.sort((a, b) => b.rating - a.rating);
-                    break;
-                case 'rating-low':
-                    movies.sort((a, b) => a.rating - b.rating);
-                    break;
-                case 'title-asc':
-                    movies.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'title-desc':
-                    movies.sort((a, b) => b.title.localeCompare(a.title));
-                    break;
                 default:
-                    movies.sort((a, b) => b.year - a.year);
+                    break;
             }
         }
 
         return res.status(200).json({ movies });
     } catch (error) {
         console.error('Error in getActorMovies:', error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+const getActorSeries = async (req, res) => {
+    try {
+        const { actor } = req.params;
+        const { year, genre, sorting } = req.query;
+        const seriesSnapshot = await db.collection('series').get();
+
+        let series = seriesSnapshot.docs
+            .filter(doc => {
+                const seriesData = doc.data();
+                return seriesData.casts && Array.isArray(seriesData.casts) &&
+                    seriesData.casts.some(castMember =>
+                        castMember.name.toLowerCase() === actor.toLowerCase()
+                    );
+            })
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+        if (year) {
+            const yearArray = year.split(',').map(y => y.trim());
+            series = series.filter(series =>
+                yearArray.includes(series.date.year.toString())
+            );
+        }
+
+        if (genre) {
+            const genreArray = genre.split(',').map(g => g.trim());
+            series = series.filter(series =>
+                series.genres.some(seriesGenre =>
+                    genreArray.includes(seriesGenre)
+                )
+            );
+        }
+
+        if (sorting) {
+            switch (sorting) {
+                case 'popularity':
+                    series.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
+                case 'newest':
+                    series.date.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res.status(200).json({ series });
+    } catch (error) {
+        console.error('Error in getActorseries:', error);
         return res.status(500).json({
             message: 'Internal server error',
             error: error.message
@@ -252,6 +297,61 @@ const getCompanyMovies = async (req, res) => {
     }
 };
 
+const getCompanySeries = async (req, res) => {
+    try {
+        const { company } = req.params;
+        const { year, genre, sorting } = req.query;
+        const seriesSnapshot = await db.collection('series').get();
+
+        let series = seriesSnapshot.docs
+            .filter(doc => {
+                const seriesData = doc.data();
+                return seriesData.producer && seriesData.producer.toLowerCase() === company.toLowerCase();
+            })
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+        if (year) {
+            const yearArray = year.split(',').map(y => y.trim());
+            series = series.filter(series =>
+                yearArray.includes(series.date.year.toString())
+            );
+        }
+
+        if (genre) {
+            const genreArray = genre.split(',').map(g => g.trim());
+            series = series.filter(series =>
+                series.genres.some(seriesGenre =>
+                    genreArray.includes(seriesGenre)
+                )
+            );
+        }
+
+        if (sorting) {
+            switch (sorting) {
+                case 'popularity':
+                    series.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
+                case 'newest':
+                    series.date.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res.status(200).json({ series });
+    } catch (error) {
+        console.error('Error in getActorseries:', error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
 const getDirectorMovies = async (req, res) => {
     try {
         const { director } = req.params;
@@ -312,6 +412,60 @@ const getDirectorMovies = async (req, res) => {
         return res.status(200).json({ movies });
     } catch (error) {
         console.error('Error in getActorMovies:', error);
+        return res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+const getDirectorSeries = async (req, res) => {
+    try {
+        const { director } = req.params;
+        const { year, genre, sorting } = req.query;
+        const seriesSnapshot = await db.collection('series').get();
+
+        let series = seriesSnapshot.docs
+            .filter(doc => {
+                const movieData = doc.data();
+                return movieData.director && movieData.director.toLowerCase() === director.toLowerCase();
+            })
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        if (year) {
+            const yearArray = year.split(',').map(y => y.trim());
+            series = series.filter(series =>
+                yearArray.includes(series.date.year.toString())
+            );
+        }
+
+        if (genre) {
+            const genreArray = genre.split(',').map(g => g.trim());
+            series = series.filter(series =>
+                series.genres.some(seriesGenre =>
+                    genreArray.includes(seriesGenre)
+                )
+            );
+        }
+
+        if (sorting) {
+            switch (sorting) {
+                case 'popularity':
+                    series.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
+                case 'newest':
+                    series.date.sort((a, b) => b.year - a.year);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return res.status(200).json({ series });
+    } catch (error) {
+        console.error('Error in getActorseries:', error);
         return res.status(500).json({
             message: 'Internal server error',
             error: error.message
@@ -422,4 +576,4 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies,getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

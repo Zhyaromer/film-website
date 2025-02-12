@@ -8,6 +8,7 @@ import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
 import { auth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
+import Seriescard from '../components/@Layout/Seriescard.jsx'
 
 const Profile = () => {
     const [activeSection, setActiveSection] = useState('favorites');
@@ -51,7 +52,7 @@ const Profile = () => {
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={favMovies} />
                         ) : (
-                            <FilmsCard moviesData={favseries} />
+                            <Seriescard moviesData={favseries} />
                         )}
                     </div>
                 );
@@ -73,7 +74,7 @@ const Profile = () => {
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={savedMovies} />
                         ) : (
-                            <FilmsCard moviesData={savedseries} />
+                            <Seriescard moviesData={savedseries} />
                         )}
                     </div>
                 );
@@ -95,7 +96,7 @@ const Profile = () => {
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={watchedMovies} />
                         ) : (
-                            <FilmsCard moviesData={watchedseries} />
+                            <Seriescard moviesData={watchedseries} />
                         )}
                     </div>
                 );
@@ -117,7 +118,7 @@ const Profile = () => {
                         {filmordrama === 'film' ? (
                             <FilmsCard moviesData={comments} />
                         ) : (
-                            <FilmsCard moviesData={commentsseries} />
+                            <Seriescard moviesData={commentsseries} />
                         )}
                     </div>
                 );

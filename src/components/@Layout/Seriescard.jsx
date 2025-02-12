@@ -1,7 +1,7 @@
 import Pagination from './Pagination.jsx'
 import { useState, useEffect } from 'react'
 
-const FilmsCard = ({ moviesData }) => {
+const Seriescard = ({ moviesData }) => {
     const [isSuggestion, setIsSuggestion] = useState(false)
     const [currentMovies, setCurrentMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ const FilmsCard = ({ moviesData }) => {
     if (movies.length === 0) {
         return (
             <div className="text-center py-20">
-                <p className="text-white text-xl">هیچ فیلمێک نەدۆزرایەوە</p>
+                <p className="text-white text-xl">هیچ زنجیرەیەک نەدۆزرایەوە</p>
             </div>
         );
     }
@@ -43,7 +43,7 @@ const FilmsCard = ({ moviesData }) => {
             <div dir="rtl" className="relative z-30 mx-auto px-4 py-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
                     {currentMovies.map((movie, index) => (
-                        <div key={movie.id || index} onClick={() => window.location.href = `/filmdetails/${movie.id}`} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
+                        <div key={movie.id || index} onClick={() => window.location.href = `/seriesdetails/${movie.id}`} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
                             <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
                                 <div className="h-full w-full relative">
                                     <img
@@ -88,4 +88,4 @@ const FilmsCard = ({ moviesData }) => {
     )
 }
 
-export default FilmsCard
+export default Seriescard

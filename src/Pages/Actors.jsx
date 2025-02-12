@@ -6,10 +6,12 @@ import MultiSelect from '../components/@UI/Filtersinput.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
 import { useParams } from 'react-router-dom';
+import Seriescard from '../components/@Layout/Seriescard.jsx'
 
 const Actors = () => {
     const { genre, year, sorting } = FiltersOption();
     const [movies, setMovies] = useState([]);
+    const [series, setSeries] = useState([]);
     const [filmordrama, setFilmordrama] = useState('film')
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedYears, setSelectedYears] = useState([]);
@@ -40,6 +42,30 @@ const Actors = () => {
         }
     };
 
+    const fetchSeries = async (filters) => {
+        try {
+            let url = `http://localhost:5000/api/movies/actorSeries/${actor}`;
+            const params = new URLSearchParams();
+            if (filters.genre.length > 0) {
+                params.append('genre', filters.genre.join(','));
+            }
+            if (filters.year.length > 0) {
+                params.append('year', filters.year.join(','));
+            }
+            if (filters.sorting.length > 0) {
+                params.append('sorting', filters.sorting[0].value);
+            }
+
+            const queryString = params.toString();
+            const finalUrl = queryString ? `${url}?${queryString}` : url;
+
+            const res = await axios.get(finalUrl);
+            setSeries(res.data.series);
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        }
+    };
+
     useEffect(() => {
         const filters = {
             genre: selectedGenres.map(g => g.value),
@@ -47,6 +73,7 @@ const Actors = () => {
             sorting: selectedSorting
         };
         fetchMovies(filters);
+        fetchSeries(filters);
     }, [selectedGenres, selectedYears, selectedSorting]);
 
     return (
@@ -86,7 +113,11 @@ const Actors = () => {
 
             <div>
                 <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>
-                    ({movies?.movies?.length || 0}) {actor} {filmordrama === 'film' ? 'فیلمەکانی' : 'زنجیرەکانی'}
+                    {filmordrama === 'film' ? (
+                        `(${movies?.movies?.length || 0}) ${actor} فیلمەکانی` 
+                    ) : (
+                        `(${series?.length || 0}) ${actor} زنجیرەکانی`
+                    )}
                 </h2>
             </div>
 
@@ -99,7 +130,11 @@ const Actors = () => {
                 </div>
             </div>
 
-            <FilmsCard moviesData={movies} />
+            {filmordrama === 'film' ? (
+                <FilmsCard moviesData={movies?.movies} />
+            ) : (
+                <Seriescard moviesData={series} />
+            )}
             <Footer />
         </div>
     );

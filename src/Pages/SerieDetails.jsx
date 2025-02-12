@@ -114,7 +114,7 @@ const Serisdetailss = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
 
                 {series.casts.map((member, index) => (
-                    <div key={index} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
+                    <div key={index} onClick={() => window.location.href = `/actors/${member.name}`} className="flex justify-center items-center gap-4 flex-col cursor-pointer bg-gray-800 p-3 rounded">
                         <div>
                             <img className='w-24 h-24 rounded-full' src={member.photo} alt="" />
                         </div>
@@ -224,6 +224,7 @@ const Serisdetailss = () => {
             }, { withCredentials: true });
 
             if (res.status === 200) {
+                setIsReviewModalOpen(false);
                 toast.success('پێداچونەوەکەتەوە', { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
@@ -492,7 +493,7 @@ const Serisdetailss = () => {
                                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                         <div>
                                             <p className="text-gray-400">بەرهەمهێنان</p>
-                                            <p className="font-semibold">{series.producer}</p>
+                                            <p onClick={() => window.location.href = `/company/${series.producer}`} className="cursor-pointer font-semibold">{series.producer}</p>
                                         </div>
                                         <div className='mb-4'>
                                             <p className="text-gray-400">وڵات</p>
@@ -529,15 +530,15 @@ const Serisdetailss = () => {
                                             <p className="font-semibold">{howmanyeps}</p>
                                         </div>
 
-                                        <div>
+                                        <div >
                                             <p className="text-gray-400">دەرهێنان</p>
-                                            <p className="font-semibold">{series.director}</p>
+                                            <p onClick={() => window.location.href = `/directors/${series.director}`} className="cursor-pointer font-semibold">{series.director}</p>
                                         </div>
 
 
                                         <div>
                                             <p className="text-gray-400 text-right"><i class="fa-solid fa-eye"></i></p>
-                                            <p className="font-semibold">5000</p>
+                                            <p className="font-semibold">{series.view}</p>
                                         </div>
 
                                     </div>
@@ -569,12 +570,6 @@ const Serisdetailss = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="relative z-50 mb-0 pt-12 px-8 flex justify-end items-center">
-                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرەی هاوشێوە</h4>
-                </div>
-
-                <FilmsCard />
             </div>
             <ToastContainer />
             <Footer />
