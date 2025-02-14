@@ -5,7 +5,6 @@ import '../index.css'
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import MovieSlider from '../components/@Layout/Slider.jsx'
-import MoviesCard from '../components/@Layout/MoviesCard.jsx'
 
 const A = () => {
     const movies =
@@ -270,13 +269,6 @@ const A = () => {
 
                 </div>
             </div>
-
-            <div className="mb-4 mt-4 px-8 flex justify-between items-center">
-                <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                <h4 className="text-lg md:text-3xl font-bold text-center text-white">زنجیرە فیلم</h4>
-            </div>
-
-            <MoviesCard />
 
             <Footer />
         </div>

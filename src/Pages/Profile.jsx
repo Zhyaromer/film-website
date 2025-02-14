@@ -1,6 +1,7 @@
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import Seriescard from '../components/@Layout/Seriescard.jsx'
 import React, { useState, useEffect } from 'react';
 import { Settings, X, EyeOff, Eye } from 'lucide-react';
 import axios from 'axios';
@@ -8,7 +9,6 @@ import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
 import { auth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
-import Seriescard from '../components/@Layout/Seriescard.jsx'
 
 const Profile = () => {
     const [activeSection, setActiveSection] = useState('favorites');

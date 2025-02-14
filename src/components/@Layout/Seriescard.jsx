@@ -12,7 +12,7 @@ const Seriescard = ({ moviesData }) => {
     useEffect(() => {
         const isOnSuggestionPages = window.location.pathname === '/suggestion' ||
             window.location.pathname === '/filmdetails' ||
-            window.location.pathname === '/seriesdetails';
+            window.location.pathname === '/seriesdetails'  || window.location.pathname === '/';
 
         if (isSuggestion !== isOnSuggestionPages) {
             setIsSuggestion(isOnSuggestionPages);

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 const SeriesCards = ({ moviesData }) => {
     const [isSuggestion, setIsSuggestion] = useState(false)
     const [currentMovies, setCurrentMovies] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Add this line
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     
     const movies = Array.isArray(moviesData) ? moviesData : (moviesData?.movies || []);

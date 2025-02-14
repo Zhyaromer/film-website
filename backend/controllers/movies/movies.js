@@ -476,7 +476,7 @@ const getDirectorSeries = async (req, res) => {
 const getAllSeries = async (req, res) => {
     try {
         const { year, genre, sorting } = req.query;
-        console.log(genre)
+        console.log(sorting)
         let moviesQuery = db.collection('series');
 
         if (year) {
@@ -504,7 +504,7 @@ const getAllSeries = async (req, res) => {
                     movies.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
                 case 'newest':
-                    movies.sort((a, b) => b.year - a.year);
+                    movies.sort((a, b) => b.date.year - a.date.year);
                     break;
                 default:
                     break;
@@ -576,4 +576,37 @@ const getNewestMoviesAndSeries = async (req, res) => {
     }
 };
 
-module.exports = { getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+const getTrending = async (req, res) => {
+    try {
+        const [moviesSnapshot, seriesSnapshot] = await Promise.all([
+            db.collection('movies')
+                .orderBy('view', 'desc')
+                .limit(6)
+                .get(),
+            db.collection('series')
+                .orderBy('view', 'desc')
+                .limit(6)
+                .get()
+        ]);
+
+        const movies = moviesSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const series = seriesSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+       return res.status(200).json({ movies, series });
+    } catch (error) {
+        console.error('Error fetching most viewed:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Error fetching content'
+        });
+    }
+}
+
+module.exports = {getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
