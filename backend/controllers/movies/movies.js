@@ -608,4 +608,38 @@ const getTrending = async (req, res) => {
     }
 }
 
-module.exports = {getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+const incrementViewMovies = async (req, res) => {
+    try {
+        const { filmId } = req.params;
+        const collectionRef = db.collection("movies");
+        const docRef = collectionRef.doc(filmId);
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            return res.status(404).json({ message: 'Document not found' });
+        }
+        await docRef.update({ view: doc.data().view + 1 });
+        return res.status(200).json({ message: 'View count incremented successfully' });
+    } catch (error) {
+        console.error('Error incrementing view:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const incrementViewSeries = async (req, res) => {
+    try {
+        const { seriesId } = req.params;
+        const collectionRef = db.collection("series");
+        const docRef = collectionRef.doc(seriesId);
+        const doc = await docRef.get();
+        if (!doc.exists) {
+            return res.status(404).json({ message: 'Document not found' });
+        }
+        await docRef.update({ view: doc.data().view + 1 });
+        return res.status(200).json({ message: 'View count incremented successfully' });
+    } catch (error) {
+        console.error('Error incrementing view:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = {incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

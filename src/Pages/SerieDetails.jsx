@@ -3,7 +3,6 @@ import { Clock, ChevronDown, Bookmark, Heart, CheckCircle, Star, X, UserCircle2 
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import { useParams } from 'react-router-dom';
-import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import axios from 'axios';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
@@ -21,6 +20,8 @@ const Serisdetailss = () => {
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [selectedSeason, setSelectedSeason] = useState("1");
     const [isOpen, setIsOpen] = useState(false);
+    const [showSpoiler, setShowSpoiler] = useState(false);
+    const { seriesId } = useParams();
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -160,13 +161,11 @@ const Serisdetailss = () => {
         </div>
     );
 
-    const { seriesId } = useParams();
-
     const updateEpisodes = useCallback((seasonNum) => {
         const seasonKey = `season${seasonNum}`;
         if (series.seasons[seasonKey]) {
             const episodesList = Object.entries(series.seasons[seasonKey].episodes)
-                .map(([key, episode]) => ({
+                .map(([_, episode]) => ({
                     id: episode.epNumber,
                     title: episode.epTitle,
                     url: episode.epUrl
@@ -195,7 +194,7 @@ const Serisdetailss = () => {
                 });
                 sethowmanyeps(episodeCount);
             } catch (error) {
-                console.error(error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         }
         fetchMovieData();
@@ -231,8 +230,6 @@ const Serisdetailss = () => {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
-
-    const [showSpoiler, setShowSpoiler] = useState(false);
 
     const renderReviews = () => (
         <div>
@@ -362,7 +359,6 @@ const Serisdetailss = () => {
             }
         } catch (error) {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
         }
     }
 
@@ -375,7 +371,6 @@ const Serisdetailss = () => {
             }
         } catch (error) {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
         }
     }
 
@@ -388,7 +383,6 @@ const Serisdetailss = () => {
             }
         } catch (error) {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
         }
     }
 
@@ -398,11 +392,10 @@ const Serisdetailss = () => {
                 const response = await axios.get('http://localhost:5000/api/useractions/savedseries',
                     { withCredentials: true }
                 );
-                console.log(response.data.savedseries);
                 const isSaved = response.data.savedseries.includes(seriesId);
                 setWatchLater(isSaved);
             } catch (error) {
-                console.error('Error checking saved status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
@@ -414,7 +407,7 @@ const Serisdetailss = () => {
                 const isSaved = response.data.favSeries.includes(seriesId);
                 setFavorite(isSaved);
             } catch (error) {
-                console.error('Error checking saved status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
@@ -426,10 +419,19 @@ const Serisdetailss = () => {
                 const isSaved = response.data.watchedSeries.includes(seriesId);
                 setWatched(isSaved);
             } catch (error) {
-                console.error('Error checking watched status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
+        const incrementView = async () => {
+            try {
+                await axios.get(`http://localhost:5000/api/movies/incrementViewSeries/${seriesId}`, {}, { withCredentials: true });
+            } catch (error) {
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+            }
+        }
+
+        incrementView();
         checkSavedStatus();
         checkFavStatus();
         checkWatchedStatus();

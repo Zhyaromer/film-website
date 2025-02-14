@@ -16,6 +16,13 @@ const MovieDetailsPage = () => {
     const [film, setFilm] = useState({});
     const [similarMovies, setSimilarMovies] = useState([]);
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [reviewData, setReviewData] = useState({
+        reviewmsg: '',
+        star: 0,
+        spoiler: false
+    });
+    const [showSpoiler, setShowSpoiler] = useState(false);
+    const { filmId } = useParams();
 
     const ActionButton = ({ icon: Icon, active, onClick, label, text }) => (
         <button
@@ -95,14 +102,6 @@ const MovieDetailsPage = () => {
         </div>
     );
 
-    const [reviewData, setReviewData] = useState({
-        reviewmsg: '',
-        star: 0,
-        spoiler: false
-    });
-
-    const { filmId } = useParams();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -120,8 +119,6 @@ const MovieDetailsPage = () => {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
-
-    const [showSpoiler, setShowSpoiler] = useState(false);
 
     const renderReviews = () => (
         <div>
@@ -247,25 +244,32 @@ const MovieDetailsPage = () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/movie/${filmId}`);
                 setFilm(res.data.movie);
-                console.log(res.data.movie);
             } catch (error) {
-                console.error(error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         }
-        fetchMovieData();
-    }, [filmId]);
 
-    useEffect(() => {
         const fetchSimiliarMovies = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/similar/${filmId}`);
                 setSimilarMovies(res.data.similarMovies);
             } catch (error) {
-                console.error(error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         }
+
+        const incrementView = async () => {
+            try {
+                await axios.get(`http://localhost:5000/api/movies/incrementView/${filmId}`, {}, { withCredentials: true });
+            } catch (error) {
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+            }
+        }
+
+        fetchMovieData();
         fetchSimiliarMovies();
-    }, [filmId])
+        incrementView();
+    }, [filmId]);
 
     const saveMovie = async () => {
         try {
@@ -275,8 +279,7 @@ const MovieDetailsPage = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
-            toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
+            toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
         }
     }
 
@@ -289,7 +292,6 @@ const MovieDetailsPage = () => {
             }
         } catch (error) {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
         }
     }
 
@@ -302,7 +304,6 @@ const MovieDetailsPage = () => {
             }
         } catch (error) {
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
-            console.error(error);
         }
     }
 
@@ -315,7 +316,7 @@ const MovieDetailsPage = () => {
                 const isSaved = response.data.savedMovies.includes(filmId);
                 setWatchLater(isSaved);
             } catch (error) {
-                console.error('Error checking saved status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
@@ -327,7 +328,7 @@ const MovieDetailsPage = () => {
                 const isSaved = response.data.favMovies.includes(filmId);
                 setFavorite(isSaved);
             } catch (error) {
-                console.error('Error checking saved status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
@@ -339,7 +340,7 @@ const MovieDetailsPage = () => {
                 const isSaved = response.data.savedMovies.includes(filmId);
                 setWatched(isSaved);
             } catch (error) {
-                console.error('Error checking watched status:', error);
+                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
             }
         };
 
