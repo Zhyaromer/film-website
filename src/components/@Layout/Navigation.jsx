@@ -9,10 +9,10 @@ const Navigation = () => {
     const [issubshown, setsubshown] = useState(false)
     const [issubshown2, setsubshown2] = useState(false)
     const [issidebarshown, setsidebarshown] = useState(false)
-    const [issidebarshown2, setsidebarshown2] = useState(false)
     const [issearchxshown, setsearchxshown] = useState(false)
     const [isuseropen, setisuseropen] = useState(false)
     const user = Onauth()
+    const navigate = useNavigate()
 
     const logingOut = async () => {
         try {
@@ -52,25 +52,19 @@ const Navigation = () => {
                                     setsubshown(!issubshown);
                                 }
                             }} className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                فیلمەکان
+                                فیلم
                             </p>
                             <div dir='rtl' className={`w-40 text-center absolute -left-14 top-11 z-30 bg-[#282e30] ${issubshown ? 'block' : 'hidden'} transition-all duration-300 ease-in-out`}>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">سەرجەم فیلمەکان</p>
+                                <p onClick={navigate.bind(this, '/films')} className="text-white p-2 cursor-pointer hover:bg-sky-500">سەرجەم فیلمەکان</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">بۆلیود</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">هۆلیود</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">کۆری</p>
                                 <p className="text-white p-2 cursor-pointer hover:bg-sky-500">ئەنیمی</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">فارسی</p>
                             </div>
                         </div>
                         <div className='relative'>
-                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                زنجیرەکان
-                            </p>
-                        </div>
-                        <div className='relative'>
-                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                زنجیرە فیلم
+                            <p onClick={navigate.bind(this, '/series')} className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
+                                زنجیرە
                             </p>
                         </div>
                         <div className='relative'>
@@ -85,31 +79,26 @@ const Navigation = () => {
                         </div>
                         <div className='relative'>
                             <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                پێداچونەوە
+                                پێشنیاری ئێمە
                             </p>
                         </div>
                         <div className='relative'>
-                            <p onClick={() => {
-                                if (issubshown) {
-                                    setsubshown(!issubshown);
-                                    setsubshown2(!issubshown2);
-                                } else {
-                                    setsubshown2(!issubshown2);
-                                }
-                            }} className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                زیاتر
+                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
+                                ستاف
                             </p>
-                            <div dir="rtl" className={`w-40 absolute -left-16 top-11 z-30 bg-[#282e30] ${issubshown2 ? 'block' : 'hidden'} transition-all duration-300 ease-in-out text-center`}>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">دەرهێنەران</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">ئەکتەرەکان</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">IMDb باشترینی 250</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">دەربارە</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">ستاف</p>
-                                <p className="text-white p-2 cursor-pointer hover:bg-sky-500">پەیوەندی کردن</p>
-                            </div>
+                        </div>
+                        <div className='relative'>
+                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
+                                دەربارە
+                            </p>
+                        </div>
+                        <div className='relative'>
+                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
+                                پەیوەندی کردن
+                            </p>
                         </div>
                     </div>
-                    {/* Mobile Menu Items */}
+                    
                     <div className='relative mb-1 flex justify-end lg:hidden visible'>
                         <button className='mt-1' onClick={() => setshown(!isshown)}>
                             <span className="block w-6 h-1 bg-white mb-1"></span>
@@ -137,7 +126,6 @@ const Navigation = () => {
                                         <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">هۆلیود</p>
                                         <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">ئەنیمی</p>
                                         <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">کۆری</p>
-                                        <p className="text-white p-2 pr-4 pb-2 cursor-pointer hover:bg-sky-500">فارسی</p>
                                     </div>
                                 </div>
 
@@ -146,16 +134,6 @@ const Navigation = () => {
                                         <div className='flex text-center justify-self-end basis-3/4'>
                                             <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
                                                 زنجیرە <i className="fa-solid fa-house ms-1 me-1"></i>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='relative w-full'>
-                                    <div className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
-                                        <div className='flex text-center justify-self-end basis-3/4'>
-                                            <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                                زنجیرە فیلم <i className="fa-solid fa-house ms-1 me-1"></i>
                                             </p>
                                         </div>
                                     </div>
@@ -185,31 +163,39 @@ const Navigation = () => {
                                     <div className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
                                         <div className='flex text-center justify-self-end basis-3/4'>
                                             <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                                پێداچونەوە <i className="fa-solid fa-house ms-1 me-1"></i>
+                                                پێشنیاری ئێمە <i className="fa-solid fa-house ms-1 me-1"></i>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className='relative w-full'>
-                                    <div onClick={() => setsidebarshown2(!issidebarshown2)} className='px-3 flex w-full items-center justify-around hover:bg-sky-400 hover:rounded cursor-pointer'>
-                                        <div className='flex justify-start ms-4 basis-1/4'>
-                                            <i className={`fa-solid fa-chevron-down text-white ${issidebarshown2 ? 'rotate-90 transition-all duration-300 ease-in-out' : 'rotate-0 transition-all duration-300 ease-in-out'}`}></i>
-                                        </div>
+                                    <div className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
                                         <div className='flex text-center justify-self-end basis-3/4'>
                                             <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                                زیاتر <i className="fa-solid fa-house ms-1 me-1"></i>
+                                                ستاف <i className="fa-solid fa-house ms-1 me-1"></i>
                                             </p>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div dir='rtl' className={`w-full bg-[hsl(195,9%,24%)] overflow-hidden ${issidebarshown2 ? 'max-h-50' : 'max-h-0'} transition-all duration-300 ease-in-out -me-4`}>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">دەرهێنەران</p>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">ئەکتەرەکان</p>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">250 باشترینی IMDb</p>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">دەربارە</p>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">ستاف</p>
-                                        <p className="text-white p-2 pr-4 cursor-pointer hover:bg-sky-500">پەیوەندی کردن</p>
+                                <div className='relative w-full'>
+                                    <div className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
+                                        <div className='flex text-center justify-self-end basis-3/4'>
+                                            <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                                دەربارە <i className="fa-solid fa-house ms-1 me-1"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='relative w-full'>
+                                    <div className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
+                                        <div className='flex text-center justify-self-end basis-3/4'>
+                                            <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
+                                                پەیوەندی کردن <i className="fa-solid fa-house ms-1 me-1"></i>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -242,9 +228,9 @@ const Navigation = () => {
                         </h3>
                         {user ? (
                             <div className={`absolute ${isuseropen ? 'block' : 'hidden'} text-right left-0 group-hover:block bg-gray-800 text-white rounded-lg shadow-lg p-0 top-full right-0 mt-2 w-48 z-50`}>
-                                <div onClick={() => window.location.href='/profile'} className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
+                                <div onClick={() => window.location.href = '/profile'} className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
                                     <div>
-                                        <a href="#" className="font-semibold">پرۆفایل</a>
+                                        <p onClick={() => window.location.href = '/profile'} className="font-semibold">پرۆفایل</p>
                                     </div>
                                     <div>
                                         <i class="fa-solid text-gray-500 fa-user-gear"></i>
@@ -253,7 +239,7 @@ const Navigation = () => {
 
                                 <div onClick={() => logingOut()} className='cursor-pointer p-4 hover:bg-gray-700 flex flex-row-reverse justify-between items-center gap-2'>
                                     <div>
-                                        <a href="#" className="font-semibold">چونەدەرەوە</a>
+                                        <p onClick={() => logingOut()} className="font-semibold">چونەدەرەوە</p>
                                     </div>
                                     <div>
                                         <i class="fa-solid text-red-500 fa-right-from-bracket"></i>
@@ -269,6 +255,7 @@ const Navigation = () => {
                     </div>
                 </div>
             </nav>
+            <ToastContainer />
         </div>
     )
 }

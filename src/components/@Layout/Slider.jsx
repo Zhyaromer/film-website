@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const MovieSlider = () => {
@@ -32,14 +32,14 @@ const MovieSlider = () => {
         },
     ];
 
-    const resetInterval = () => {
+    const resetInterval = useCallback(() => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
         intervalRef.current = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % movies.length);
         }, 4000);
-    };
+    }, [movies.length]);
 
     const goToSlide = (index) => {
         setCurrentSlide(index);
@@ -81,7 +81,11 @@ const MovieSlider = () => {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [movies.length]);
+    }, [movies.length, resetInterval]);
+
+    useEffect(() => {
+        resetInterval();
+    }, [resetInterval]);
 
     return (
         <div
@@ -89,7 +93,7 @@ const MovieSlider = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden"
+            className="relative z-40 w-full h-[70vh] md:h-[80vh] overflow-hidden"
         >
             {movies.map((movie, index) => (
                 <div
