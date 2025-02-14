@@ -279,6 +279,9 @@ const MovieDetailsPage = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+              return  toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
         }
     }
@@ -291,6 +294,9 @@ const MovieDetailsPage = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+               return  toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
@@ -303,6 +309,9 @@ const MovieDetailsPage = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+              return  toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
@@ -313,10 +322,12 @@ const MovieDetailsPage = () => {
                 const response = await axios.get('http://localhost:5000/api/useractions/savedmovies',
                     { withCredentials: true }
                 );
-                const isSaved = response.data.savedMovies.includes(filmId);
+                const isSaved = response?.data?.savedMovies?.includes(filmId);
                 setWatchLater(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 
@@ -325,10 +336,12 @@ const MovieDetailsPage = () => {
                 const response = await axios.get('http://localhost:5000/api/useractions/favmovies',
                     { withCredentials: true }
                 );
-                const isSaved = response.data.favMovies.includes(filmId);
+                const isSaved = response?.data?.favMovies?.includes(filmId);
                 setFavorite(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 
@@ -340,7 +353,9 @@ const MovieDetailsPage = () => {
                 const isSaved = response?.data?.savedMovies?.includes(filmId);
                 setWatched(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 

@@ -376,6 +376,9 @@ const Serisdetailss = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+                toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
@@ -388,6 +391,9 @@ const Serisdetailss = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+                toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
@@ -400,6 +406,9 @@ const Serisdetailss = () => {
                 toast.success(res.data.message, { transition: Slide, autoClose: 3000 });
             }
         } catch (error) {
+            if (error.response?.status === 401) {
+                toast.error('تکایە سەرەتا بچۆرە ژورەوە', { transition: Slide, autoClose: 3000 });
+            }
             toast.error(error.response.data.message, { transition: Slide, autoClose: 3000 });
         }
     }
@@ -413,7 +422,9 @@ const Serisdetailss = () => {
                 const isSaved = response.data.savedseries.includes(seriesId);
                 setWatchLater(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 
@@ -425,7 +436,9 @@ const Serisdetailss = () => {
                 const isSaved = response.data.favSeries.includes(seriesId);
                 setFavorite(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 
@@ -437,7 +450,9 @@ const Serisdetailss = () => {
                 const isSaved = response.data.watchedSeries.includes(seriesId);
                 setWatched(isSaved);
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         };
 
@@ -445,7 +460,9 @@ const Serisdetailss = () => {
             try {
                 await axios.get(`http://localhost:5000/api/movies/incrementViewSeries/${seriesId}`, {}, { withCredentials: true });
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                if (error.response?.status !== 401) {
+                    toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                }
             }
         }
 

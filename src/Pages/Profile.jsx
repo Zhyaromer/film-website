@@ -9,8 +9,10 @@ import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
 import { auth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '../Firebase/frontendfb.js';
+import ProtectedPages from '../helpers/ProtectedPages.jsx';
 
 const Profile = () => {
+    ProtectedPages();
     const [activeSection, setActiveSection] = useState('favorites');
     const [filmordrama, setFilmordrama] = useState('film')
     const [showPassword, setShowPassword] = useState(false);
