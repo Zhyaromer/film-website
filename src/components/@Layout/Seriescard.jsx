@@ -48,7 +48,7 @@ const Seriescard = ({ moviesData }) => {
                                 <div className="h-full w-full relative">
                                     <img
                                         src={movie.posterUrl}
-                                        alt={movie.filmtitle || movie.title}
+                                        alt={movie.title}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
@@ -56,16 +56,12 @@ const Seriescard = ({ moviesData }) => {
                             <div className="mt-2 space-y-2 text-center">
                                 <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">
-                                        {movie.filmtitle || movie.title}
+                                        {movie.title}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year || movie.date.year}</p>
+                                    <p className='text-white'>{movie?.date?.year}</p>
                                     <p className='text-white'>
-                                        {movie.genre && Array.isArray(movie.genre || movie.genres)
-                                            ? movie.genre.slice(0, 2).join(" - ")
-                                            : ''}
-
                                         {movie.genres && Array.isArray(movie.genres)
                                             ? movie.genres.slice(0, 2).join(" - ")
                                             : ''}

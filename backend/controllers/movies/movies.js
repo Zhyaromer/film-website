@@ -539,7 +539,7 @@ const getRandomMoveandSeries = async (req, res) => {
         }
 
         const selectedSeriesIndices = new Set();
-        while (randomSeries.length < 6) {
+        while (randomSeries.length < 4) {
             const randomIndex = Math.floor(Math.random() * series.length);
             if (!selectedSeriesIndices.has(randomIndex)) {
                 randomSeries.push(series[randomIndex]);
@@ -548,7 +548,6 @@ const getRandomMoveandSeries = async (req, res) => {
         }
 
         return res.status(200).json({ movies: randomMovies, series: randomSeries });
-
     } catch (error) {
         console.error("Error getting random movies and series:", error);
         return res.status(500).json({ message: "Something went wrong" });
