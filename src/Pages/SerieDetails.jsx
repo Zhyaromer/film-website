@@ -179,26 +179,44 @@ const Serisdetailss = () => {
         const fetchMovieData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/seriesDetails/${seriesId}`);
-                setseries(res.data.movie);
-                const seasons = Object.keys(series.seasons).map(season => ({
-                    value: parseInt(season.replace('season', '')),
-                    label: `Season ${season.replace('season', '')}`
-                }));
-                setSeasonsList(seasons);
-                updateEpisodes(selectedSeason);
-                const seasonCount = Object.keys(res.data.movie.seasons).length;
-                sethowmanyseasons(seasonCount);
-                let episodeCount = 0;
-                Object.values(res.data.movie.seasons).forEach(season => {
-                    episodeCount += Object.keys(season.episodes).length;
-                });
-                sethowmanyeps(episodeCount);
+                const movieData = res?.data?.movie;
+
+                if (movieData?.seasons) {
+                    setseries(movieData);
+
+                    const seasons = Object.keys(movieData.seasons).map(season => ({
+                        value: parseInt(season.replace('season', '')),
+                        label: `Season ${season.replace('season', '')}`
+                    }));
+                    setSeasonsList(seasons);
+
+                    if (!selectedSeason && seasons.length > 0) {
+                        setSelectedSeason(seasons[0].value);
+                    }
+
+                    const seasonCount = Object.keys(movieData.seasons).length;
+                    sethowmanyseasons(seasonCount);
+
+                    let episodeCount = 0;
+                    Object.values(movieData.seasons).forEach(season => {
+                        episodeCount += Object.keys(season.episodes).length;
+                    });
+                    sethowmanyeps(episodeCount);
+                }
             } catch (error) {
-                toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
+                toast.error(error.response?.data?.message || 'هەڵەیەک ڕویدا',
+                    { transition: Slide, autoClose: 3000 });
             }
-        }
+        };
+
         fetchMovieData();
-    }, [seriesId, series, selectedSeason, updateEpisodes]);
+    }, [seriesId]);
+
+    useEffect(() => {
+        if (series?.seasons && selectedSeason) {
+            updateEpisodes(selectedSeason);
+        }
+    }, [selectedSeason, series]);
 
     const handleSeasonChange = (seasonNum) => {
         setSelectedSeason(seasonNum);

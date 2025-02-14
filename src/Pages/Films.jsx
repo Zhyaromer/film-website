@@ -5,7 +5,7 @@ import Footer from '../components/@Layout/Footer.jsx'
 import MultiSelect from '../components/@UI/Filtersinput.jsx'
 import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
-//Series
+
 const Films = () => {
     const { genre, year, sorting } = FiltersOption();
     const [movies, setMovies] = useState([]);

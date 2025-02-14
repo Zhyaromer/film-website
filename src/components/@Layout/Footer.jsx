@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import FilmsCard from '../@Layout/FilmsCard.jsx'
+import Footerfilms from '../@Layout/Footerfilms.jsx'
 import Seriescard from '../@Layout/Seriescard.jsx'
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ const Footer = () => {
         ,
         {
             id: 1, text: 'پربینەرترین فیلم', content: (
-                <FilmsCard moviesData={mostViewedMovies} />
+                <Footerfilms moviesData={mostViewedMovies} />
             )
         }
     ];

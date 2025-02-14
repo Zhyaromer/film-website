@@ -1,8 +1,7 @@
 import Pagination from './Pagination.jsx'
 import { useState, useEffect } from 'react'
 
-const FilmsCard = ({ moviesData }) => {
-    const [isSuggestion, setIsSuggestion] = useState(false)
+const Footerfilms = ({ moviesData }) => {
     const [currentMovies, setCurrentMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -10,27 +9,19 @@ const FilmsCard = ({ moviesData }) => {
     const movies = Array.isArray(moviesData) ? moviesData : (moviesData?.movies || []);
 
     useEffect(() => {
-        const isOnSuggestionPages = window.location.pathname === '/suggestion' ||
-            window.location.pathname === '/filmdetails' ||
-            window.location.pathname === '/seriesdetails' || window.location.pathname === '/';
-
-        if (isSuggestion !== isOnSuggestionPages) {
-            setIsSuggestion(isOnSuggestionPages);
-        }
-
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
 
-        if (movies.length > 0) {
+        if (movies?.length > 0) {
             setCurrentMovies(movies.slice(startIndex, endIndex));
         }
-    }, [movies, currentPage, isSuggestion]);
+    }, [movies, currentPage]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    if (movies.length === 0) {
+    if (movies?.length === 0) {
         return (
             <div className="text-center py-20">
                 <p className="text-white text-xl">هیچ فیلمێک نەدۆزرایەوە</p>
@@ -56,13 +47,17 @@ const FilmsCard = ({ moviesData }) => {
                             <div className="mt-2 space-y-2 text-center">
                                 <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">
-                                        {movie.filmtitle}
+                                    <p className="text-sm sm:text-base text-sky-500 font-semibold">
+                                      {movie?.filmtitle?.length > 20
+                                        ?  '...' + movie.filmtitle.slice(0, 20)
+                                        : movie.filmtitle}
+                                    </p>
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
                                     <p className='text-white'>{movie.year}</p>
                                     <p className='text-white'>
-                                        {movie.genre && Array.isArray(movie.genre || movie.genres)
+                                        {movie.genre && Array.isArray(movie.genre)
                                             ? movie.genre.slice(0, 2).join(" - ")
                                             : ''}
                                     </p>
@@ -73,9 +68,9 @@ const FilmsCard = ({ moviesData }) => {
                 </div>
             </div>
 
-            <div className={`mb-16 ${isSuggestion ? 'hidden' : 'block'}`}>
+            <div className={`mb-16 `}>
                 <Pagination
-                    totalItems={movies.length}
+                    totalItems={movies?.length}
                     itemsPerPage={itemsPerPage}
                     onPageChange={handlePageChange}
                 />
@@ -84,4 +79,4 @@ const FilmsCard = ({ moviesData }) => {
     )
 }
 
-export default FilmsCard
+export default Footerfilms
