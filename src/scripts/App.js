@@ -14,7 +14,7 @@ import SeriesViewer from '../Pages/Test.jsx'
 import Actors from '../Pages/Actors.jsx'
 import Companies from '../Pages/Company.jsx'
 import Directors from '../Pages/Directors.jsx'
-import SeriesPage from '../Pages/B.jsx'
+import NotFound from '../Pages/NotFound.jsx'
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/aa" element={<SeriesViewer />} />
-        <Route path="/b" element={<SeriesPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

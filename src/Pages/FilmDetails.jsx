@@ -337,7 +337,7 @@ const MovieDetailsPage = () => {
                 const response = await axios.get('http://localhost:5000/api/useractions/watchedmovies',
                     { withCredentials: true }
                 );
-                const isSaved = response.data.savedMovies.includes(filmId);
+                const isSaved = response?.data?.savedMovies?.includes(filmId);
                 setWatched(isSaved);
             } catch (error) {
                 toast.error(error.response.data.message || 'هەڵەیەک ڕویدا', { transition: Slide, autoClose: 3000 });
