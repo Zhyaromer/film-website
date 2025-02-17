@@ -598,7 +598,7 @@ const getTrending = async (req, res) => {
             ...doc.data()
         }));
 
-       return res.status(200).json({ movies, series });
+        return res.status(200).json({ movies, series });
     } catch (error) {
         console.error('Error fetching most viewed:', error);
         res.status(500).json({
@@ -642,4 +642,38 @@ const incrementViewSeries = async (req, res) => {
     }
 };
 
-module.exports = {incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+const getNewMovies = async (req, res) => {
+    try {
+        const moviesSnapshot = await db.collection('movies')
+            .limit(12)
+            .get();
+
+        const movies = moviesSnapshot.docs.map(doc => {
+            return { id: doc.id, ...doc.data() };
+        });
+
+        return res.status(200).json({ movies });
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const getNewSeries = async (req, res) => {
+    try {
+        const seriesSnapshot = await db.collection('series')
+            .limit(5)
+            .get();
+
+        const series = seriesSnapshot.docs.map(doc => {
+            return { id: doc.id, ...doc.data() };
+        });
+
+        return res.status(200).json({ series });
+    } catch (error) {
+        console.error('Error fetching series:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+module.exports = { getNewSeries,getNewMovies, incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

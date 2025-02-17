@@ -6,7 +6,6 @@ import { auth, signOut } from '../../Firebase/frontendfb.js';
 
 const Navigation = () => {
     const [isshown, setshown] = useState(true)
-    const [issidebarshown, setsidebarshown] = useState(false)
     const [issearchxshown, setsearchxshown] = useState(false)
     const [isuseropen, setisuseropen] = useState(false)
     const user = Onauth()
@@ -36,7 +35,7 @@ const Navigation = () => {
             </div>
             <nav className="w-full h-16 bg-[hsl(195,9%,20%)] flex flex-row-reverse items-center md:justify-start justify-between px-4">
                 <div className='flex flex-row lg:flex-row-reverse gap-8 items-center justify-end lg:justify-start w-4/5'>
-                    <div className='flex flex-row justify-center text-center items-center'>
+                    <div onClick={navigate.bind(this, '/')} className='cursor-pointer flex flex-row justify-center text-center items-center'>
                         <p className='text-xl font-bold text-white'>Kurdish <span className='text-sky-500'>Movie</span></p>
                     </div>
 

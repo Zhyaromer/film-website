@@ -18,6 +18,7 @@ router.get('/directorSeries/:director', moviesController.getDirectorSeries);
 router.get('/trending', moviesController.getTrending);
 router.get('/incrementView/:filmId', moviesController.incrementViewMovies);
 router.get('/incrementViewSeries/:seriesId', moviesController.incrementViewSeries);
-
+router.get('/newmovies', moviesController.getNewMovies);
+router.get('/newseries', moviesController.getNewSeries);
 
 module.exports = router;

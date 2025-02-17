@@ -5,6 +5,10 @@ import '../index.css'
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import MovieSlider from '../components/@Layout/Slider.jsx'
+import axios from 'axios'
+import Footerfilms from '../components/@Layout/Footerfilms.jsx'
+import Seriescard from '../components/@Layout/Seriescard.jsx'
+import { useNavigate } from 'react-router-dom';
 
 const A = () => {
     const movies =
@@ -123,6 +127,34 @@ const A = () => {
             },
         ]
 
+    const navigate = useNavigate();
+    const [newestMovies, setNewestMovies] = useState([]);
+    const [newestSeries, setNewestSeries] = useState([]);
+
+    useEffect(() => {
+        const getNewestMovies = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/movies/newmovies');
+                setNewestMovies(res.data.movies);
+                console.log(res.data.movies);
+            } catch (error) {
+                console.error('Error fetching newest movies:', error);
+            }
+        }
+
+        const getNewestSeries = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/movies/newseries');
+                setNewestSeries(res.data.series);
+            } catch (error) {
+                console.error('Error fetching newest series:', error);
+            }
+        }
+
+        getNewestMovies();
+        getNewestSeries();
+    }, []);
+
     return (
         <div className='bg-[#282e30]'>
             <Navigation />
@@ -131,64 +163,18 @@ const A = () => {
 
             <div className="mx-auto px-4 py-8">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
-                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <p onClick={() => navigate('/films')} className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
                     <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین فیلمەکان</h4>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
-                    {movies.map((movie, index) => (
-                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
-                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
-                                <div className="h-full w-full relative">
-                                    <img
-                                        src={movie.img}
-                                        alt=""
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base text-sky-500 font-semibold">{movie.movieName}</p>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year}</p>
-                                    <p className='text-white'>{movie.genre}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <Footerfilms moviesData={newestMovies} />
             </div>
 
             <div className="mx-auto px-4 py-4 bg-[hsl(195,9%,10%)]">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
-                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <p onClick={() => navigate('/series')} className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
                     <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین زنجیرەکان</h4>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
-                    {series.map((movie, index) => (
-                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
-                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
-                                <div className="h-full w-full relative">
-                                    <img
-                                        src={movie.img}
-                                        alt=""
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year}</p>
-                                    <p className='text-white'>{movie.genre}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <Seriescard moviesData={newestSeries} />
             </div>
 
             <div className="mx-auto px-4 py-4">
@@ -222,38 +208,7 @@ const A = () => {
                 </div>
             </div>
 
-            <div className="mx-auto px-4 py-4 bg-[hsl(195,9%,10%)]">
-                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
-                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">ئەنیمی</h4>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
-                    {series.map((movie, index) => (
-                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
-                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
-                                <div className="h-full w-full relative">
-                                    <img
-                                        src={movie.img}
-                                        alt=""
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base text-sky-500 font-semibold">{movie.movieName}</p>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year}</p>
-                                    <p className='text-white'>{movie.genre}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className='flex justify-center items-center mb-12'>
+            <div onClick={() => navigate('/suggestion')} className='flex justify-center items-center mb-12'>
                 <div className='bg-gradient-to-r from-sky-500 to-blue-500 w-[90%] h-48 md:w-2/4 mt-12 rounded-full'>
                     <div className='flex flex-col justify-center items-center gap-4 mt-4'>
                         <div>

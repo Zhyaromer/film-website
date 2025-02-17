@@ -24,7 +24,7 @@ const Footerfilms = ({ moviesData = [] }) => {
                     {moviesData.map((movie, index) => (
                         <div 
                             key={movie?.id || index} 
-                            onClick={() => movie?.id && (window.location.href = `/seriesdetails/${movie.id}`)} 
+                            onClick={() => movie?.id && (window.location.href = `/filmdetails/${movie.id}`)} 
                             className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer"
                         >
                             <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">

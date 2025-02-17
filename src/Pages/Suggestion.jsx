@@ -1,6 +1,6 @@
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
-import FilmsCard from '../components/@Layout/FilmsCard.jsx'
+import Footerfilms from '../components/@Layout/Footerfilms.jsx'
 import Seriescard from '../components/@Layout/Seriescard.jsx'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -45,7 +45,7 @@ const Suggestion = () => {
                 <h4 className="text-2xl md:text-3xl font-bold text-center text-white">فیلمەکان</h4>
             </div>
 
-            <FilmsCard moviesData={movies}/>
+            <Footerfilms moviesData={movies}/>
 
             <div className="mt-4 px-8 flex justify-end items-center">
                 <h4 className="text-2xl md:text-3xl font-bold text-center text-white">زنجیرەکان</h4>
