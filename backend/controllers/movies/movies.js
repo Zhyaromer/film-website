@@ -676,10 +676,4 @@ const getNewSeries = async (req, res) => {
     }
 };
 
-const getAnimesGenre = async (req, res) => {
-    const anime = await db.collection('movies').where('genre', 'array-contains', 'ئەنیمی').get().then(querySnapshot => querySnapshot.docs.map(doc => doc.data())).catch(error => console.error('Error fetching movies:', error)).where('genre', 'array-contains', 'انیمی').get();
-
-    
-}
-
 module.exports = { getNewSeries,getNewMovies, incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

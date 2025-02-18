@@ -12,7 +12,7 @@ const Footerfilms = ({ moviesData = [] }) => {
     if (moviesData.length === 0) {
         return (
             <div className="text-center py-20">
-                <p className="text-white text-xl">هیچ زنجیرەیەک نەدۆزرایەوە</p>
+                <p className="text-white text-xl">هیچ فلیمێک نەدۆزرایەوە</p>
             </div>
         );
     }
