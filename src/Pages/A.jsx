@@ -177,37 +177,6 @@ const A = () => {
                 <Seriescard moviesData={newestSeries} />
             </div>
 
-            <div className="mx-auto px-4 py-4">
-                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
-                    <p className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
-                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">کۆری</h4>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
-                    {series.map((movie, index) => (
-                        <div key={index} className="w-full hover:scale-95 transition-transform duration-300 cursor-pointer">
-                            <div className="bg-red-500 rounded-lg shadow-md overflow-hidden group h-64">
-                                <div className="h-full w-full relative">
-                                    <img
-                                        src={movie.img}
-                                        alt=""
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2 space-y-2 text-center">
-                                <div dir="rtl" className="break-all">
-                                    <p className="text-sm sm:text-base font-semibold text-sky-500">{movie.movieName}</p>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2 text-gray-600 text-sm">
-                                    <p className='text-white'>{movie.year}</p>
-                                    <p className='text-white'>{movie.genre}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
             <div onClick={() => navigate('/suggestion')} className='flex justify-center items-center mb-12'>
                 <div className='bg-gradient-to-r from-sky-500 to-blue-500 w-[90%] h-48 md:w-2/4 mt-12 rounded-full'>
                     <div className='flex flex-col justify-center items-center gap-4 mt-4'>

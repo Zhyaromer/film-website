@@ -50,11 +50,6 @@ const Navigation = () => {
                                 زنجیرە
                             </p>
                         </div>
-                        <div onClick={navigate.bind(this, '/films')} className='relative'>
-                            <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
-                                ئەنیمی
-                            </p>
-                        </div>
                         <div onClick={navigate.bind(this, '/suggestion')} className='relative'>
                             <p className="text-base text-white hover:text-sky-500 font-semibold cursor-pointer transition-all duration-200 ease-in-out">
                                 پێشنیاری ئێمە
@@ -101,16 +96,6 @@ const Navigation = () => {
                                         <div className='flex text-center justify-self-end basis-3/4'>
                                             <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
                                                 زنجیرە <i className="fa-solid fa-house ms-1 me-1"></i>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='relative w-full'>
-                                    <div onClick={navigate.bind(this, '/films')} className='px-3 flex w-full items-center justify-end hover:bg-sky-400 hover:rounded cursor-pointer'>
-                                        <div className='flex text-center justify-self-end basis-3/4'>
-                                            <p className="text-base text-right p-4 w-full text-white font-semibold transition-all duration-300 ease-in-out md:text-xl lg:text-2xl xl:text-2xl">
-                                                ئەنیمی <i className="fa-solid fa-house ms-1 me-1"></i>
                                             </p>
                                         </div>
                                     </div>
