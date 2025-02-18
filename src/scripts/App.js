@@ -15,6 +15,7 @@ import Actors from '../Pages/Actors.jsx'
 import Companies from '../Pages/Company.jsx'
 import Directors from '../Pages/Directors.jsx'
 import NotFound from '../Pages/NotFound.jsx'
+import AboutPage from '../Pages/About.jsx'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/aa" element={<SeriesViewer />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
