@@ -10,7 +10,7 @@ const register = async (req, res) => {
 
     if (!sanEmail || !sanPassowrd || !sanName || !sanUsername) {
         return res.status(400).json({
-            message: "All fields are required"
+            message: "تکایە هەموو زانیاریەکان پڕ بکەوە"
         })
     }
     try {
@@ -35,7 +35,6 @@ const register = async (req, res) => {
                 username: sanUsername
             });
         } catch (error) {
-            console.error("Error writing to Firestore:", error);
             await auth.deleteUser(user.uid);
             return res.status(500).json({ message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە" });
         }
@@ -44,7 +43,6 @@ const register = async (req, res) => {
             message: "هەژمارەکەت بە سەرکەوتوی دروستکرا"
         })
     } catch (error) {
-        console.error("Registration error:", error);
         if (error.code === 'auth/email-already-exists') {
             return res.status(400).json({ message: "ئیمەیڵەکە پێشتر بەکارهێنراوە" });
         } else if (error.code === 'auth/weak-password') {
@@ -61,7 +59,7 @@ const login = async (req, res) => {
     const sanEmail = xss(email)
     if (!sanEmail) {
         return res.status(400).json({
-            message: "All fields are required"
+            message: "تکایە هەموو زانیاریەکان پڕ بکەوە"
         })
     }
     try {
@@ -90,7 +88,6 @@ const login = async (req, res) => {
             message: "بە سەرکەوتووی چویتە ژورەوە"
         })
     } catch (error) {
-        console.error("Login error:", error);
         return res.status(500).json({
             message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە"
         })
@@ -102,7 +99,6 @@ const logout = async (req, res) => {
         res.clearCookie('idToken');
         res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Logout failed" });
     }
 };

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import A from '../Pages/A';
+import Home from '../Pages/Home';
 import Films from '../Pages/Films.jsx';
 import Series from '../Pages/Series.jsx';
 import Suggestion from '../Pages/Suggestion.jsx';
@@ -10,7 +10,6 @@ import Loginpage from '../Pages/Login.jsx'
 import Signuppage from '../Pages/Signup.jsx'
 import Profile from '../Pages/Profile.jsx'
 import ForgotPassword from '../Pages/Forgotpass.jsx'
-import NewsDetailsPage from '../Pages/Test.jsx'
 import Actors from '../Pages/Actors.jsx'
 import Companies from '../Pages/Company.jsx'
 import Directors from '../Pages/Directors.jsx'
@@ -22,7 +21,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<A />} />
+        <Route path="/" element={<Home />} />
         <Route path="/films" element={<Films />} />
         <Route path="/series" element={<Series />} />
         <Route path="/suggestion" element={<Suggestion />} />
@@ -37,7 +36,6 @@ function App() {
         <Route path="/signup" element={<Signuppage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/aa" element={<NewsDetailsPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

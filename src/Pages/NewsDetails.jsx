@@ -28,7 +28,6 @@ const NewsDetails = () => {
             }
         }
 
-
         incrementView();
         fetchMovieData();
     }, [newsId]);

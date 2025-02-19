@@ -11,7 +11,7 @@ import Seriescard from '../components/@Layout/Seriescard.jsx'
 import NewsTemplateComponent from '../components/@Layout/NewsTemplate';
 import { useNavigate } from 'react-router-dom';
 
-const A = () => {
+const Home = () => {
     const navigate = useNavigate();
     const [newestMovies, setNewestMovies] = useState([]);
     const [newestSeries, setNewestSeries] = useState([]);
@@ -103,4 +103,4 @@ const A = () => {
     )
 }
 
-export default A
+export default Home

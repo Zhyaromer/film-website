@@ -163,7 +163,7 @@ const getCommentedMovies = async (req, res) => {
         return res.status(500).json({ message: 'Something went wrong' });
     }
 };
-//
+
 const getSavedSeries = async (req, res) => {
     const { uid } = req.user;
     try {

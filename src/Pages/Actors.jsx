@@ -110,7 +110,6 @@ const Actors = () => {
                 </div>
             </div>
 
-
             <div>
                 <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>
                     {filmordrama === 'film' ? (
