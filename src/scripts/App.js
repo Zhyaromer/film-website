@@ -16,6 +16,7 @@ import Companies from '../Pages/Company.jsx'
 import Directors from '../Pages/Directors.jsx'
 import NotFound from '../Pages/NotFound.jsx'
 import AboutPage from '../Pages/About.jsx'
+import NewsDetails from '../Pages/NewsDetails.jsx'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/company/:company" element={<Companies />} />
         <Route path="/directors/:director" element={<Directors />} />
         <Route path="/seriesdetails/:seriesId" element={<SerieDetails />} />
+        <Route path="/newsdetails/:newsId" element={<NewsDetails />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<Signuppage />} />
         <Route path="/profile" element={<Profile />} />

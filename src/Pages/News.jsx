@@ -11,7 +11,8 @@ const News = () => {
         const getNews = async () => {
             try {
                 const res = await axios.get('http://localhost:5000/api/news/newestnews');
-                setNews(res.data.news);
+                setNews(res.data.newsData);
+                console.log(res.data.newsData);
             } catch (error) {
                 console.error('Error fetching news:', error);
             }
@@ -28,7 +29,7 @@ const News = () => {
                 <h4 className="text-xl md:text-3xl font-bold text-right text-white">نوێترین هەواڵەکان</h4>
             </div>
 
-            <NewsTemplateComponent />
+            <NewsTemplateComponent newsData={news} />
 
             <Footer />
         </div>

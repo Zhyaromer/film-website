@@ -5,6 +5,7 @@ const moviesRoutes = require('./routes/movies.js')
 const profileRoutes = require('./routes/profile.js')
 const useractions = require('./routes/useractions.js')
 const profileandsettings = require('./routes/profilemoviesdata.js')
+const news = require('./routes/news.js')
 require('dotenv').config()
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5000
@@ -21,5 +22,6 @@ app.use('/api/movies', moviesRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/useractions', useractions);
 app.use('/api/profileandsettings', profileandsettings);
+app.use('/api/news', news);
 
 app.listen(port, () => console.log('> Server is up and running on port : ' + port))
