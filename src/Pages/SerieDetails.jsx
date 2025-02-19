@@ -179,7 +179,7 @@ const Serisdetailss = () => {
         const fetchMovieData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/seriesDetails/${seriesId}`);
-                const movieData = res?.data?.movie;
+                const movieData = res?.data?.series;
 
                 if (movieData?.seasons) {
                     setseries(movieData);

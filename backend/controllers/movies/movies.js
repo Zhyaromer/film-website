@@ -1,20 +1,20 @@
 const { db } = require('../../config/Firebase/firebase');
+const xss = require('xss');
 
 const getAllMovies = async (req, res) => {
+    const { year, genre, sorting } = req.query;
     try {
-        const { year, genre, sorting } = req.query;
-        console.log(genre)
         let moviesQuery = db.collection('movies');
 
         if (year) {
-            const years = year.split(',');
-            console.log(years)
+            const sanYear = xss(year);
+            const years = sanYear.split(',');
             moviesQuery = moviesQuery.where('year', 'in', years);
         }
 
         if (genre) {
-            const genres = genre.split(',');
-            console.log(genres)
+            const sanGenre = xss(genre);
+            const genres = sanGenre.split(',');
             moviesQuery = moviesQuery.where('genre', 'array-contains-any', genres);
         }
 
@@ -26,7 +26,8 @@ const getAllMovies = async (req, res) => {
         });
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     movies.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -40,38 +41,49 @@ const getAllMovies = async (req, res) => {
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
 const getMovieById = async (req, res) => {
     const { filmId } = req.params;
-    const movieDoc = await db.collection('movies').doc(filmId).get();
-    if (!movieDoc.exists) {
-        return res.status(404).json({ message: 'Movie not found' });
+    const sanFilmId = xss(filmId);
+
+    try {
+        const movieDoc = await db.collection('movies').doc(sanFilmId).get();
+        if (!movieDoc.exists) {
+            return res.status(404).json({ message: 'هیچ فلیمێک نەدۆزرایەوە' });
+        }
+        const movie = movieDoc.data();
+        return res.status(200).json({ movie });
+    } catch (error) {
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
-    const movie = movieDoc.data();
-    return res.status(200).json({ movie });
 };
 
 const getSeriesById = async (req, res) => {
     const { seriesId } = req.params;
-    const movieDoc = await db.collection('series').doc(seriesId).get();
-    if (!movieDoc.exists) {
-        return res.status(404).json({ message: 'Movie not found' });
+    const sanSeriesId = xss(seriesId);
+    try {
+        const seriesDoc = await db.collection('series').doc(sanSeriesId).get();
+        if (!seriesDoc.exists) {
+            return res.status(404).json({ message: 'هیچ زنجیرەیەک نەدۆزرایەوە' });
+        }
+        const series = seriesDoc.data();
+        return res.status(200).json({ series });
+    } catch (error) {
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
-    const movie = movieDoc.data();
-    return res.status(200).json({ movie });
 };
 
 const getSimilarMovies = async (req, res) => {
+    const { filmId } = req.params;
+    const sanFilmId = xss(filmId);
     try {
-        const { filmId } = req.params;
-        const movieDoc = await db.collection('movies').doc(filmId).get();
+        const movieDoc = await db.collection('movies').doc(sanFilmId).get();
 
         if (!movieDoc.exists) {
-            return res.status(404).json({ message: 'Movie not found' });
+            return res.status(404).json({ message: 'هیچ فلیمێک نەدۆزرایەوە' });
         }
 
         const movie = movieDoc.data();
@@ -86,7 +98,7 @@ const getSimilarMovies = async (req, res) => {
                 ...doc.data(),
                 id: doc.id
             }))
-            .filter(m => m.id !== filmId);
+            .filter(m => m.id !== sanFilmId);
 
         const moviesWithScores = movies.map(m => {
             const matchingGenres = m.genre.filter(g => genres.includes(g));
@@ -109,15 +121,20 @@ const getSimilarMovies = async (req, res) => {
             similarMovies: sortedMovies.map(({ matchScore, ...movie }) => movie)
         });
     } catch (error) {
-        console.error('Error getting similar movies:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
 const getActorMovies = async (req, res) => {
+    const { actor } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanActor = xss(actor);
+
+    if (!sanActor) {
+        return res.status(400).json({ message: 'هیچ ئەکتەرێک نەدۆزرایەە' });
+    }
+
     try {
-        const { actor } = req.params;
-        const { year, genre, sorting } = req.query;
         const moviesSnapshot = await db.collection('movies').get();
 
         let movies = moviesSnapshot.docs
@@ -125,7 +142,7 @@ const getActorMovies = async (req, res) => {
                 const movieData = doc.data();
                 return movieData.cast && Array.isArray(movieData.cast) &&
                     movieData.cast.some(castMember =>
-                        castMember.name.toLowerCase() === actor.toLowerCase()
+                        castMember.name.toLowerCase() === sanActor.toLowerCase()
                     );
             })
             .map(doc => ({
@@ -134,14 +151,16 @@ const getActorMovies = async (req, res) => {
             }));
 
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             movies = movies.filter(movie =>
                 yearArray.includes(movie.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             movies = movies.filter(movie =>
                 movie.genre.some(movieGenre =>
                     genreArray.includes(movieGenre)
@@ -150,7 +169,8 @@ const getActorMovies = async (req, res) => {
         }
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     movies.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -164,18 +184,23 @@ const getActorMovies = async (req, res) => {
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error in getActorMovies:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getActorSeries = async (req, res) => {
+    const { actor } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanActor = xss(actor);
+
+    if (!sanActor) {
+        return res.status(400).json({ message: 'هیچ ئەکتەرێک نەدۆزرایەە' });
+    }
+
     try {
-        const { actor } = req.params;
-        const { year, genre, sorting } = req.query;
         const seriesSnapshot = await db.collection('series').get();
 
         let series = seriesSnapshot.docs
@@ -183,7 +208,7 @@ const getActorSeries = async (req, res) => {
                 const seriesData = doc.data();
                 return seriesData.casts && Array.isArray(seriesData.casts) &&
                     seriesData.casts.some(castMember =>
-                        castMember.name.toLowerCase() === actor.toLowerCase()
+                        castMember.name.toLowerCase() === sanActor.toLowerCase()
                     );
             })
             .map(doc => ({
@@ -192,14 +217,16 @@ const getActorSeries = async (req, res) => {
             }));
 
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             series = series.filter(series =>
                 yearArray.includes(series.date.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             series = series.filter(series =>
                 series.genres.some(seriesGenre =>
                     genreArray.includes(seriesGenre)
@@ -208,7 +235,8 @@ const getActorSeries = async (req, res) => {
         }
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     series.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -222,25 +250,29 @@ const getActorSeries = async (req, res) => {
 
         return res.status(200).json({ series });
     } catch (error) {
-        console.error('Error in getActorseries:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getCompanyMovies = async (req, res) => {
+    const { company } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanCompany = xss(company);
+
+    if (!sanCompany) {
+        return res.status(400).json({ message: 'هیچ نەدۆزرایەە' });
+    }
+
     try {
-        const { company } = req.params;
-        const { year, genre, sorting } = req.query;
-        console.log(company);
         const moviesSnapshot = await db.collection('movies').get();
 
         let movies = moviesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.producer && movieData.producer.toLowerCase() === company.toLowerCase();
+                return movieData.producer && movieData.producer.toLowerCase() === sanCompany.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
@@ -248,65 +280,62 @@ const getCompanyMovies = async (req, res) => {
             }));
 
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             movies = movies.filter(movie =>
                 yearArray.includes(movie.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             movies = movies.filter(movie =>
                 movie.genre.some(movieGenre =>
                     genreArray.includes(movieGenre)
                 )
             );
         }
+
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
+                case 'popularity':
+                    movies.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
                 case 'newest':
-                    movies.sort((a, b) => b.year - a.year);
-                    break;
-                case 'oldest':
-                    movies.sort((a, b) => a.year - b.year);
-                    break;
-                case 'rating-high':
-                    movies.sort((a, b) => b.rating - a.rating);
-                    break;
-                case 'rating-low':
-                    movies.sort((a, b) => a.rating - b.rating);
-                    break;
-                case 'title-asc':
-                    movies.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'title-desc':
-                    movies.sort((a, b) => b.title.localeCompare(a.title));
+                    movies.date.sort((a, b) => b.year - a.year);
                     break;
                 default:
-                    movies.sort((a, b) => b.year - a.year);
+                    break;
             }
         }
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error in getActorMovies:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getCompanySeries = async (req, res) => {
+    const { company } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanCompany = xss(company);
+
+    if (!sanCompany) {
+        return res.status(400).json({ message: 'هیچ نەدۆزرایەە' });
+    }
+
     try {
-        const { company } = req.params;
-        const { year, genre, sorting } = req.query;
         const seriesSnapshot = await db.collection('series').get();
 
         let series = seriesSnapshot.docs
             .filter(doc => {
                 const seriesData = doc.data();
-                return seriesData.producer && seriesData.producer.toLowerCase() === company.toLowerCase();
+                return seriesData.producer && seriesData.producer.toLowerCase() === sanCompany.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
@@ -314,14 +343,16 @@ const getCompanySeries = async (req, res) => {
             }));
 
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             series = series.filter(series =>
                 yearArray.includes(series.date.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             series = series.filter(series =>
                 series.genres.some(seriesGenre =>
                     genreArray.includes(seriesGenre)
@@ -330,7 +361,8 @@ const getCompanySeries = async (req, res) => {
         }
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     series.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -344,25 +376,29 @@ const getCompanySeries = async (req, res) => {
 
         return res.status(200).json({ series });
     } catch (error) {
-        console.error('Error in getActorseries:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getDirectorMovies = async (req, res) => {
+    const { director } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanDirector = xss(director);
+
+    if (!sanDirector) {
+        return res.status(400).json({ message: 'هیچ نەدۆزرایەە' });
+    }
+
     try {
-        const { director } = req.params;
-        console.log(director);
-        const { year, genre, sorting } = req.query;
         const moviesSnapshot = await db.collection('movies').get();
 
         let movies = moviesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.director && movieData.director.toLowerCase() === director.toLowerCase();
+                return movieData.director && movieData.director.toLowerCase() === sanDirector.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
@@ -370,79 +406,79 @@ const getDirectorMovies = async (req, res) => {
             }));
 
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             movies = movies.filter(movie =>
                 yearArray.includes(movie.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             movies = movies.filter(movie =>
                 movie.genre.some(movieGenre =>
                     genreArray.includes(movieGenre)
                 )
             );
         }
+        
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
+                case 'popularity':
+                    movies.sort((a, b) => (b.view || 0) - (a.view || 0));
+                    break;
                 case 'newest':
-                    movies.sort((a, b) => b.year - a.year);
-                    break;
-                case 'oldest':
-                    movies.sort((a, b) => a.year - b.year);
-                    break;
-                case 'rating-high':
-                    movies.sort((a, b) => b.rating - a.rating);
-                    break;
-                case 'rating-low':
-                    movies.sort((a, b) => a.rating - b.rating);
-                    break;
-                case 'title-asc':
-                    movies.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'title-desc':
-                    movies.sort((a, b) => b.title.localeCompare(a.title));
+                    movies.date.sort((a, b) => b.year - a.year);
                     break;
                 default:
-                    movies.sort((a, b) => b.year - a.year);
+                    break;
             }
         }
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error in getActorMovies:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getDirectorSeries = async (req, res) => {
+    const { director } = req.params;
+    const { year, genre, sorting } = req.query;
+    const sanDirector = xss(director);
+
+    if (!sanDirector) {
+        return res.status(400).json({ message: 'هیچ نەدۆزرایەە' });
+    }
+
     try {
-        const { director } = req.params;
-        const { year, genre, sorting } = req.query;
         const seriesSnapshot = await db.collection('series').get();
 
         let series = seriesSnapshot.docs
             .filter(doc => {
                 const movieData = doc.data();
-                return movieData.director && movieData.director.toLowerCase() === director.toLowerCase();
+                return movieData.director && movieData.director.toLowerCase() === sanDirector.toLowerCase();
             })
             .map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
+
         if (year) {
-            const yearArray = year.split(',').map(y => y.trim());
+            const sanYear = xss(year);
+            const yearArray = sanYear.split(',').map(y => y.trim());
             series = series.filter(series =>
                 yearArray.includes(series.date.year.toString())
             );
         }
 
         if (genre) {
-            const genreArray = genre.split(',').map(g => g.trim());
+            const sanGenre = xss(genre);
+            const genreArray = sanGenre.split(',').map(g => g.trim());
             series = series.filter(series =>
                 series.genres.some(seriesGenre =>
                     genreArray.includes(seriesGenre)
@@ -451,7 +487,8 @@ const getDirectorSeries = async (req, res) => {
         }
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     series.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -465,29 +502,28 @@ const getDirectorSeries = async (req, res) => {
 
         return res.status(200).json({ series });
     } catch (error) {
-        console.error('Error in getActorseries:', error);
         return res.status(500).json({
-            message: 'Internal server error',
+            message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە',
             error: error.message
         });
     }
 };
 
 const getAllSeries = async (req, res) => {
+    const { year, genre, sorting } = req.query;
+
     try {
-        const { year, genre, sorting } = req.query;
-        console.log(sorting)
         let moviesQuery = db.collection('series');
 
         if (year) {
-            const years = year.split(',');
-            console.log(years)
+            const sanYear = xss(year);
+            const years = sanYear.split(',');
             moviesQuery = moviesQuery.where('year', 'in', years);
         }
 
         if (genre) {
-            const genres = genre.split(',');
-            console.log(genres)
+            const sanGenre = xss(genre);
+            const genres = sanGenre.split(',');
             moviesQuery = moviesQuery.where('genre', 'array-contains-any', genres);
         }
 
@@ -499,7 +535,8 @@ const getAllSeries = async (req, res) => {
         });
 
         if (sorting) {
-            switch (sorting) {
+            const sanSorting = xss(sorting);
+            switch (sanSorting) {
                 case 'popularity':
                     movies.sort((a, b) => (b.view || 0) - (a.view || 0));
                     break;
@@ -513,8 +550,7 @@ const getAllSeries = async (req, res) => {
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -549,8 +585,7 @@ const getRandomMoveandSeries = async (req, res) => {
 
         return res.status(200).json({ movies: randomMovies, series: randomSeries });
     } catch (error) {
-        console.error("Error getting random movies and series:", error);
-        return res.status(500).json({ message: "Something went wrong" });
+        return res.status(500).json({ message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە" });
     }
 };
 
@@ -570,8 +605,7 @@ const getNewestMoviesAndSeries = async (req, res) => {
         return res.status(200).json({ movies: newestMovies, series: newestSeries });
 
     } catch (error) {
-        console.error("Error getting newest movies and series:", error);
-        return res.status(500).json({ message: "Something went wrong" });
+        return res.status(500).json({ message: "هەڵەیەک ڕویدا تکایە هەوڵ بدەوە" });
     }
 };
 
@@ -600,7 +634,6 @@ const getTrending = async (req, res) => {
 
         return res.status(200).json({ movies, series });
     } catch (error) {
-        console.error('Error fetching most viewed:', error);
         res.status(500).json({
             success: false,
             error: 'Error fetching content'
@@ -609,36 +642,37 @@ const getTrending = async (req, res) => {
 }
 
 const incrementViewMovies = async (req, res) => {
+    const { filmId } = req.params;
+    const sanFilmId = xss(filmId);
+
     try {
-        const { filmId } = req.params;
         const collectionRef = db.collection("movies");
-        const docRef = collectionRef.doc(filmId);
+        const docRef = collectionRef.doc(sanFilmId);
         const doc = await docRef.get();
         if (!doc.exists) {
-            return res.status(404).json({ message: 'Document not found' });
+            return res.status(404).json({ message: 'هیچ فلیمێک نەدۆزرایەوە' });
         }
         await docRef.update({ view: doc.data().view + 1 });
-        return res.status(200).json({ message: 'View count incremented successfully' });
+        return res.status(200)
     } catch (error) {
-        console.error('Error incrementing view:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
 const incrementViewSeries = async (req, res) => {
+    const { seriesId } = req.params;
+    const sanSeriesId = xss(seriesId);
     try {
-        const { seriesId } = req.params;
         const collectionRef = db.collection("series");
-        const docRef = collectionRef.doc(seriesId);
+        const docRef = collectionRef.doc(sanSeriesId);
         const doc = await docRef.get();
         if (!doc.exists) {
-            return res.status(404).json({ message: 'Document not found' });
+            return res.status(404).json({ message: 'هیچ زنجیرەیەک نەدۆزرایەوە' });
         }
         await docRef.update({ view: doc.data().view + 1 });
-        return res.status(200).json({ message: 'View count incremented successfully' });
+        return res.status(200)
     } catch (error) {
-        console.error('Error incrementing view:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -654,8 +688,7 @@ const getNewMovies = async (req, res) => {
 
         return res.status(200).json({ movies });
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -671,9 +704,8 @@ const getNewSeries = async (req, res) => {
 
         return res.status(200).json({ series });
     } catch (error) {
-        console.error('Error fetching series:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
-module.exports = { getNewSeries,getNewMovies, incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
+module.exports = { getNewSeries, getNewMovies, incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };
