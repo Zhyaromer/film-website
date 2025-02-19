@@ -29,6 +29,7 @@ const AboutPage = () => {
                         </div>
                     </div>
 
+
                     <div className="bg-[#282e30]/70 backdrop-blur-sm rounded-2xl shadow-lg p-8 mb-20 border border-gray-700">
                         <h2 className="text-3xl font-semibold text-sky-500 mb-8 text-center">خزمەتگوزارییەکانی ئێمە</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
