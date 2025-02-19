@@ -43,7 +43,7 @@ const A = () => {
         <div className='bg-[#282e30]'>
             <Navigation />
 
-            <MovieSlider />
+            <MovieSlider series={newestSeries} />
 
             <div className="mx-auto px-4 py-8">
                 <div className="mb-4 mt-4 px-4 flex justify-between items-center">
