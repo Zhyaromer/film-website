@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Pagination from './Pagination.jsx';
 
-const NewsTemplateComponent = () => {
+const NewsTemplateComponent = ({newsData}) => {
     const newsInfo = [
         {
             title: "سپایدەرمان",
@@ -67,8 +67,19 @@ const NewsTemplateComponent = () => {
                 {currentMovies.map((news, index) => (
                     <div className='w-full sm:w-[40%] lg:w-[30%] p-2'>
                         <div key={index} className='bg-[hsl(195,9%,20%)] p-2 rounded-xl shadow-xl cursor-pointer'>
-                            <div >
+                            <div className='relative' >
                                 <img className='rounded-lg' src="https://cdn.europosters.eu/image/750/posters/blade-runner-2049-flying-car-i50060.jpg" alt="" />
+
+                                <div className='absolute bottom-0 p-2'>
+                                    <div className='flex flex-row justify-center items-center gap-2'>
+                                        <div>
+                                            <i class="fa-solid fa-eye text-sky-500"></i>
+                                        </div>
+                                        <div>
+                                            <p className='text-white text-base font-semibold'>{news.views}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div dir='rtl' className='p-4'>
                                 <h1 className='text-sky-500 mb-4 text-2xl font-bold'>{news.title}</h1>
@@ -77,25 +88,6 @@ const NewsTemplateComponent = () => {
 
                             <div className='flex justify-center'>
                                 <hr className='w-90' />
-                            </div>
-
-                            <div className='flex flex-row justify-between p-4'>
-                                <div className='flex flex-row justify-center items-center gap-2'>
-                                    <div>
-                                        <i class="fa-solid fa-eye text-sky-500"></i>
-                                    </div>
-                                    <div>
-                                        <p className='text-white text-lg font-semibold'>{news.views}</p>
-                                    </div>
-                                </div>
-                                <div className='flex flex-row justify-center items-center gap-2'>
-                                    <div>
-                                        <p className='text-white text-md font-semibold'>{news.dateOfNews}</p>
-                                    </div>
-                                    <div>
-                                        <i class="fa-solid tetx-md text-sky-500 fa-clock-rotate-left"></i>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
