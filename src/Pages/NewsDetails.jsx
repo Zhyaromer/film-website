@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Bookmark, Heart, CheckCircle, Download, X, Tv, Star, UserCircle2 } from 'lucide-react';
 import Navigation from '../components/@Layout/Navigation.jsx'
 import Footer from '../components/@Layout/Footer.jsx'
 import { useParams } from 'react-router-dom';
