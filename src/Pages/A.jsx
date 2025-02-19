@@ -8,12 +8,14 @@ import MovieSlider from '../components/@Layout/Slider.jsx'
 import axios from 'axios'
 import Footerfilms from '../components/@Layout/Footerfilms.jsx'
 import Seriescard from '../components/@Layout/Seriescard.jsx'
+import NewsTemplateComponent from '../components/@Layout/NewsTemplate';
 import { useNavigate } from 'react-router-dom';
 
 const A = () => {
     const navigate = useNavigate();
     const [newestMovies, setNewestMovies] = useState([]);
     const [newestSeries, setNewestSeries] = useState([]);
+    const [newestNews, setNewestNews] = useState([]);
 
     useEffect(() => {
         const getNewestMovies = async () => {
@@ -35,8 +37,18 @@ const A = () => {
             }
         }
 
+        const getNewestNews = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/news/newestnewshome');
+                setNewestNews(res.data.newsData);
+            } catch (error) {
+                console.error('Error fetching newest series:', error);
+            }
+        }
+
         getNewestMovies();
         getNewestSeries();
+        getNewestNews();
     }, []);
 
     return (
@@ -59,6 +71,14 @@ const A = () => {
                     <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین زنجیرەکان</h4>
                 </div>
                 <Seriescard moviesData={newestSeries} />
+            </div>
+
+            <div className="mx-auto px-4 py-8">
+                <div className="mb-4 mt-4 px-4 flex justify-between items-center">
+                    <p onClick={() => navigate('/news')} className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
+                    <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین هەواڵەکان</h4>
+                </div>
+               <NewsTemplateComponent newsData={newestNews} />
             </div>
 
             <div onClick={() => navigate('/suggestion')} className='flex justify-center items-center mb-12'>

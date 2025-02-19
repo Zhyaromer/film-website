@@ -56,7 +56,7 @@ const SeriesCards = ({ moviesData }) => {
                             <div className="mt-2 space-y-2 text-center">
                                 <div className="break-all">
                                     <p className="text-sm sm:text-base text-sky-500 font-semibold">
-                                        {movie.title}
+                                    {movie?.title?.length > 15 ? movie?.title?.slice(0, 15) + '...' : movie?.title}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">

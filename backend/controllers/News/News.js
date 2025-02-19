@@ -11,6 +11,17 @@ const getAllNews = async (req, res) => {
     }
 };
 
+const getNewestNews = async (req, res) => {
+    try {
+        const news = await db.collection('News').limit(6).get();
+        const newsData = news.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        return res.status(200).json({ newsData });
+    } catch (error) {
+        console.error('Error getting news:', error);
+        return res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
 const getSpecificNews = async (req, res) => {
     const { newsId } = req.params;
     try {
@@ -44,4 +55,4 @@ const incrementViewNews = async (req, res) => {
     }
 };
 
-module.exports = { getAllNews, getSpecificNews, incrementViewNews };
+module.exports = { getNewestNews, getAllNews, getSpecificNews, incrementViewNews };

@@ -676,5 +676,4 @@ const getNewSeries = async (req, res) => {
     }
 };
 
-
 module.exports = { getNewSeries,getNewMovies, incrementViewMovies, incrementViewSeries, getTrending, getActorSeries, getDirectorSeries, getCompanySeries, getAllMovies, getSeriesById, getDirectorMovies, getCompanyMovies, getActorMovies, getSimilarMovies, getMovieById, getAllSeries, getRandomMoveandSeries, getNewestMoviesAndSeries };

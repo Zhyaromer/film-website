@@ -66,7 +66,7 @@ const Footer = () => {
                 </div>
 
                 <div className>
-                    <p className='text-gray-400'>گەورەترین کۆگای فیلم و زنجیرەی ژێرنووسکراوی کوردی</p>
+                    <p className='text-gray-400'>باشترین پێگەی سینەمایی کوردی</p>
                 </div>
 
                 <div className='flex flex-row justify-center items-center text-center gap-5 mt-4'>
