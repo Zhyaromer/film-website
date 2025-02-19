@@ -6,11 +6,11 @@ const profileRoutes = require('./routes/profile.js')
 const useractions = require('./routes/useractions.js')
 const profileandsettings = require('./routes/profilemoviesdata.js')
 const news = require('./routes/news.js')
-require('dotenv').config()
 const cookieParser = require('cookie-parser');
-const port = process.env.PORT || 5000
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config()
+const port = process.env.PORT || 5000
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
