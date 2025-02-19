@@ -66,7 +66,7 @@ const login = async (req, res) => {
         const user = await auth.getUserByEmail(sanEmail);
         if (!user) {
             return res.status(404).json({
-                message: "هیج هەژمارێک نەدۆزرایەوە",
+                message: "هیج ئەندامێک نەدۆزرایەوە",
             })
         }
 

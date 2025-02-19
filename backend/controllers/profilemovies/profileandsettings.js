@@ -5,7 +5,7 @@ const getSavedMovies = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const savedMovieIds = userDoc.data().savedMovies || [];
@@ -36,8 +36,7 @@ const getSavedMovies = async (req, res) => {
         const validMovies = movies.filter(movie => movie !== null);
         return res.status(200).json({ movies: validMovies });
     } catch (error) {
-        console.error('Error fetching saved movies:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -46,7 +45,7 @@ const getfavMovies = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const favMovieIds = userDoc.data().favMovies || [];
@@ -77,8 +76,7 @@ const getfavMovies = async (req, res) => {
         const validMovies = movies.filter(movie => movie !== null);
         return res.status(200).json({ movies: validMovies });
     } catch (error) {
-        console.error('Error fetching favorited movies:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -87,7 +85,7 @@ const getWatchedMovies = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const watcheddMovieIds = userDoc.data().watchedMovies || [];
@@ -118,8 +116,7 @@ const getWatchedMovies = async (req, res) => {
         const validMovies = movies.filter(movie => movie !== null);
         return res.status(200).json({ movies: validMovies });
     } catch (error) {
-        console.error('Error fetching watched movies:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -128,7 +125,7 @@ const getCommentedMovies = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const commentedMovieIds = userDoc.data().comments || [];
@@ -159,8 +156,7 @@ const getCommentedMovies = async (req, res) => {
         const validMovies = movies.filter(movie => movie !== null);
         return res.status(200).json({ movies: validMovies });
     } catch (error) {
-        console.error('Error fetching commented movies:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -169,7 +165,7 @@ const getSavedSeries = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const savedSeriesIds = userDoc.data().savedseries || [];
@@ -200,8 +196,7 @@ const getSavedSeries = async (req, res) => {
         const validMovies = series.filter(serie => serie !== null);
         return res.status(200).json({ series: validMovies });
     } catch (error) {
-        console.error('Error fetching saved series:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -210,7 +205,7 @@ const getfavSeries = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const favSeriesIds = userDoc.data().favSeries || [];
@@ -241,8 +236,7 @@ const getfavSeries = async (req, res) => {
         const validSeries = series.filter(series => series !== null);
         return res.status(200).json({ series: validSeries });
     } catch (error) {
-        console.error('Error fetching favorited series:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -251,7 +245,7 @@ const getWatchedSeries = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const watcheddseriesIds = userDoc.data().watchedSeries || [];
@@ -282,8 +276,7 @@ const getWatchedSeries = async (req, res) => {
         const validSeries = series.filter(series => series !== null);
         return res.status(200).json({ series: validSeries });
     } catch (error) {
-        console.error('Error fetching watched series:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
@@ -292,7 +285,7 @@ const getCommentedSeries = async (req, res) => {
     try {
         const userDoc = await db.collection('users').doc(uid).get();
         if (!userDoc.exists) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'هیج ئەندامێک نەدۆزرایەوە' });
         }
 
         const commentedSeriesIds = userDoc.data().Seriescomments || [];
@@ -323,10 +316,8 @@ const getCommentedSeries = async (req, res) => {
         const validSeries = series.filter(series => series !== null);
         return res.status(200).json({ series: validSeries });
     } catch (error) {
-        console.error('Error fetching commented movies:', error);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'هەڵەیەک ڕویدا تکایە هەوڵ بدەوە' });
     }
 };
 
 module.exports = { getSavedMovies, getfavMovies, getWatchedMovies, getCommentedMovies, getSavedSeries, getfavSeries, getWatchedSeries, getCommentedSeries };
-
