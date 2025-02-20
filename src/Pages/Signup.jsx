@@ -22,7 +22,6 @@ const Signuppage = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/api/auth/register', { name, username, email, password });
-            console.log(response.status);
             if (response.status === 201) {
                 const credentials = await signInWithEmailAndPassword(auth, email, password);
                 const id = await credentials.user.getIdToken();

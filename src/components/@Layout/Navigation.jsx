@@ -38,17 +38,16 @@ const Navigation = () => {
                 const res = await axios.get('http://localhost:5000/api/movies/movies');
                 setMovies(res.data.movies);
             } catch (error) {
-                console.error('Error fetching movies:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی فیلمەکان", { transition: Slide });
             }
         }
 
         const fetchSeries = async () => {
             try {
                 const res = await axios.get('http://localhost:5000/api/movies/series');
-                console.log(res.data.movies);
                 setSeries(res.data.movies);
             } catch (error) {
-                console.error('Error fetching series:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی زنجیرەکان", { transition: Slide });
             }
         }
 

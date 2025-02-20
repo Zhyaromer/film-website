@@ -10,6 +10,8 @@ import Footerfilms from '../components/@Layout/Footerfilms.jsx'
 import Seriescard from '../components/@Layout/Seriescard.jsx'
 import NewsTemplateComponent from '../components/@Layout/NewsTemplate';
 import { useNavigate } from 'react-router-dom';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -22,9 +24,8 @@ const Home = () => {
             try {
                 const res = await axios.get('http://localhost:5000/api/movies/newmovies');
                 setNewestMovies(res.data.movies);
-                console.log(res.data.movies);
             } catch (error) {
-                console.error('Error fetching newest movies:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی فیلمەکان", { transition: Slide });
             }
         }
 
@@ -33,7 +34,7 @@ const Home = () => {
                 const res = await axios.get('http://localhost:5000/api/movies/newseries');
                 setNewestSeries(res.data.series);
             } catch (error) {
-                console.error('Error fetching newest series:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی زنجیرەکان", { transition: Slide });
             }
         }
 
@@ -42,7 +43,7 @@ const Home = () => {
                 const res = await axios.get('http://localhost:5000/api/news/newestnewshome');
                 setNewestNews(res.data.newsData);
             } catch (error) {
-                console.error('Error fetching newest series:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی هەواڵەکان", { transition: Slide });
             }
         }
 
@@ -78,7 +79,7 @@ const Home = () => {
                     <p onClick={() => navigate('/news')} className="text-sm md:text-2xl cursor-pointer font-bold text-center text-sky-500"> <i class="fa-solid fa-chevron-left me-1"></i> بینینی هەمووی</p>
                     <h4 className="text-lg md:text-3xl font-bold text-center text-white">نوێترین هەواڵەکان</h4>
                 </div>
-               <NewsTemplateComponent newsData={newestNews} />
+                <NewsTemplateComponent newsData={newestNews} />
             </div>
 
             <div onClick={() => navigate('/suggestion')} className='flex justify-center items-center mb-12'>
@@ -99,6 +100,7 @@ const Home = () => {
             </div>
 
             <Footer />
+            <ToastContainer />
         </div>
     )
 }

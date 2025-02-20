@@ -176,15 +176,15 @@ const Serisdetailss = () => {
     }, [series]);
 
     useEffect(() => {
-        const fetchMovieData = async () => {
+        const fetchSeriesData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/movies/seriesDetails/${seriesId}`);
-                const movieData = res?.data?.series;
+                const seriesData = res?.data?.series;
 
-                if (movieData?.seasons) {
-                    setseries(movieData);
+                if (seriesData?.seasons) {
+                    setseries(seriesData);
 
-                    const seasons = Object.keys(movieData.seasons).map(season => ({
+                    const seasons = Object.keys(seriesData.seasons).map(season => ({
                         value: parseInt(season.replace('season', '')),
                         label: `Season ${season.replace('season', '')}`
                     }));
@@ -194,11 +194,11 @@ const Serisdetailss = () => {
                         setSelectedSeason(seasons[0].value);
                     }
 
-                    const seasonCount = Object.keys(movieData.seasons).length;
+                    const seasonCount = Object.keys(seriesData.seasons).length;
                     sethowmanyseasons(seasonCount);
 
                     let episodeCount = 0;
-                    Object.values(movieData.seasons).forEach(season => {
+                    Object.values(seriesData.seasons).forEach(season => {
                         episodeCount += Object.keys(season.episodes).length;
                     });
                     sethowmanyeps(episodeCount);
@@ -209,7 +209,7 @@ const Serisdetailss = () => {
             }
         };
 
-        fetchMovieData();
+        fetchSeriesData();
     }, [seriesId]);
 
     useEffect(() => {

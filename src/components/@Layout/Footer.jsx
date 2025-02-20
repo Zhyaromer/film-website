@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Footerfilms from '../@Layout/Footerfilms.jsx'
 import Seriescard from '../@Layout/Seriescard.jsx'
 import axios from 'axios';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Footer = () => {
     const [selectedButton, setSelectedButton] = useState(1);
@@ -15,7 +17,7 @@ const Footer = () => {
                 setMostViewedMovies(response.data.movies);
                 setMostViewedSeries(response.data.series);
             } catch (error) {
-                console.error('Error fetching most viewed movies:', error);
+                toast.error("هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە", { transition: Slide });
             }
         };
 
@@ -40,6 +42,7 @@ const Footer = () => {
         { id: 0, text: 'پربینەرترین زنجیرە' },
         { id: 1, text: 'پربینەرترین فیلم' },
     ];
+
     return (
         <footer className="relative z-50 w-full bg-[hsl(195,9%,10%)] p-4">
             <div className="flex justify-center md:justify-end items-center gap-6 pr-0 md:pr-4 mt-6">
@@ -99,6 +102,7 @@ const Footer = () => {
                     <p className='text-gray-400 text-center mt-4'>دروستکردنی وێبسایت</p>
                 </div>
             </div>
+            <ToastContainer transition={Slide} />
         </footer>
     )
 }

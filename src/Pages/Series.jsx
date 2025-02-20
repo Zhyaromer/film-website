@@ -5,15 +5,17 @@ import Footer from '../components/@Layout/Footer.jsx'
 import MultiSelect from '../components/@UI/Filtersinput.jsx'
 import SeriesCards from '../components/@Layout/SeriesCards.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Series = () => {
     const { genre, year, sorting } = FiltersOption();
-    const [movies, setMovies] = useState([]);
+    const [Series, setSeries] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedYears, setSelectedYears] = useState([]);
     const [selectedSorting, setSelectedSorting] = useState([]);
 
-    const fetchMovies = async (filters) => {
+    const fetchSeries = async (filters) => {
         try {
             let url = 'http://localhost:5000/api/movies/series';
             
@@ -32,9 +34,9 @@ const Series = () => {
             const finalUrl = queryString ? `${url}?${queryString}` : url;
             
             const res = await axios.get(finalUrl);
-            setMovies(res.data);
+            setSeries(res.data);
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی زنجیرەکان", { transition: Slide });
         }
     };
 
@@ -44,7 +46,7 @@ const Series = () => {
             year: selectedYears.map(y => y.value),
             sorting: selectedSorting
         };
-        fetchMovies(filters);
+        fetchSeries(filters);
     }, [selectedGenres, selectedYears, selectedSorting]);
 
     return (
@@ -83,12 +85,13 @@ const Series = () => {
 
             <div>
                 <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>
-                    زنجیرەکان ({movies?.movies?.length || 0})
+                    زنجیرەکان ({Series?.movies?.length || 0})
                 </h2>
             </div>
 
-            <SeriesCards moviesData={movies}/>
+            <SeriesCards moviesData={Series}/>
             <Footer />
+            <ToastContainer />
         </div>
     );
 };

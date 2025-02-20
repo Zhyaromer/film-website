@@ -7,6 +7,8 @@ import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
 import { useParams } from 'react-router-dom';
 import Seriescard from '../components/@Layout/Seriescard.jsx'
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Companies = () => {
     const { genre, year, sorting } = FiltersOption();
@@ -38,7 +40,7 @@ const Companies = () => {
             const res = await axios.get(finalUrl);
             setMovies(res.data);
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی فیلمەکان", { transition: Slide });
         }
     };
 
@@ -62,7 +64,7 @@ const Companies = () => {
             const res = await axios.get(finalUrl);
             setSeries(res.data.series);
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی زنجیرەکان", { transition: Slide });
         }
     };
 
@@ -137,6 +139,7 @@ const Companies = () => {
                 <Seriescard moviesData={series} />
             )}
             <Footer />
+            <ToastContainer />
         </div>
     );
 };

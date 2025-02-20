@@ -20,6 +20,14 @@ const Profile = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [savedMovies, setSavedMovies] = useState([]);
+    const [favMovies, setFavMovies] = useState([]);
+    const [watchedMovies, setWatchedMovies] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [savedseries, setSavedseries] = useState([]);
+    const [favseries, setFavseries] = useState([]);
+    const [watchedseries, setWatchedseries] = useState([]);
+    const [commentsseries, setCommentsseries] = useState([]);
     const [form, setForm] = useState({
         name: user.name,
         username: user.username,
@@ -170,7 +178,6 @@ const Profile = () => {
                     } else {
                         toast.error('هەڵەیەک ڕوویدا لە گۆڕینی وشەی نهێنیدا', { transition: Slide, autoClose: 3000 });
                     }
-                    console.error('Password update error:', error);
                     return;
                 }
             }
@@ -200,21 +207,10 @@ const Profile = () => {
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'هەڵەیەک ڕوویدا تکایە دوبارە هەوڵ بدەوە';
             toast.error(errorMessage, { transition: Slide, autoClose: 3000 });
-            console.error('Profile update error:', error);
         } finally {
             setIsLoading(false);
         }
     }
-
-    const [savedMovies, setSavedMovies] = useState([]);
-    const [favMovies, setFavMovies] = useState([]);
-    const [watchedMovies, setWatchedMovies] = useState([]);
-    const [comments, setComments] = useState([]);
-
-    const [savedseries, setSavedseries] = useState([]);
-    const [favseries, setFavseries] = useState([]);
-    const [watchedseries, setWatchedseries] = useState([]);
-    const [commentsseries, setCommentsseries] = useState([]);
 
     useEffect(() => {
         const fetchSavedMovies = async () => {
@@ -222,7 +218,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/savedmoviesprofile`, { withCredentials: true });
                 setSavedMovies(res.data.movies);
             } catch (error) {
-                console.error('Error fetching saved movies:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -231,7 +227,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/savedseriesprofile`, { withCredentials: true });
                 setSavedseries(res.data.series);
             } catch (error) {
-                console.error('Error fetching saved series:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -239,9 +235,8 @@ const Profile = () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/favmoviesprofile`, { withCredentials: true });
                 setFavMovies(res.data.movies);
-                console.log(res.data.movies);
             } catch (error) {
-                console.error('Error fetching saved movies:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -250,7 +245,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/favseriesprofile`, { withCredentials: true });
                 setFavseries(res.data.series);
             } catch (error) {
-                console.error('Error fetching saved series:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -259,7 +254,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/watchedmoviesprofile`, { withCredentials: true });
                 setWatchedMovies(res.data.movies);
             } catch (error) {
-                console.error('Error fetching saved movies:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -268,7 +263,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/watchedseriesprofile`, { withCredentials: true });
                 setWatchedseries(res.data.series);
             } catch (error) {
-                console.error('Error fetching saved series:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -277,7 +272,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/commentedmoviesprofile`, { withCredentials: true });
                 setComments(res.data.movies);
             } catch (error) {
-                console.error('Error fetching saved movies:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 
@@ -286,7 +281,7 @@ const Profile = () => {
                 const res = await axios.get(`http://localhost:5000/api/profileandsettings/commentedseriesprofile`, { withCredentials: true });
                 setCommentsseries(res.data.series);
             } catch (error) {
-                console.error('Error fetching saved comments:', error);
+                toast.error('هەڵەیەک ڕویدا تکایە دوبارە هەوڵ بدەوە', { transition: Slide });
             }
         }
 

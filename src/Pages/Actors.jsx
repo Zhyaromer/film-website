@@ -7,6 +7,8 @@ import FilmsCard from '../components/@Layout/FilmsCard.jsx'
 import FiltersOption from '../helpers/FiltersOption.jsx'
 import { useParams } from 'react-router-dom';
 import Seriescard from '../components/@Layout/Seriescard.jsx'
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Actors = () => {
     const { genre, year, sorting } = FiltersOption();
@@ -38,7 +40,7 @@ const Actors = () => {
             const res = await axios.get(finalUrl);
             setMovies(res.data);
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی فیلمەکان", { transition: Slide });
         }
     };
 
@@ -62,7 +64,7 @@ const Actors = () => {
             const res = await axios.get(finalUrl);
             setSeries(res.data.series);
         } catch (error) {
-            console.error('Error fetching movies:', error);
+            toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی زنجیرەکان", { transition: Slide });
         }
     };
 
@@ -113,7 +115,7 @@ const Actors = () => {
             <div>
                 <h2 className='text-xl md:text-3xl text-right font-bold text-white px-6 pt-5 pb-0'>
                     {filmordrama === 'film' ? (
-                        `(${movies?.movies?.length || 0}) ${actor} فیلمەکانی` 
+                        `(${movies?.movies?.length || 0}) ${actor} فیلمەکانی`
                     ) : (
                         `(${series?.length || 0}) ${actor} زنجیرەکانی`
                     )}
@@ -135,6 +137,7 @@ const Actors = () => {
                 <Seriescard moviesData={series} />
             )}
             <Footer />
+            <ToastContainer />
         </div>
     );
 };

@@ -3,6 +3,8 @@ import Footer from '../components/@Layout/Footer.jsx'
 import NewsTemplateComponent from '../components/@Layout/NewsTemplate.jsx'
 import { React, useState, useEffect } from 'react'
 import axios from 'axios'
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const News = () => {
     const [news, setNews] = useState([]);
@@ -12,9 +14,8 @@ const News = () => {
             try {
                 const res = await axios.get('http://localhost:5000/api/news/newestnews');
                 setNews(res.data.newsData);
-                console.log(res.data.newsData);
             } catch (error) {
-                console.error('Error fetching news:', error);
+                toast.error("هەڵەیەک هەیە لە گرتنی زانیاریەکانی هەواڵەکان", { transition: Slide });
             }
         }
 
@@ -32,6 +33,7 @@ const News = () => {
             <NewsTemplateComponent newsData={news} />
 
             <Footer />
+            <ToastContainer />
         </div>
     )
 }
